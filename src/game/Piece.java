@@ -8,7 +8,7 @@ package game;
 public class Piece 
 {
 	/** The enum describing the state of this piece **/
-	private static enum State {SOLDIER, KING};
+	public static enum State {SOLDIER, KING};
 	
 	/** The board this piece belongs to **/
 	private Board board;
@@ -19,4 +19,24 @@ public class Piece
 	/** The state of this piece **/
 	private State state;
 	
+	/**
+	 * Default constructor
+	 */
+	public Piece()
+	{
+		state = State.SOLDIER;
+	}
+	
+	/**
+	 * Parameterized constructor, initializes board and node to given variables
+	 * 
+	 * @param board	the board of this instance
+	 * @param node	the node of this instance on the board
+	 */
+	public Piece(Board board, Node node)
+	{
+		this();
+		this.board = board;
+		this.node = node;
+	}
 }
