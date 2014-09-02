@@ -50,4 +50,26 @@ public class Board
 	{
 		grid = new Node[length][width];
 	}
+	
+	/**
+	 * Adds the given piece to the grid at the defualt node
+	 * 
+	 * @param piece	the piece to be added
+	 */
+	public void add(Piece piece)
+	{
+		//Adds to default node
+	}
+	
+	/**
+	 * Adds the given piece to the grid at the given node
+	 * 
+	 * @param piece	the piece to be added
+	 * @param node	the node to be
+	 */
+	public void add(Piece piece, Node node)
+	{
+		piece.add(this, node);
+		pieces.add(piece);
+	}
 }
