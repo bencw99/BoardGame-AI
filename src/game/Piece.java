@@ -1,5 +1,7 @@
 package game;
 
+import java.util.ArrayList;
+
 /**
  * A class representing a checkers piece
  * 
@@ -9,6 +11,9 @@ public class Piece
 {
 	/** The enum describing the state of this piece **/
 	public static enum State {SOLDIER, KING};
+	
+	/** The enum describing the loyalty of this piece **/
+	public static enum Loyalty {P1, P2};
 	
 	/** The board this piece belongs to **/
 	private Board board;
@@ -36,6 +41,28 @@ public class Piece
 	public Piece(Board board, Node node)
 	{
 		this();
+		this.board = board;
+		this.node = node;
+	}
+	
+	/**
+	 * Returns the possible nodes this piece can go to
+	 * 
+	 * @return	the array list of possible nodes this piece can go to
+	 */
+	public ArrayList<Node> getPossibleMoves()
+	{
+		return null;
+	}
+	
+	/**
+	 * Adds this instance to the given board at the given node
+	 * 
+	 * @param board	the board this instance is added to
+	 * @param node	the node this instance is adde to
+	 */
+	public void add(Board board, Node node)
+	{
 		this.board = board;
 		this.node = node;
 	}
