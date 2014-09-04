@@ -24,12 +24,18 @@ public class Piece
 	/** The state of this piece **/
 	private State state;
 	
+	/** The loyalty of this piece **/
+	private Loyalty loyalty;
+	
 	/**
 	 * Default constructor
+	 * 
+	 * @param loyalty	the value the loyalty of this piece
 	 */
-	public Piece()
+	public Piece(Loyalty loyalty)
 	{
 		state = State.SOLDIER;
+		this.loyalty = loyalty;
 	}
 	
 	/**
@@ -37,10 +43,11 @@ public class Piece
 	 * 
 	 * @param board	the board of this instance
 	 * @param node	the node of this instance on the board
+	 * @param loyalty	the value the loyalty is set to
 	 */
-	public Piece(Board board, Node node)
+	public Piece(Loyalty loyalty, Board board, Node node)
 	{
-		this();
+		this(loyalty);
 		this.board = board;
 		this.node = node;
 	}
