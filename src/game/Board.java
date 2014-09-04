@@ -49,24 +49,16 @@ public class Board
 	}
 	
 	/**
-	 * Adds the given piece to the grid at the default node
-	 * 
-	 * @param piece	the piece to be added
-	 */
-	public void add(Piece piece)
-	{
-		//Adds to default node
-	}
-	
-	/**
 	 * Adds the given piece to the grid at the given node
 	 * 
 	 * @param piece	the piece to be added
-	 * @param node	the node to be
+	 * @param loc	the location to be added to
 	 */
-	public void add(Piece piece, Node node)
+	public void add(Piece piece, Location loc)
 	{
-		piece.add(this, node);
+		piece.add(this, loc);
+		
+		grid[loc.getRow()][loc.getCol()].add(piece);
 	}
 	
 	/**
@@ -74,9 +66,9 @@ public class Board
 	 * 
 	 * @return the piece at the given location
 	 */ 
-	public boolean isValid(int row, int col)
+	public boolean isValid(Location loc)
 	{
-		if(row < grid.length && col < grid[0].length)
+		if(loc.getRow() < grid.length && loc.getCol() < grid[0].length)
 		{
 			return true;
 		}
@@ -87,12 +79,36 @@ public class Board
 	}
 	
 	/**
+	 * Returns the node at the given location
+	 * 
+	 * @return the node at the given location
+	 */ 
+	public Node getNode(Location loc)
+	{
+		return grid[loc.getRow()][loc.getCol()];
+	}
+	
+	/**
 	 * Returns the piece at the given location
 	 * 
 	 * @return the piece at the given location
 	 */ 
-	public Piece get (int row, int col)
+	public Piece getPiece(Location loc)
 	{
-		return grid[row][col].getPiece();
+		return grid[loc.getRow()][loc.getCol()].getPiece();
+	}
+	
+	/**
+	 * Returns the piece at the given location and removes it from the board
+	 * 
+	 * @return the piece at the given location
+	 */ 
+	public Piece remove(Location loc)
+	{
+		Piece piece = getPiece(loc);
+		
+		add(null, loc);
+		
+		return piece;
 	}
 }

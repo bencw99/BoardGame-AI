@@ -13,7 +13,7 @@ public class Piece
 	public static enum State {SOLDIER, KING};
 	
 	/** The enum describing the loyalty of this piece **/
-	public static enum Loyalty {P1, P2};
+	public static enum Loyalty {BLACK, RED};
 	
 	/** The board this piece belongs to **/
 	private Board board;
@@ -71,9 +71,8 @@ public class Piece
 	 * @param board	the board this instance is added to
 	 * @param node	the node this instance is adde to
 	 */
-	public void add(Board board, Node node)
+	public void add(Board board, Location loc)
 	{
 		this.board = board;
-		this.node = node;
 	}
 }

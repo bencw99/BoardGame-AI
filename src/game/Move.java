@@ -63,7 +63,7 @@ public class Move
 			
 			if(Math.abs(next.getLoc().getRow() - current.getLoc().getRow()) > 1)
 			{
-				jumped.add(board.get((next.getLoc().getRow() + current.getLoc().getRow())/2 , (next.getLoc().getCol() + current.getLoc().getCol())/2));
+				jumped.add(board.getPiece(new Location((next.getLoc().getRow() + current.getLoc().getRow())/2, (next.getLoc().getCol() + current.getLoc().getCol())/2)));
 			}
 			
 			current = next;
