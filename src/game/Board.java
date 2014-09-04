@@ -12,9 +12,6 @@ public class Board
 	/** The array of nodes composing the board grid **/
 	private Node[][] grid;
 	
-	/** The array list containing the pieces on the board **/
-	ArrayList<Piece> pieces;
-	
 	/** The default length of the board grid **/
 	public final static int DEFAULT_GRID_LENGTH = 8;
 	
@@ -52,7 +49,7 @@ public class Board
 	}
 	
 	/**
-	 * Adds the given piece to the grid at the defualt node
+	 * Adds the given piece to the grid at the default node
 	 * 
 	 * @param piece	the piece to be added
 	 */
@@ -70,7 +67,6 @@ public class Board
 	public void add(Piece piece, Node node)
 	{
 		piece.add(this, node);
-		pieces.add(piece);
 	}
 	
 	/**
@@ -95,7 +91,7 @@ public class Board
 	 * 
 	 * @return the piece at the given location
 	 */ 
-	public Piece getPiece(int row, int col)
+	public Piece get (int row, int col)
 	{
 		return grid[row][col].getPiece();
 	}
