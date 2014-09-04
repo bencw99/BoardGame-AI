@@ -38,6 +38,8 @@ public class Move
 		this.end = end;
 		this.interNodes = interNodes;
 		this.board = board;
+		
+		jumpedInit();
 	}
 	
 	/**
@@ -59,9 +61,9 @@ public class Move
 				next = interNodes.get(i);
 			}
 			
-			if(Math.abs(next.getRow() - current.getRow()) > 1)
+			if(Math.abs(next.getLoc().getRow() - current.getLoc().getRow()) > 1)
 			{
-				jumped.add(board.get((next.getRow() + current.getRow())/2 , (next.getCol() + current.getCol())/2));
+				jumped.add(board.get((next.getLoc().getRow() + current.getLoc().getRow())/2 , (next.getLoc().getCol() + current.getLoc().getCol())/2));
 			}
 			
 			current = next;

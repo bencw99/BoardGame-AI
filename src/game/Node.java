@@ -12,11 +12,8 @@ public class Node
 	/** The board containing this node **/
 	private Board board;
 	
-	/** The row this node is part of **/
-	private int row;
-	
-	/** The column this node is part of **/
-	private int col;
+	/** The location of this node **/
+	private Location loc;
 	
 	/** The piece currently contained in this node **/
 	private Piece piece;
@@ -25,20 +22,19 @@ public class Node
 	private Color color;
 	
 	/**
-	 * Paremeterized constructor, initializes Node location
+	 * Parameterized constructor, initializes Node location
 	 */
-	public Node(int row, int col)
+	public Node(Location loc)
 	{
-		this.row = row;
-		this.col = col;
+		this.loc = loc;
 	}
 	
 	/**
 	 * Parameterized constructor, initializes color to given color, and location to given values
 	 */
-	public Node(int row, int col, Color color)
+	public Node(Location loc, Color color)
 	{
-		this(row, col);
+		this(loc);
 		this.color = color;
 	}
 	
@@ -63,22 +59,12 @@ public class Node
 	}
 	
 	/**
-	 * Returns the row of this node
+	 * Returns the location of this node
 	 * 
 	 * @return the row of this node
 	 */ 
-	public int getRow()
+	public Location getLoc()
 	{
-		return row;
-	}
-	
-		/**
-	 * Returns the col of this node
-	 * 
-	 * @return the col of this node
-	 */ 
-	public int getCol()
-	{
-		return col;
+		return loc;
 	}
 }
