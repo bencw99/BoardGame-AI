@@ -39,6 +39,34 @@ public class Move
 	}
 	
 	/**
+	 * Adds jumped pieces to the jump array list
+	 */
+	public void jumpedInit()
+	{
+		Node current = start;
+		Node next;
+		
+		for(int i = 0; i <= interNodes.size(); i ++)
+		{
+			if(i == interNodes.size())
+			{
+				next = end;
+			}
+			else
+			{
+				next = interNodes.get(i)
+			}
+			
+			if(Math.abs(next.getRow() - current.getRow()) > 1)
+			{
+				jumped.add(board.get((next.getRow() + current.getRow())/2 , (next.getCol() + current.getCol())/2));
+			}
+			
+			current = next;
+		}
+	}
+	
+	/**
 	 * Returns whether or not this move is simple
 	 * 
 	 * @return a boolean describing whether or not this move is simple
