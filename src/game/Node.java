@@ -61,10 +61,21 @@ public class Node
 	/**
 	 * Returns the location of this node
 	 * 
-	 * @return the row of this node
+	 * @return the loaction of this node
 	 */ 
 	public Location getLoc()
 	{
 		return loc;
+	}
+	
+	
+	/**
+	 * Returns the color of this node
+	 * 
+	 * @return the color of this node
+	 */ 
+	public Color getColor()
+	{
+		return color;
 	}
 }
