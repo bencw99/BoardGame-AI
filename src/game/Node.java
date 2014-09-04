@@ -61,4 +61,24 @@ public class Node
 	{
 		return piece;
 	}
+	
+	/**
+	 * Returns the row of this node
+	 * 
+	 * @return the row of this node
+	 */ 
+	public int getRow()
+	{
+		return row;
+	}
+	
+		/**
+	 * Returns the col of this node
+	 * 
+	 * @return the col of this node
+	 */ 
+	public int getCol()
+	{
+		return col;
+	}
 }
