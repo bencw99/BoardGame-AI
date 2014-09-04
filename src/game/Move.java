@@ -1,5 +1,7 @@
 package game;
 
+import java.util.ArrayList;
+
 /**
  * A class representing a move of a piece in a checkers game 
  * 
@@ -54,7 +56,7 @@ public class Move
 			}
 			else
 			{
-				next = interNodes.get(i)
+				next = interNodes.get(i);
 			}
 			
 			if(Math.abs(next.getRow() - current.getRow()) > 1)
