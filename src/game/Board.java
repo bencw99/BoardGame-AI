@@ -1,5 +1,8 @@
 package game;
 
+import game.Piece.Loyalty;
+
+import java.awt.Color;
 import java.util.ArrayList;
 
 /**
@@ -46,6 +49,46 @@ public class Board
 	public Board(int length, int width, int pieceNum)
 	{
 		grid = new Node[length][width];
+		
+		for(int i = 0; i < length; i ++)
+		{
+			for(int j = 0; j < width; j ++)
+			{
+				Color color;
+				
+				if(length*i + j == 0)
+				{
+					color = Color.RED;
+				}
+				else
+				{
+					color = Color.BLACK;
+				}
+				
+				grid[i][j] = new Node(new Location(i, j), color); 
+			}
+		}
+		
+		int piecesLeft = pieceNum;
+
+		for(int i = 0; i < length; i ++)
+		{
+			for(int j = 0; j < width; j ++)
+			{
+				if(grid[i][j].getColor() == Color.BLACK)
+				{
+					grid[i][j].add(new Piece(Loyalty.RED, this, grid[i][j]));
+					grid[length - 1 - i][width - 1 - j].add(new Piece(Loyalty.BLACK, this, grid[length - 1 - i][width - 1 - j]));
+					
+					piecesLeft --;
+					
+					if(piecesLeft <= 0)
+					{
+						break;
+					}
+				}
+			}
+		}
 	}
 	
 	/**
@@ -59,23 +102,6 @@ public class Board
 		piece.add(this, loc);
 		
 		grid[loc.getRow()][loc.getCol()].add(piece);
-	}
-	
-	/**
-	 * Returns the piece at the given location
-	 * 
-	 * @return the piece at the given location
-	 */ 
-	public boolean isValid(Location loc)
-	{
-		if(loc.getRow() < grid.length && loc.getCol() < grid[0].length)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
 	}
 	
 	/**
@@ -110,5 +136,22 @@ public class Board
 		add(null, loc);
 		
 		return piece;
+	}
+	
+	/**
+	 * Returns the piece at the given location
+	 * 
+	 * @return the piece at the given location
+	 */ 
+	public boolean isValid(Location loc)
+	{
+		if(loc.getRow() < grid.length && loc.getCol() < grid[0].length)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 }
