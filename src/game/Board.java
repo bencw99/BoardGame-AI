@@ -78,6 +78,23 @@ public class Board
 	 * 
 	 * @return the piece at the given location
 	 */ 
+	public boolean isValid(int row, int col)
+	{
+		if(row < grid.length && col < grid[0].length)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	/**
+	 * Returns the piece at the given location
+	 * 
+	 * @return the piece at the given location
+	 */ 
 	public Piece getPiece(int row, int col)
 	{
 		return grid[row][col].getPiece();
