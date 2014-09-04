@@ -18,4 +18,18 @@ public class Move
 	
 	/** The array list of pieces jumped in this move **/
 	private ArrayList<Piece> jumped;
+	
+	/** The board this move is executed on **/
+	private Board board;
+	
+	/**
+	 * Parameterized Constructor, initializes start and end nodes, board, and interNodes
+	 */
+	public Move(Node start, Node end, ArrayList<Node> interNodes, Board board)
+	{
+		this.start = start;
+		this.end = end;
+		this.interNodes = interNodes;
+		this.board = board;
+	}
 }
