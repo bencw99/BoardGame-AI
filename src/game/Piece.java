@@ -56,6 +56,16 @@ public class Piece
 	}
 	
 	/**
+	 * Returns the possible nodes this piece can jump to
+	 * 
+	 * @return	the array list of possible nodes this piece can jump to
+	 */
+	public ArrayList<Node> getJumpMoves()
+	{
+		return null;
+	}
+	
+	/**
 	 * Adds this instance to the given board at the given node
 	 * 
 	 * @param board	the board this instance is added to
