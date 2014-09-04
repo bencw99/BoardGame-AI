@@ -24,6 +24,11 @@ public class Move
 	
 	/**
 	 * Parameterized Constructor, initializes start and end nodes, board, and interNodes
+	 * 
+	 * @param start	the node this move starts at
+	 * @param end	the node this move ends at
+	 * @param interNodes	the array list of nodes jumped through
+	 * @param board	the board this move occurs in
 	 */
 	public Move(Node start, Node end, ArrayList<Node> interNodes, Board board)
 	{
@@ -31,5 +36,62 @@ public class Move
 		this.end = end;
 		this.interNodes = interNodes;
 		this.board = board;
+	}
+	
+	/**
+	 * Returns whether or not this move is simple
+	 * 
+	 * @return a boolean describing whether or not this move is simple
+	 */
+	public boolean isSimple()
+	{
+		if(interNodes.isEmpty())
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	/**
+	 * Returns the array list of pieces jumped in this move
+	 * 
+	 * @return the array list of pieces jumped in this move
+	 */ 
+	public ArrayList<Piece> getJumped()
+	{
+		return jumped;
+	}
+	
+	/**
+	 * Returns the array list of nodes moved through in this move
+	 * 
+	 * @return the array list of nodes moved through
+	 */ 
+	public ArrayList<Node> getInterNodes()
+	{
+		return interNodes;
+	}
+	
+	/**
+	 * Returns the node this move starts at
+	 * 
+	 * @return the node this move starts at
+	 */
+	public Node getStart()
+	{
+		return start;
+	}
+	
+	/**
+	 * Returns the node this move ends at
+	 * 
+	 * @return the node this move ends at
+	 */
+	public Node getEnd()
+	{
+		return end;
 	}
 }
