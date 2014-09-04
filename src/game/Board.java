@@ -72,4 +72,14 @@ public class Board
 		piece.add(this, node);
 		pieces.add(piece);
 	}
+	
+	/**
+	 * Returns the piece at the given location
+	 * 
+	 * @return the piece at the given location
+	 */ 
+	public Piece getPiece(int row, int col)
+	{
+		return grid[row][col].getPiece();
+	}
 }
