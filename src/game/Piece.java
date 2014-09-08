@@ -55,11 +55,14 @@ public class Piece
 	/**
 	 * Returns the possible nodes this piece can go to
 	 * 
-	 * @return	the array list of possible nodes this piece can go to
+	 * @return	the array list of possible moves this piece execute
 	 */
 	public ArrayList<Node> getPossibleMoves()
 	{
-		
+		for(int i = -1; i <= 1; i += 2)
+		{
+			
+		}
 		
 		return null;
 	}
@@ -67,7 +70,7 @@ public class Piece
 	/**
 	 * Returns the possible nodes this piece can jump to
 	 * 
-	 * @return	the array list of possible nodes this piece can jump to
+	 * @return	the array list of possible moves this piece can jump to
 	 */
 	public ArrayList<Node> getJumpMoves()
 	{
