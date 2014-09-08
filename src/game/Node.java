@@ -61,7 +61,7 @@ public class Node
 	/**
 	 * Returns the location of this node
 	 * 
-	 * @return the loaction of this node
+	 * @return the location of this node
 	 */ 
 	public Location getLoc()
 	{
