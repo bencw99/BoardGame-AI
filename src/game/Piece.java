@@ -59,6 +59,8 @@ public class Piece
 	 */
 	public ArrayList<Node> getPossibleMoves()
 	{
+		
+		
 		return null;
 	}
 	
@@ -76,10 +78,11 @@ public class Piece
 	 * Adds this instance to the given board at the given node
 	 * 
 	 * @param board	the board this instance is added to
-	 * @param node	the node this instance is adde to
+	 * @param loc	the location this instance is added to
 	 */
 	public void add(Board board, Location loc)
 	{
 		this.board = board;
+		this.node = board.getNode(loc);
 	}
 }
