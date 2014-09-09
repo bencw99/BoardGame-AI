@@ -41,13 +41,13 @@ public class Move
 		this.interNodes = interNodes;
 		this.board = board;
 		
-		jumpedInit();
+		loadJumped();
 	}
 	
 	/**
 	 * Adds jumped pieces to the jump array list
 	 */
-	public void jumpedInit()
+	public void loadJumped()
 	{
 		Node current = start;
 		Node next;

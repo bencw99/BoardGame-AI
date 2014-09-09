@@ -1,7 +1,11 @@
 package game.piece;
 
+import java.util.ArrayList;
+
 import game.Location;
+import game.Move;
 import game.Node;
+import game.piece.Piece.Loyalty;
 
 /**
  * A class describing a checkers soldier piece
@@ -10,6 +14,27 @@ import game.Node;
  */
 public class Soldier extends Piece
 {
+	/**
+	 * Default constructor
+	 * 
+	 * @param loyalty	the value the loyalty of this piece
+	 */
+	public Soldier(Loyalty loyalty)
+	{
+		super(loyalty);
+	}
+	
+	/**
+	 * Parameterized constructor, initializes loyalty and node to given variables
+	 * 
+	 * @param node	the node of this instance on the board
+	 * @param loyalty	the value the loyalty is set to
+	 */
+	public Soldier(Loyalty loyalty, Node node)
+	{
+		super(loyalty, node);
+	}
+	
 	/**
 	 * Returns the possible nodes this piece can go to
 	 * 
@@ -29,15 +54,17 @@ public class Soldier extends Piece
 			{
 				if(getNode().getBoard().getPiece(currentLoc) == null)
 				{
-					possibleMoves.add(new Move(getNode().getLoc(), currentLoc, new ArrayList<Node>(), getNode().getBoard()));
+					possibleMoves.add(new Move(getNode(), getNode().getBoard().getNode(currentLoc), new ArrayList<Node>(), getNode().getBoard()));
 				}
-				else
+				else if(getNode().getBoard().getPiece(currentLoc).getLoyalty() != this.getLoyalty())
 				{
-					Location jumpLoc = new Location(currentLoc.getRow() + i, currentLog.getCol() + orientation);
+					
+					
+					Location jumpLoc = new Location(currentLoc.getRow() + i, currentLoc.getCol() + orientation);
 					
 					if(getNode().getBoard().isValid(jumpLoc) && getNode().getBoard().getPiece(jumpLoc) == null)
 					{
-						for(Node next : getNextJumps(jumpLoc))
+						for(Node next : getNextJumps(getNode().getBoard().getNode(jumpLoc)))
 						{
 						
 						}
@@ -45,6 +72,8 @@ public class Soldier extends Piece
 				}
 			}
 		}
+		
+		return possibleMoves;
 	}
 	
 	/**
@@ -54,6 +83,13 @@ public class Soldier extends Piece
 	 */
 	protected ArrayList<Node> getNextJumps(Node current)
 	{
+			boolean lastMove = false;
+			
+			while(!lastMove)
+			{
+				
+			}
 		
+		return null;
 	}
 }

@@ -1,5 +1,6 @@
 package game.piece;
 
+import game.Move;
 import game.Node;
 
 import java.util.ArrayList;

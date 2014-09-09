@@ -2,6 +2,7 @@ package game;
 
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
+import game.piece.Soldier;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -78,8 +79,8 @@ public class Board
 			{
 				if(grid[i][j].getColor() == Color.BLACK)
 				{
-					grid[i][j].add(new Piece(Loyalty.RED, this, grid[i][j]));
-					grid[length - 1 - i][width - 1 - j].add(new Piece(Loyalty.BLACK, this, grid[length - 1 - i][width - 1 - j]));
+					grid[i][j].add(new Soldier(Loyalty.RED, grid[i][j]));
+					grid[length - 1 - i][width - 1 - j].add(new Soldier(Loyalty.BLACK, grid[length - 1 - i][width - 1 - j]));
 					
 					piecesLeft --;
 					
