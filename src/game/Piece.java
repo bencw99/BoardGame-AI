@@ -15,10 +15,7 @@ public class Piece
 	/** The enum describing the loyalty of this piece **/
 	public static enum Loyalty {BLACK, RED};
 	
-	/** The board this piece belongs to **/
-	private Board board;
-	
-	/** The node on the board that this piece belongs to **/
+	/** The node that this piece belongs to **/
 	private Node node;
 	
 	/** The state of this piece **/
@@ -39,16 +36,14 @@ public class Piece
 	}
 	
 	/**
-	 * Parameterized constructor, initializes board and node to given variables
+	 * Parameterized constructor, initializes loyalty and node to given variables
 	 * 
-	 * @param board	the board of this instance
 	 * @param node	the node of this instance on the board
 	 * @param loyalty	the value the loyalty is set to
 	 */
-	public Piece(Loyalty loyalty, Board board, Node node)
+	public Piece(Loyalty loyalty, Node node)
 	{
 		this(loyalty);
-		this.board = board;
 		this.node = node;
 	}
 	
@@ -78,14 +73,12 @@ public class Piece
 	}
 	
 	/**
-	 * Adds this instance to the given board at the given node
+	 * Adds this instance to the given node
 	 * 
-	 * @param board	the board this instance is added to
-	 * @param loc	the location this instance is added to
+	 * @param node	the node this instance is added to
 	 */
-	public void add(Board board, Location loc)
+	public void add(Node node)
 	{
-		this.board = board;
-		this.node = board.getNode(loc);
+		this.node = node;
 	}
 }
