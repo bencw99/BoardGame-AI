@@ -99,7 +99,7 @@ public class Board
 	 */
 	public void add(Piece piece, Location loc)
 	{
-		piece.add(this, loc);
+		piece.add(getNode(loc));
 		
 		grid[loc.getRow()][loc.getCol()].add(piece);
 	}
