@@ -44,30 +44,18 @@ public abstract class Piece
 	}
 	
 	/**
-	 * Returns the possible nodes this piece can go to
+	 * Returns the possible move this piece can do
 	 * 
 	 * @return	the array list of possible moves this piece execute
 	 */
-	public ArrayList<Node> getPossibleMoves()
-	{
-		for(int i = -1; i <= 1; i += 2)
-		{
-			
-		}
-		
-		return null;
-	}
-	
+	public abstract ArrayList<Move> getPossibleMoves();
+
 	/**
 	 * Returns the possible nodes this piece can jump to
 	 * 
-	 * @return	the array list of possible moves this piece can jump to
+	 * @return	the array list of possible nodes this piece can jump to
 	 */
-	public ArrayList<Node> getJumpMoves()
-	{
-		return null;
-	}
-	
+	protected abstract ArrayList<Node> getNextJumps(Node current);
 	/**
 	 * Adds this instance to the given node
 	 * 
@@ -76,5 +64,21 @@ public abstract class Piece
 	public void add(Node node)
 	{
 		this.node = node;
+	}
+	
+	/**
+	 * @return the node of this piece
+	 */
+	public Node getNode()
+	{
+		return node;
+	}
+
+	/**
+	 * @return the loyalty of this piece
+	 */
+	public Loyalty getLoyalty()
+	{
+		return loyalty;
 	}
 }
