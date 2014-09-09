@@ -70,6 +70,16 @@ public class Node
 		return loc;
 	}
 	
+	/**
+	 * Returns the board of this node
+	 * 
+	 * @return the board of this node
+	 */ 
+	public Board getBoard()
+	{
+		return board;
+	}
+	
 	
 	/**
 	 * Returns the color of this node
