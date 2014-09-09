@@ -1,4 +1,6 @@
-package game;
+package game.piece;
+
+import game.Node;
 
 import java.util.ArrayList;
 
@@ -7,19 +9,14 @@ import java.util.ArrayList;
  * 
  * @author Benjamin Cohen-Wang
  */
-public class Piece 
+public abstract class Piece 
 {
-	/** The enum describing the state of this piece **/
-	public static enum State {SOLDIER, KING};
 	
 	/** The enum describing the loyalty of this piece **/
 	public static enum Loyalty {BLACK, RED};
 	
 	/** The node that this piece belongs to **/
 	private Node node;
-	
-	/** The state of this piece **/
-	private State state;
 	
 	/** The loyalty of this piece **/
 	private Loyalty loyalty;
@@ -31,7 +28,6 @@ public class Piece
 	 */
 	public Piece(Loyalty loyalty)
 	{
-		state = State.SOLDIER;
 		this.loyalty = loyalty;
 	}
 	

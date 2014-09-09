@@ -1,5 +1,7 @@
 package game;
 
+import game.piece.Piece;
+
 import java.awt.Color;
 
 /**

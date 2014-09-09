@@ -1,6 +1,7 @@
 package game;
 
-import game.Piece.Loyalty;
+import game.piece.Piece;
+import game.piece.Piece.Loyalty;
 
 import java.awt.Color;
 import java.util.ArrayList;
