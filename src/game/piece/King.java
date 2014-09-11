@@ -39,7 +39,7 @@ public class King extends Piece
 		return null;
 	}
 
-	protected ArrayList<Node> getNextJumps(Node current) 
+	protected ArrayList<Node> getNextJumps(ArrayList<Node> prevSteps) 
 	{
 		return null;
 	}

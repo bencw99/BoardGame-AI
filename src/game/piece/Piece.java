@@ -56,7 +56,7 @@ public abstract class Piece
 	 * 
 	 * @return	the array list of possible nodes this piece can jump to
 	 */
-	protected abstract ArrayList<Node> getNextJumps(Node current);
+	protected abstract ArrayList<Node> getNextJumps(ArrayList<Node> prevSteps);
 	/**
 	 * Adds this instance to the given node
 	 * 

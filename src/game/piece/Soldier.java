@@ -71,9 +71,11 @@ public class Soldier extends Piece
 	 * 
 	 * @return	the array list of possible nodes this piece can jump to
 	 */
-	protected ArrayList<Node> getNextJumps(ArrayList<Node> beforeThis)
-	{
+	protected ArrayList<Node> getNextJumps(ArrayList<Node> prevSteps)
+	{	
 		int orientation = getLoyalty() == Loyalty.RED ? -1 : 1;
+		
+		Node current = prevSteps.get(prevSteps.size() - 1);
 		
 		for(int i = - 1; i < + 1; i += 2)
 		{
@@ -81,7 +83,9 @@ public class Soldier extends Piece
 						
 			if(getNode().getBoard().isValid(jumpLoc) && getNode().getBoard().getPiece(jumpLoc) == null)
 			{
-				for(Node next : getNextJumps(getNode().getBoard().getNode(jumpLoc)))
+				prevSteps.add(getNode().getBoard().getNode(jumpLoc));
+				
+				for(Node next : getNextJumps(prevSteps))
 				{
 					
 				}
