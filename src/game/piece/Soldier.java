@@ -56,11 +56,12 @@ public class Soldier extends Piece
 				{
 					possibleMoves.add(new Move(getNode(), getNode().getBoard().getNode(currentLoc), new ArrayList<Node>(), getNode().getBoard()));
 				}
-				else if(getNode().getBoard().getPiece(currentLoc).getLoyalty() != this.getLoyalty())
-				{
-					
-				}
 			}
+		}
+		
+		for(ArrayList<Node> move : getNextJumps(getNode().getLoc())
+		{
+			possibleMoves.add(new Move(move));
 		}
 		
 		return possibleMoves;
@@ -71,9 +72,9 @@ public class Soldier extends Piece
 	 * 
 	 * @return	the array list of possible nodes this piece can jump to
 	 */
-	protected ArrayList<Move> getNextJumps(Location loc)
+	protected ArrayList<ArrayList<Node>> getNextJumps(Location loc)
 	{	
-		ArrayList<Move> retVal = new ArrayList<Move>();
+		ArrayList<ArrayList<Node>> retVal = new ArrayList<ArrayList<Node>>();
 		
 		ArrayList<Location> jumps = new ArrayList<Location>();
 		
@@ -91,26 +92,28 @@ public class Soldier extends Piece
 		
 		if(jumps.isEmpty())
 		{
+			ArrayList<Node> thisLoc = new ArrayList<Node>();
+			thisLoc.add(getNode().getBoard().getNode(loc));
 			
+			retVal.add(thisLoc);
+			
+			return retVal;
 		}
-		
-		Node current = prevSteps.get(prevSteps.size() - 1);
-		
-		for(int i = - 1; i < + 1; i += 2)
+		else
 		{
-			Location jumpLoc = new Location(current.getLoc().getRow() + i, current.getLoc().getCol() + orientation);
-						
-			if(getNode().getBoard().isValid(jumpLoc) && getNode().getBoard().getPiece(jumpLoc) == null)
+			for(Location jump : jumps)
 			{
-				prevSteps.add(getNode().getBoard().getNode(jumpLoc));
+				ArrayList<ArrayList<Node>> movesOfCurrent = getNextJumps(jump);
 				
-				for(Node next : getNextJumps(prevSteps))
+				for(ArrayList<Node> thisMoveOfCurrent : movesOfCurrent)
 				{
-					
+					thisMoveOfCurrent.insert(loc, 0);
+					retVal.add(thisMoveOfCurrent);
 				}
 			}
 		}
 		
-		return null;
+		return retVal;
+
 	}
 }
