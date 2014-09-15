@@ -2,9 +2,9 @@ package game.piece;
 
 import java.util.ArrayList;
 
-import game.Location;
 import game.Move;
-import game.Node;
+import game.board.Location;
+import game.board.Node;
 import game.piece.Piece.Loyalty;
 
 /**
@@ -37,7 +37,34 @@ public class King extends Piece
 
 	public ArrayList<Move> getPossibleMoves() 
 	{
-		return null;
+		ArrayList<Move> possibleMoves = new ArrayList<Move>();
+		
+		for(int i = - 1; i < 1; i += 2)
+		{
+			for(int j = -1; j < 1; j += 2)
+			{
+				Location currentLoc = new Location(getNode().getLoc().getRow() + i, getNode().getLoc().getCol() + j);
+				
+				if(getNode().getBoard().isValid(currentLoc))
+				{
+					if(getNode().getBoard().getPiece(currentLoc) == null)
+					{
+						ArrayList<Node> move = new ArrayList<Node>();
+						move.add(getNode());
+						move.add(getNode().getBoard().getNode(currentLoc));
+						
+						possibleMoves.add(new Move(move, getNode().getBoard()));
+					}
+				}
+			}
+		}
+		
+		for(ArrayList<Node> move : getNextJumps(getNode().getLoc()))
+		{
+			possibleMoves.add(new Move(move, getNode().getBoard()));
+		}
+		
+		return possibleMoves;
 	}
 
 	protected ArrayList<ArrayList<Node>> getNextJumps(Location loc)
