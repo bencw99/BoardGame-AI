@@ -84,11 +84,13 @@ public class Soldier extends Piece
 		
 		int orientation = getLoyalty() == Loyalty.RED ? -1 : 1;
 		
-		for(int i = -2 ; i <= 2; i += 4)
+		for(int i = -1 ; i <= 1; i += 2)
 		{
-			Location possibleJumpLoc = new Location(loc.getRow() + i, loc.getCol() + 2*orientation);
+			Location possibleJumpLoc = new Location(loc.getRow() + 2*i, loc.getCol() + 2*orientation);
 			
-			if(getNode().getBoard().isValid(possibleJumpLoc))
+			Location interJumpLoc = new Location(loc.getRow() + i, loc.getCol() + orientation);
+			
+			if(getNode().getBoard().isValid(possibleJumpLoc) && getNode().getBoard().getPiece(interJumpLoc).getLoyalty() != this.getLoyalty())
 			{
 				jumps.add(possibleJumpLoc);
 			}
@@ -118,6 +120,5 @@ public class Soldier extends Piece
 		}
 		
 		return retVal;
-
 	}
 }

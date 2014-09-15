@@ -69,6 +69,48 @@ public class King extends Piece
 
 	protected ArrayList<ArrayList<Node>> getNextJumps(Location loc)
 	{
-		return null;
+		ArrayList<ArrayList<Node>> retVal = new ArrayList<ArrayList<Node>>();
+		
+		ArrayList<Location> jumps = new ArrayList<Location>();
+		
+		for(int i = -1; i <= 1; i += 1)
+		{
+			for(int j = -1; j <= 1; j += 1)
+			{
+				Location possibleJumpLoc = new Location(loc.getRow() + 2*i, loc.getCol() + 2*j);
+				
+				Location interJumpLoc = new Location(loc.getRow() + i, loc.getCol() + j);
+				
+				if(getNode().getBoard().isValid(possibleJumpLoc) && getNode().getBoard().getPiece(interJumpLoc).getLoyalty() != this.getLoyalty())
+				{
+					jumps.add(possibleJumpLoc);
+				}
+			}
+		}
+		
+		if(jumps.isEmpty())
+		{
+			ArrayList<Node> thisLoc = new ArrayList<Node>();
+			thisLoc.add(getNode().getBoard().getNode(loc));
+			
+			retVal.add(thisLoc);
+			
+			return retVal;
+		}
+		else
+		{
+			for(Location jump : jumps)
+			{
+				ArrayList<ArrayList<Node>> movesOfCurrent = getNextJumps(jump);
+				
+				for(ArrayList<Node> thisMoveOfCurrent : movesOfCurrent)
+				{
+					thisMoveOfCurrent.add(0, getNode().getBoard().getNode(loc));
+					retVal.add(thisMoveOfCurrent);
+				}
+			}
+		}
+		
+		return retVal;
 	}
 }
