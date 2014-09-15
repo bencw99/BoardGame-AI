@@ -2,6 +2,7 @@ package game.piece;
 
 import java.util.ArrayList;
 
+import game.Location;
 import game.Move;
 import game.Node;
 import game.piece.Piece.Loyalty;
@@ -39,7 +40,7 @@ public class King extends Piece
 		return null;
 	}
 
-	protected ArrayList<Node> getNextJumps(ArrayList<Node> prevSteps) 
+	protected ArrayList<ArrayList<Node>> getNextJumps(Location loc)
 	{
 		return null;
 	}
