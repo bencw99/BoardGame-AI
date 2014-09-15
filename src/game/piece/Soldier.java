@@ -54,14 +54,18 @@ public class Soldier extends Piece
 			{
 				if(getNode().getBoard().getPiece(currentLoc) == null)
 				{
-					possibleMoves.add(new Move(getNode(), getNode().getBoard().getNode(currentLoc), new ArrayList<Node>(), getNode().getBoard()));
+					ArrayList<Node> move = new ArrayList<Node>();
+					move.add(getNode());
+					move.add(getNode().getBoard().getNode(currentLoc));
+					
+					possibleMoves.add(new Move(move, getNode().getBoard()));
 				}
 			}
 		}
 		
-		for(ArrayList<Node> move : getNextJumps(getNode().getLoc())
+		for(ArrayList<Node> move : getNextJumps(getNode().getLoc()))
 		{
-			possibleMoves.add(new Move(move));
+			possibleMoves.add(new Move(move, getNode().getBoard()));
 		}
 		
 		return possibleMoves;
@@ -82,9 +86,9 @@ public class Soldier extends Piece
 		
 		for(int i = -2 ; i <= 2; i += 4)
 		{
-			Location possibleJumpLoc = new Location(loc.getX() + i, loc.getY() + 2*orientation);
+			Location possibleJumpLoc = new Location(loc.getRow() + i, loc.getCol() + 2*orientation);
 			
-			if(getNode().getBoard().isValid(possibleJumpLoc)
+			if(getNode().getBoard().isValid(possibleJumpLoc))
 			{
 				jumps.add(possibleJumpLoc);
 			}
@@ -107,7 +111,7 @@ public class Soldier extends Piece
 				
 				for(ArrayList<Node> thisMoveOfCurrent : movesOfCurrent)
 				{
-					thisMoveOfCurrent.insert(loc, 0);
+					thisMoveOfCurrent.add(0, getNode().getBoard().getNode(loc));
 					retVal.add(thisMoveOfCurrent);
 				}
 			}
