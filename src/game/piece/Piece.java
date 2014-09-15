@@ -1,5 +1,6 @@
 package game.piece;
 
+import game.Location;
 import game.Move;
 import game.Node;
 
@@ -56,7 +57,7 @@ public abstract class Piece
 	 * 
 	 * @return	the array list of possible nodes this piece can jump to
 	 */
-	protected abstract ArrayList<Node> getNextJumps(ArrayList<Node> prevSteps);
+	protected abstract ArrayList<ArrayList<Node>> getNextJumps(Location loc);
 	/**
 	 * Adds this instance to the given node
 	 * 
