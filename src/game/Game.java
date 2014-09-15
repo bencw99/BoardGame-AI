@@ -17,8 +17,15 @@ public class Game
 	 */
 	public enum Turn
 	{
-		PLAYER1,
-		PLAYER2;
+		PLAYER1(0),
+		PLAYER2(1);
+		
+		private int val;
+		
+		Turn(int val)
+		{
+			this.val = val;
+		}
 		
 		public Turn getOther()
 		{
@@ -50,11 +57,8 @@ public class Game
 	/** The board this game takes place on **/
 	private Board board;
 	
-	/** The first player participating in this game **/
-	private Player player1;
-	
-	/** The second player participating in this game **/
-	private Player player2;
+	/** The array of players participating in this game **/
+	private Player[] players;
 	
 	/** The Turn describing whose turn it is **/
 	private Turn turn;
@@ -94,6 +98,9 @@ public class Game
 		this.turn = turn;
 	}
 	
+	/**
+	 * Executes the next turn
+	 */
 	public void executeTurn()
 	{
 		
