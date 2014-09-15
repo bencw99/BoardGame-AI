@@ -2,9 +2,9 @@ package game.piece;
 
 import java.util.ArrayList;
 
-import game.Location;
 import game.Move;
-import game.Node;
+import game.board.Location;
+import game.board.Node;
 import game.piece.Piece.Loyalty;
 
 /**
@@ -46,7 +46,7 @@ public class Soldier extends Piece
 		
 		int orientation = getLoyalty() == Loyalty.RED ? -1 : 1;
 		
-		for(int i = - 1; i < + 1; i += 2)
+		for(int i = - 1; i < 1; i += 2)
 		{
 			Location currentLoc = new Location(getNode().getLoc().getRow() + i, getNode().getLoc().getCol() + orientation);
 			

@@ -1,8 +1,8 @@
 package game.piece;
 
-import game.Location;
 import game.Move;
-import game.Node;
+import game.board.Location;
+import game.board.Node;
 
 import java.util.ArrayList;
 
