@@ -4,6 +4,7 @@ import game.Move;
 import game.board.Location;
 import game.board.Node;
 
+import java.awt.Graphics;
 import java.util.ArrayList;
 
 /**
@@ -51,6 +52,13 @@ public abstract class Piece
 	 * @return	the array list of possible moves this piece execute
 	 */
 	public abstract ArrayList<Move> getPossibleMoves();
+	
+	/**
+	 * Draws this piece
+	 * 
+	 * @param graphics	the grapics object to be drawn on
+	 */
+	public abstract void draw(Graphics graphics);
 
 	/**
 	 * Returns the possible nodes this piece can jump to
