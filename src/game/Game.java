@@ -1,6 +1,9 @@
 package game;
 
+import java.util.ArrayList;
+
 import game.board.*;
+import game.piece.Piece;
 import game.player.*;
 
 /**
@@ -25,6 +28,11 @@ public class Game
 		Turn(int val)
 		{
 			this.val = val;
+		}
+		
+		public int getVal()
+		{
+			return val;
 		}
 		
 		public Turn getOther()
@@ -75,26 +83,23 @@ public class Game
 	 * Parameterized constructor, initializes fields to given parameters 
 	 * 
 	 * @param board	the board that the board of this game is set to
-	 * @param player1	the first player of this game
-	 * @param player2	the second player of this game
+	 * @param players	the players of this game
 	 */
-	public Game(Board board, Player player1, Player player2)
+	public Game(Board board, Player[] players)
 	{
-		this(board, player1, player2, Turn.getRandom());
+		this(board, players, Turn.getRandom());
 	}
 	
 	/**
 	 * Parameterized constructor, initializes fields to given parameters 
 	 * 
 	 * @param board	the board that the board of this game is set to
-	 * @param player1	the first player of this game
-	 * @param player2	the second player of this game
+	 * @param player1	the players of this game
 	 */
-	public Game(Board board, Player player1, Player player2, Turn turn)
+	public Game(Board board, Player[] players, Turn turn)
 	{
 		this.board = board;
-		this.player1 = player1;
-		this.player2 = player2;
+		this.players = players;
 		this.turn = turn;
 	}
 	
@@ -103,6 +108,8 @@ public class Game
 	 */
 	public void executeTurn()
 	{
+		Player thisPlayer = players[turn.getVal()];
 		
+		Move move = thisPlayer.getThisTurnMove();
 	}
 }
