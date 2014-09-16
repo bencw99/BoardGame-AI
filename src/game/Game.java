@@ -111,5 +111,9 @@ public class Game
 		Player thisPlayer = players[turn.getVal()];
 		
 		Move move = thisPlayer.getThisTurnMove();
+		
+		board.executeMove(move);
+		
+		turn = turn.getOther();
 	}
 }
