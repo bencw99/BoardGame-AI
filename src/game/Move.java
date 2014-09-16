@@ -42,19 +42,18 @@ public class Move
 	 */
 	public void loadJumped()
 	{
-		Node current = nodes.get(0);
+		Node current;
 		Node next;
 		
-		for(int i = 0; i <= nodes.size(); i ++)
+		for(int i = 0; i < nodes.size() - 1; i ++)
 		{
-			next = nodes.get(i);
+			current = nodes.get(i);
+			next = nodes.get(i + 1);
 			
 			if(Math.abs(next.getLoc().getRow() - current.getLoc().getRow()) > 1)
 			{
 				jumped.add(board.getNode(new Location((next.getLoc().getRow() + current.getLoc().getRow())/2, (next.getLoc().getCol() + current.getLoc().getCol())/2)));
 			}
-			
-			current = next;
 		}
 	}
 	
