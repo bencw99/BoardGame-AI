@@ -18,7 +18,7 @@ public class Move
 	private ArrayList<Node> nodes;
 	
 	/** The array list of pieces jumped in this move **/
-	private ArrayList<Piece> jumped;
+	private ArrayList<Node> jumped;
 	
 	/** The board this move is executed on **/
 	private Board board;
@@ -51,7 +51,7 @@ public class Move
 			
 			if(Math.abs(next.getLoc().getRow() - current.getLoc().getRow()) > 1)
 			{
-				jumped.add(board.getPiece(new Location((next.getLoc().getRow() + current.getLoc().getRow())/2, (next.getLoc().getCol() + current.getLoc().getCol())/2)));
+				jumped.add(board.getNode(new Location((next.getLoc().getRow() + current.getLoc().getRow())/2, (next.getLoc().getCol() + current.getLoc().getCol())/2)));
 			}
 			
 			current = next;
@@ -76,11 +76,11 @@ public class Move
 	}
 	
 	/**
-	 * Returns the array list of pieces jumped in this move
+	 * Returns the array list of nodes jumped in this move
 	 * 
-	 * @return the array list of pieces jumped in this move
+	 * @return the array list of nodes jumped in this move
 	 */ 
-	public ArrayList<Piece> getJumped()
+	public ArrayList<Node> getJumped()
 	{
 		return jumped;
 	}
