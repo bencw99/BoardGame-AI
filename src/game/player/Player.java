@@ -21,6 +21,9 @@ public abstract class Player
 	/** The pieces of this player **/
 	ArrayList<Piece> pieces;
 	
+	/** The default number of pieces on the checkers grid **/
+	public final static int DEFAULT_PIECE_NUM = 12;
+	
 	/**
 	 * Parameterized constructor, initializes name, pieces, and loyalty
 	 * 
