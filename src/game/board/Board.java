@@ -1,5 +1,6 @@
 package game.board;
 
+import game.Move;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
 import game.piece.Soldier;
@@ -94,6 +95,23 @@ public class Board
 	}
 	
 	/**
+	 * Executes the given move
+	 * 
+	 * @param move	the move to be executed
+	 */
+	public void executeMove(Move move)
+	{
+		for(Node jumped : move.getJumped())
+		{
+			remove(jumped.getLoc());
+		}
+		
+		ArrayList<Node> nodes = move.getNodes();
+		
+		move(nodes.get(0).getLoc(), nodes.get(nodes.size() - 1).getLoc());
+	}
+	
+	/**
 	 * Adds the given piece to the grid at the given node
 	 * 
 	 * @param piece	the piece to be added
@@ -124,6 +142,20 @@ public class Board
 	public Piece getPiece(Location loc)
 	{
 		return grid[loc.getRow()][loc.getCol()].getPiece();
+	}
+	
+	/**
+	 * Moves the piece at the start location to the end location
+	 * 
+	 * @return the piece moved
+	 */ 
+	public Piece move(Location start, Location end)
+	{
+		Piece piece = remove(start);
+		
+		add(piece, end);
+		
+		return piece;
 	}
 	
 	/**
