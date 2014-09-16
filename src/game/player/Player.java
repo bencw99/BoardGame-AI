@@ -1,6 +1,7 @@
 package game.player;
 import java.util.ArrayList;
 
+import game.Move;
 import game.piece.*;
 import game.piece.Piece.Loyalty;
 
@@ -9,7 +10,7 @@ import game.piece.Piece.Loyalty;
  * 
  * @author Benjamin Cohen-Wang
  */
-public class Player
+public abstract class Player
 {
 	/** The name of this player **/
 	private String name;
@@ -34,6 +35,13 @@ public class Player
 		this.pieces = pieces;
 	}
 
+	/**
+	 * Returns the move executed this turn
+	 * 
+	 * @return	the move to be executed this turn
+	 */
+	public abstract Move getThisTurnMove();
+	
 	/**
 	 * @return the name
 	 */
