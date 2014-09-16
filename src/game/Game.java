@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import game.board.*;
 import game.piece.Piece;
+import game.piece.Piece.Loyalty;
+import game.piece.Soldier;
 import game.player.*;
 
 /**
@@ -76,6 +78,18 @@ public class Game
 	 */
 	public Game()
 	{
+		ArrayList<Piece> p1Pieces = new ArrayList<Piece>();
+		ArrayList<Piece> p2Pieces = new ArrayList<Piece>();
+		
+		for(int i = 0; i < Player.DEFAULT_PIECE_NUM; i ++)
+		{
+			p1Pieces.add(new Soldier(Loyalty.RED));
+			p2Pieces.add(new Soldier(Loyalty.BLACK));
+		}
+		
+		players = new Player[2];
+		players[0] = new Human("Player 1", Loyalty.RED, p1Pieces);
+		players[1] = new Human("Player 2", Loyalty.BLACK, p2Pieces);	
 		
 	}
 	
@@ -116,4 +130,56 @@ public class Game
 		
 		turn = turn.getOther();
 	}
+
+	/**
+	 * @return the board
+	 */
+	public Board getBoard() 
+	{
+		return board;
+	}
+
+	/**
+	 * @return the players
+	 */
+	public Player[] getPlayers() 
+	{
+		return players;
+	}
+
+	/**
+	 * @return the turn
+	 */
+	public Turn getTurn() 
+	{
+		return turn;
+	}
+
+	/**
+	 * @param board the board to set
+	 */
+	public void setBoard(Board board) 
+	{
+		this.board = board;
+	}
+
+	/**
+	 * @param players the players to set
+	 */
+	public void setPlayers(Player[] players) 
+	{
+		this.players = players;
+	}
+
+	/**
+	 * @param turn the turn to set
+	 */
+	public void setTurn(Turn turn) 
+	{
+		this.turn = turn;
+	}
+	
+	
+	
+	
 }
