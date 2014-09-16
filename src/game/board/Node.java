@@ -3,6 +3,7 @@ package game.board;
 import game.piece.Piece;
 
 import java.awt.Color;
+import java.awt.Graphics;
 
 /**
  * A class representing a checkers board node
@@ -38,6 +39,21 @@ public class Node
 	{
 		this(loc);
 		this.color = color;
+	}
+	
+	/**
+	 * Draws this node
+	 * 
+	 * @param graphics	 the graphics object to be drawn on
+	 */
+	public void draw(Graphics graphics)
+	{
+		graphics.fillRect(getLoc().getRow()*Board.NODE_WIDTH, getLoc().getCol()*Board.NODE_HEIGHT, Board.NODE_WIDTH, Board.NODE_HEIGHT);
+		
+		if(piece != null)
+		{
+			piece.draw(graphics);
+		}
 	}
 	
 	/**
