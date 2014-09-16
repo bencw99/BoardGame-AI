@@ -1,5 +1,6 @@
 package game.piece;
 
+import java.awt.Graphics;
 import java.util.ArrayList;
 
 import game.Move;
@@ -120,5 +121,10 @@ public class Soldier extends Piece
 		}
 		
 		return retVal;
+	}
+
+	public void draw(Graphics graphics) 
+	{
+		// TODO Auto-generated method stub
 	}
 }
