@@ -70,7 +70,7 @@ public class Board
 			{
 				Color color;
 				
-				if(length*i + j == 0)
+				if((i + j) % 2 == 0)
 				{
 					color = Color.RED;
 				}
@@ -79,7 +79,7 @@ public class Board
 					color = Color.BLACK;
 				}
 				
-				grid[i][j] = new Node(new Location(i, j), color); 
+				grid[i][j] = new Node(new Location(i, j), this, color); 
 			}
 		}
 		
@@ -107,6 +107,7 @@ public class Board
 					if(piecesLeft[0] > 0)
 					{
 						add(game.getPlayers()[0].getPieces().get(piecesLeft[0] - 1), grid[i][j].getLoc());
+						game.getPlayers()[0].getPieces().get(piecesLeft[0] - 1).add(grid[i][j]);
 					}
 						
 					piecesLeft[0] --;
@@ -116,13 +117,14 @@ public class Board
 		
 		for(int i = grid.length - 1; i >= 0; i --)
 		{
-			for(int j = grid[0].length; j >= 0; j --)
+			for(int j = grid[0].length - 1; j >= 0; j --)
 			{	
 				if(grid[i][j].getColor() == Color.BLACK)
 				{
 					if(piecesLeft[1] > 0)
 					{
 						add(game.getPlayers()[1].getPieces().get(piecesLeft[1] - 1), grid[i][j].getLoc());
+						game.getPlayers()[1].getPieces().get(piecesLeft[1] - 1).add(grid[i][j]);
 					}
 						
 					piecesLeft[1] --;
@@ -172,7 +174,10 @@ public class Board
 	 */
 	public void add(Piece piece, Location loc)
 	{
-		piece.add(getNode(loc));
+		if(piece != null)
+		{
+			piece.add(getNode(loc));
+		}
 		
 		grid[loc.getRow()][loc.getCol()].add(piece);
 	}
@@ -232,7 +237,7 @@ public class Board
 	 */ 
 	public boolean isValid(Location loc)
 	{
-		if(loc.getRow() < grid.length && loc.getCol() < grid[0].length)
+		if(loc.getRow() >= 0 && loc.getRow() < grid.length && loc.getCol() >= 0 && loc.getCol() < grid[0].length)
 		{
 			return true;
 		}
