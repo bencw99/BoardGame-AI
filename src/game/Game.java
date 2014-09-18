@@ -1,5 +1,6 @@
 package game;
 
+import java.awt.Graphics;
 import java.util.ArrayList;
 
 import game.board.*;
@@ -77,7 +78,9 @@ public class Game
 	 * Default constructor, creates this as a default game
 	 */
 	public Game()
-	{
+	{	
+		turn = Turn.getRandom();
+		
 		ArrayList<Piece> p1Pieces = new ArrayList<Piece>();
 		ArrayList<Piece> p2Pieces = new ArrayList<Piece>();
 		
@@ -88,8 +91,10 @@ public class Game
 		}
 		
 		players = new Player[2];
-		players[0] = new Human("Player 1", Loyalty.RED, p1Pieces);
-		players[1] = new Human("Player 2", Loyalty.BLACK, p2Pieces);	
+		players[0] = new AI("Player 1", Loyalty.RED, p1Pieces);
+		players[1] = new AI("Player 2", Loyalty.BLACK, p2Pieces);	
+		
+		board = new Board(this);
 		
 	}
 	
@@ -129,6 +134,16 @@ public class Game
 		board.executeMove(move);
 		
 		turn = turn.getOther();
+	}
+	
+	/**
+	 * Draws this game on the given graphics object
+	 * 
+	 * @param graphics	the graphics object to be drawn on
+	 */
+	public void draw(Graphics graphics)
+	{
+		board.draw(graphics);
 	}
 
 	/**
@@ -178,8 +193,4 @@ public class Game
 	{
 		this.turn = turn;
 	}
-	
-	
-	
-	
 }
