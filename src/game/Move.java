@@ -45,12 +45,14 @@ public class Move
 		Node current;
 		Node next;
 		
+		jumped = new ArrayList<Node>();
+		
 		for(int i = 0; i < nodes.size() - 1; i ++)
 		{
 			current = nodes.get(i);
 			next = nodes.get(i + 1);
 			
-			if(Math.abs(next.getLoc().getRow() - current.getLoc().getRow()) > 1)
+			if(Math.abs(next.getLoc().getRow() - current.getLoc().getRow()) == 2)
 			{
 				jumped.add(board.getNode(new Location((next.getLoc().getRow() + current.getLoc().getRow())/2, (next.getLoc().getCol() + current.getLoc().getCol())/2)));
 			}
