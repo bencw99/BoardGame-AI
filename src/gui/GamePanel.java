@@ -29,8 +29,8 @@ public class GamePanel extends JPanel implements KeyListener, MouseMotionListene
 		game = new Game();
 		
 		
-        frame.setSize(680,680);
-        frame.setTitle("Terrain");
+        frame.setSize(640,662);
+        frame.setTitle("Checkers Game");
         frame.setLocationRelativeTo(null);
         frame.setBackground(Color.WHITE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,9 +44,11 @@ public class GamePanel extends JPanel implements KeyListener, MouseMotionListene
         {
         	game.executeTurn();
         	
+        	System.out.println(game.getTurn());
+        	
         	try
 			{
-				Thread.sleep(200);
+				Thread.sleep(1000);
 			} catch (InterruptedException e)
 			{
 				// TODO Auto-generated catch block

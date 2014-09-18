@@ -49,9 +49,9 @@ public class Soldier extends Piece
 		
 		int orientation = getLoyalty() == Loyalty.RED ? 1 : -1;
 		
-		for(int i = - 1; i < 1; i += 2)
+		for(int i = - 1; i <= 1; i += 2)
 		{
-			Location currentLoc = new Location(getNode().getLoc().getRow() + i, getNode().getLoc().getCol() + orientation);
+			Location currentLoc = new Location(getNode().getLoc().getRow() + orientation, getNode().getLoc().getCol() + i);
 			
 			if(getNode().getBoard().isValid(currentLoc))
 			{
@@ -68,7 +68,10 @@ public class Soldier extends Piece
 		
 		for(ArrayList<Node> move : getNextJumps(getNode().getLoc()))
 		{
-			possibleMoves.add(new Move(move, getNode().getBoard()));
+			if(move.size() > 1)
+			{
+				possibleMoves.add(new Move(move, getNode().getBoard()));
+			}
 		}
 		
 		return possibleMoves;
@@ -89,9 +92,9 @@ public class Soldier extends Piece
 		
 		for(int i = -1 ; i <= 1; i += 2)
 		{
-			Location possibleJumpLoc = new Location(loc.getRow() + 2*i, loc.getCol() + 2*orientation);
+			Location possibleJumpLoc = new Location(loc.getRow() + 2*orientation, loc.getCol() + 2*i);
 			
-			Location interJumpLoc = new Location(loc.getRow() + i, loc.getCol() + orientation);
+			Location interJumpLoc = new Location(loc.getRow() + orientation, loc.getCol() + i);
 			
 			if(getNode().getBoard().isValid(possibleJumpLoc) && getNode().getBoard().getPiece(interJumpLoc) != null && getNode().getBoard().getPiece(interJumpLoc).getLoyalty() != this.getLoyalty())
 			{

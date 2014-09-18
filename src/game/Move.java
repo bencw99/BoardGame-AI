@@ -77,6 +77,21 @@ public class Move
 	}
 	
 	/**
+	 * Returns a String representation of this move 
+	 */
+	public String toString()
+	{
+		String string = "";
+		
+		for(Node node : nodes)
+		{
+			string += "(" + node.getLoc().getRow() + ", " + node.getLoc().getCol() + "), ";
+		}
+		
+		return string;
+	}
+	
+	/**
 	 * Returns the array list of nodes jumped in this move
 	 * 
 	 * @return the array list of nodes jumped in this move

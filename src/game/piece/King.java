@@ -40,11 +40,11 @@ public class King extends Piece
 	{
 		ArrayList<Move> possibleMoves = new ArrayList<Move>();
 		
-		for(int i = - 1; i < 1; i += 2)
+		for(int i = - 1; i <= 1; i += 2)
 		{
-			for(int j = -1; j < 1; j += 2)
+			for(int j = -1; j <= 1; j += 2)
 			{
-				Location currentLoc = new Location(getNode().getLoc().getRow() + i, getNode().getLoc().getCol() + j);
+				Location currentLoc = new Location(getNode().getLoc().getRow() + j, getNode().getLoc().getCol() + i);
 				
 				if(getNode().getBoard().isValid(currentLoc))
 				{
@@ -62,7 +62,10 @@ public class King extends Piece
 		
 		for(ArrayList<Node> move : getNextJumps(getNode().getLoc()))
 		{
-			possibleMoves.add(new Move(move, getNode().getBoard()));
+			if(move.size() > 1)
+			{
+				possibleMoves.add(new Move(move, getNode().getBoard()));
+			}
 		}
 		
 		return possibleMoves;
@@ -78,9 +81,9 @@ public class King extends Piece
 		{
 			for(int j = -1; j <= 1; j += 1)
 			{
-				Location possibleJumpLoc = new Location(loc.getRow() + 2*i, loc.getCol() + 2*j);
+				Location possibleJumpLoc = new Location(loc.getRow() + 2*j, loc.getCol() + 2*i);
 				
-				Location interJumpLoc = new Location(loc.getRow() + i, loc.getCol() + j);
+				Location interJumpLoc = new Location(loc.getRow() + j, loc.getCol() + i);
 				
 				if(getNode().getBoard().isValid(possibleJumpLoc) && getNode().getBoard().getPiece(interJumpLoc).getLoyalty() != this.getLoyalty())
 				{

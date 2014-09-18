@@ -32,13 +32,17 @@ public class AI extends Player
 	 */
 	public Move getThisTurnMove()
 	{
-		Piece selectedPiece;
+		ArrayList<Move> possibleMoves = new ArrayList<Move>();
 		
-		int randomPiece = (int)(getPieces().size()*Math.random());
-		
-		selectedPiece = pieces.get(randomPiece);
-		
-		ArrayList<Move> possibleMoves = selectedPiece.getPossibleMoves();
+		for(Piece piece : getPieces())
+		{
+			for(Move move : piece.getPossibleMoves())
+			{
+				possibleMoves.add(move);
+				
+				System.out.println(move);
+			}
+		}
 		
 		int randomMove = (int)(possibleMoves.size()*Math.random());
 		
