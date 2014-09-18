@@ -96,7 +96,7 @@ public class Soldier extends Piece
 			
 			Location interJumpLoc = new Location(loc.getRow() + orientation, loc.getCol() + i);
 			
-			if(getNode().getBoard().isValid(possibleJumpLoc) && getNode().getBoard().getPiece(interJumpLoc) != null && getNode().getBoard().getPiece(interJumpLoc).getLoyalty() != this.getLoyalty())
+			if(getNode().getBoard().isValid(possibleJumpLoc) && getNode().getBoard().getPiece(possibleJumpLoc) == null && getNode().getBoard().getPiece(interJumpLoc) != null && getNode().getBoard().getPiece(interJumpLoc).getLoyalty() != this.getLoyalty())
 			{
 				jumps.add(possibleJumpLoc);
 			}

@@ -3,6 +3,7 @@ package gui;
 import game.Game;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -28,17 +29,17 @@ public class GamePanel extends JPanel implements KeyListener, MouseMotionListene
 	{
 		game = new Game();
 		
-		
-        frame.setSize(640,662);
         frame.setTitle("Checkers Game");
         frame.setLocationRelativeTo(null);
         frame.setBackground(Color.WHITE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         GamePanel panel = new GamePanel();
+        panel.setPreferredSize(new Dimension(640, 640));
         frame.add(panel);
         frame.addKeyListener(panel);
         frame.addMouseMotionListener(panel);
         frame.setVisible(true);
+        frame.pack();
         
         while(true)
         {
