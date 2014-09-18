@@ -27,17 +27,18 @@ public class Node
 	/**
 	 * Parameterized constructor, initializes Node location
 	 */
-	public Node(Location loc)
+	public Node(Location loc, Board board)
 	{
 		this.loc = loc;
+		this.board = board;
 	}
 	
 	/**
 	 * Parameterized constructor, initializes color to given color, and location to given values
 	 */
-	public Node(Location loc, Color color)
+	public Node(Location loc, Board board, Color color)
 	{
-		this(loc);
+		this(loc, board);
 		this.color = color;
 	}
 	
@@ -48,6 +49,7 @@ public class Node
 	 */
 	public void draw(Graphics graphics)
 	{
+		graphics.setColor(color);
 		graphics.fillRect(getLoc().getRow()*Board.NODE_WIDTH, getLoc().getCol()*Board.NODE_HEIGHT, Board.NODE_WIDTH, Board.NODE_HEIGHT);
 		
 		if(piece != null)
