@@ -1,9 +1,11 @@
 package game.piece;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
 import game.Move;
+import game.board.Board;
 import game.board.Location;
 import game.board.Node;
 import game.piece.Piece.Loyalty;
@@ -45,7 +47,7 @@ public class Soldier extends Piece
 	{
 		ArrayList<Move> possibleMoves = new ArrayList<Move>();
 		
-		int orientation = getLoyalty() == Loyalty.RED ? -1 : 1;
+		int orientation = getLoyalty() == Loyalty.RED ? 1 : -1;
 		
 		for(int i = - 1; i < 1; i += 2)
 		{
@@ -83,7 +85,7 @@ public class Soldier extends Piece
 		
 		ArrayList<Location> jumps = new ArrayList<Location>();
 		
-		int orientation = getLoyalty() == Loyalty.RED ? -1 : 1;
+		int orientation = getLoyalty() == Loyalty.RED ? 1 : -1;
 		
 		for(int i = -1 ; i <= 1; i += 2)
 		{
@@ -91,7 +93,7 @@ public class Soldier extends Piece
 			
 			Location interJumpLoc = new Location(loc.getRow() + i, loc.getCol() + orientation);
 			
-			if(getNode().getBoard().isValid(possibleJumpLoc) && getNode().getBoard().getPiece(interJumpLoc).getLoyalty() != this.getLoyalty())
+			if(getNode().getBoard().isValid(possibleJumpLoc) && getNode().getBoard().getPiece(interJumpLoc) != null && getNode().getBoard().getPiece(interJumpLoc).getLoyalty() != this.getLoyalty())
 			{
 				jumps.add(possibleJumpLoc);
 			}
@@ -125,6 +127,7 @@ public class Soldier extends Piece
 
 	public void draw(Graphics graphics) 
 	{
-		// TODO Auto-generated method stub
+		graphics.setColor(getLoyalty() == Loyalty.RED ? Color.RED : Color.DARK_GRAY);
+		graphics.fillOval(getNode().getLoc().getRow()*Board.NODE_WIDTH, getNode().getLoc().getCol()*Board.NODE_HEIGHT, Board.NODE_WIDTH, Board.NODE_HEIGHT);
 	}
 }
