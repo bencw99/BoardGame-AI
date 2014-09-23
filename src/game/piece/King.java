@@ -85,7 +85,24 @@ public class King extends Piece
 			}
 		}
 		
-		return possibleMoves;
+		ArrayList<Move> jumpMoves = new ArrayList<Move>();
+		
+		for(Move possibleMove : possibleMoves)
+		{
+			if(!possibleMove.getJumped().isEmpty())
+			{
+				jumpMoves.add(possibleMove);
+			}
+		}
+		
+		if(!jumpMoves.isEmpty())
+		{
+			return jumpMoves;
+		}
+		else
+		{
+			return possibleMoves;
+		}
 	}
 
 	protected ArrayList<ArrayList<Node>> getNextJumps(Location loc)
