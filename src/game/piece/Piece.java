@@ -5,7 +5,12 @@ import game.board.Location;
 import game.board.Node;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 /**
  * A class representing a checkers piece
@@ -23,6 +28,24 @@ public abstract class Piece
 	
 	/** The loyalty of this piece **/
 	private Loyalty loyalty;
+	
+	/** The image of this piece **/
+	protected BufferedImage image;
+	
+	/**The boolean describing the initialization state of the checkers images **/
+	protected static boolean imagesInitialized = false;
+	
+	/** The image for a black checker **/
+	public static BufferedImage BLACK_CHECKER;
+	
+	/** The image for a red checker **/
+	public static BufferedImage RED_CHECKER;
+	
+	/** The image for a black king checker **/
+	public static BufferedImage BLACK_KING;
+	
+	/** The image for a red king checker **/
+	public static BufferedImage RED_KING;
 	
 	/**
 	 * Default constructor
@@ -90,5 +113,20 @@ public abstract class Piece
 	public Loyalty getLoyalty()
 	{
 		return loyalty;
+	}
+	
+	/**
+	 * Initializes checkers images
+	 * 
+	 * @throws IOException
+	 */
+	public static void checkerImagesInit() throws IOException
+	{
+		BLACK_CHECKER = ImageIO.read(new File("black-checker.png"));
+		RED_CHECKER = ImageIO.read(new File("red-checker.png"));
+		BLACK_KING = ImageIO.read(new File("black-king.png"));
+		RED_KING = ImageIO.read(new File("red-king.png"));
+		
+		imagesInitialized = true;
 	}
 }
