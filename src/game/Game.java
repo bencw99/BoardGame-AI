@@ -1,6 +1,7 @@
 package game;
 
 import java.awt.Graphics;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import game.board.*;
@@ -76,8 +77,9 @@ public class Game
 	
 	/**
 	 * Default constructor, creates this as a default game
+	 * @throws IOException 
 	 */
-	public Game()
+	public Game() throws IOException
 	{	
 		turn = Turn.getRandom();
 		
@@ -124,8 +126,9 @@ public class Game
 	
 	/**
 	 * Executes the next turn
+	 * @throws IOException 
 	 */
-	public void executeTurn()
+	public void executeTurn() throws IOException
 	{
 		Player thisPlayer = players[turn.getVal()];
 		
