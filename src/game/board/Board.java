@@ -2,12 +2,14 @@ package game.board;
 
 import game.Game;
 import game.Move;
+import game.piece.King;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
 import game.piece.Soldier;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -137,8 +139,9 @@ public class Board
 	 * Executes the given move
 	 * 
 	 * @param move	the move to be executed
+	 * @throws IOException 
 	 */
-	public void executeMove(Move move)
+	public void executeMove(Move move) throws IOException
 	{
 		for(Node jumped : move.getJumped())
 		{
@@ -146,6 +149,16 @@ public class Board
 		}
 		
 		ArrayList<Node> nodes = move.getNodes();
+		
+		if(nodes.get(nodes.size() - 1).getLoc().getRow() == grid.length - 1 && getPiece(nodes.get(0).getLoc()).getLoyalty() == Loyalty.RED)
+		{
+			add(new King(Loyalty.RED, nodes.get(0)), nodes.get(0).getLoc());
+		}
+		
+		if(nodes.get(nodes.size() - 1).getLoc().getRow() == 0 && getPiece(nodes.get(0).getLoc()).getLoyalty() == Loyalty.BLACK)
+		{
+			add(new King(Loyalty.BLACK, nodes.get(0)), nodes.get(0).getLoc());
+		}
 		
 		move(nodes.get(0).getLoc(), nodes.get(nodes.size() - 1).getLoc());
 	}
@@ -165,6 +178,8 @@ public class Board
 			}
 		}
 	}
+	
+	//ERROR: Add method causes the black checkers player to have its Players ArrayList point to red pieces when red pieces are added to previous black location
 	
 	/**
 	 * Adds the given piece to the grid at the given node
