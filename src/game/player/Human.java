@@ -32,17 +32,11 @@ public class Human extends Player
 	 */
 	public Move getThisTurnMove()
 	{
-		ArrayList<Move> possibleMoves = new ArrayList<Move>();
-		
-		for(Piece piece : getPieces())
-		{
-			for(Move move : piece.getPossibleMoves())
-			{
-				possibleMoves.add(move);
-			}
-		}
+		ArrayList<Move> possibleMoves = getPossibleMoves();
 		
 		int randomMove = (int)(possibleMoves.size()*Math.random());
+		
+		System.out.println(possibleMoves.get(randomMove));
 		
 		return possibleMoves.get(randomMove);
 	}
