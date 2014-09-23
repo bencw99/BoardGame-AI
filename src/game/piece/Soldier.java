@@ -35,7 +35,7 @@ public class Soldier extends Piece implements ImageObserver
 			checkerImagesInit();
 		}
 		
-		image = (getLoyalty() == Loyalty.RED) ? RED_CHECKER: BLACK_CHECKER;
+		image = (getLoyalty() == Loyalty.RED) ? RED_KING: BLACK_KING;
 	}
 	
 	/**
@@ -85,15 +85,25 @@ public class Soldier extends Piece implements ImageObserver
 			}
 		}
 		
+		ArrayList<Move> jumpMoves = new ArrayList<Move>();
+		
 		for(ArrayList<Node> move : getNextJumps(getNode().getLoc()))
 		{
 			if(move.size() > 1)
 			{
+				jumpMoves.add(new Move(move, getNode().getBoard()));
 				possibleMoves.add(new Move(move, getNode().getBoard()));
 			}
 		}
 		
-		return possibleMoves;
+		if(jumpMoves.size() > 0)
+		{
+			return jumpMoves;
+		}
+		else
+		{
+			return possibleMoves;
+		}
 	}
 	
 	/**
