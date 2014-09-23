@@ -37,6 +37,34 @@ public abstract class Player
 		this.loyalty = loyalty;
 		this.pieces = pieces;
 	}
+	
+	public ArrayList<Move> getPossibleMoves()
+	{
+		ArrayList<Move> jumpMoves = new ArrayList<Move>();
+		ArrayList<Move> possibleMoves = new ArrayList<Move>();
+		
+		for(Piece piece : pieces)
+		{
+			for(Move possibleMove : piece.getPossibleMoves())
+			{
+				if(!possibleMove.getJumped().isEmpty())
+				{
+					jumpMoves.add(possibleMove);
+				}
+				
+				possibleMoves.add(possibleMove);
+			}
+		}
+		
+		if(jumpMoves.isEmpty())
+		{
+			return possibleMoves;
+		}
+		else
+		{
+			return jumpMoves;
+		}
+	}
 
 	/**
 	 * Returns the move executed this turn
