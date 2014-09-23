@@ -1,6 +1,7 @@
 package game.piece;
 
 import java.awt.Graphics;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import game.Move;
@@ -19,10 +20,18 @@ public class King extends Piece
 	 * Default constructor
 	 * 
 	 * @param loyalty	the value the loyalty of this piece
+	 * @throws IOException 
 	 */
-	public King(Loyalty loyalty)
+	public King(Loyalty loyalty) throws IOException
 	{
 		super(loyalty);
+		
+		if(!imagesInitialized)
+		{
+			checkerImagesInit();
+		}
+		
+		image = (getLoyalty() == Loyalty.RED) ? RED_KING: BLACK_KING;
 	}
 	
 	/**
@@ -30,10 +39,18 @@ public class King extends Piece
 	 * 
 	 * @param node	the node of this instance on the board
 	 * @param loyalty	the value the loyalty is set to
+	 * @throws IOException 
 	 */
-	public King(Loyalty loyalty, Node node)
+	public King(Loyalty loyalty, Node node) throws IOException
 	{
 		super(loyalty, node);
+		
+		if(!imagesInitialized)
+		{
+			checkerImagesInit();
+		}
+		
+		image = (getLoyalty() == Loyalty.RED) ? RED_KING: BLACK_KING;
 	}
 
 	public ArrayList<Move> getPossibleMoves() 

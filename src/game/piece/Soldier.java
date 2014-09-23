@@ -2,6 +2,9 @@ package game.piece;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.ImageObserver;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import game.Move;
@@ -15,16 +18,24 @@ import game.piece.Piece.Loyalty;
  * 
  * @author Benjamin Cohen-Wang
  */
-public class Soldier extends Piece
+public class Soldier extends Piece implements ImageObserver
 {
 	/**
 	 * Default constructor
 	 * 
 	 * @param loyalty	the value the loyalty of this piece
+	 * @throws IOException 
 	 */
-	public Soldier(Loyalty loyalty)
+	public Soldier(Loyalty loyalty) throws IOException
 	{
 		super(loyalty);
+		
+		if(!imagesInitialized)
+		{
+			checkerImagesInit();
+		}
+		
+		image = (getLoyalty() == Loyalty.RED) ? RED_CHECKER: BLACK_CHECKER;
 	}
 	
 	/**
@@ -32,10 +43,18 @@ public class Soldier extends Piece
 	 * 
 	 * @param node	the node of this instance on the board
 	 * @param loyalty	the value the loyalty is set to
+	 * @throws IOException 
 	 */
-	public Soldier(Loyalty loyalty, Node node)
+	public Soldier(Loyalty loyalty, Node node) throws IOException
 	{
 		super(loyalty, node);
+		
+		if(!imagesInitialized)
+		{
+			checkerImagesInit();
+		}
+		
+		image = (getLoyalty() == Loyalty.RED) ? RED_CHECKER: BLACK_CHECKER;
 	}
 	
 	/**
@@ -130,7 +149,11 @@ public class Soldier extends Piece
 
 	public void draw(Graphics graphics) 
 	{
-		graphics.setColor(getLoyalty() == Loyalty.RED ? Color.RED : Color.DARK_GRAY);
-		graphics.fillOval(getNode().getLoc().getRow()*Board.NODE_WIDTH, getNode().getLoc().getCol()*Board.NODE_HEIGHT, Board.NODE_WIDTH, Board.NODE_HEIGHT);
+		graphics.drawImage(image, getNode().getLoc().getRow()*Board.NODE_WIDTH + 9, getNode().getLoc().getCol()*Board.NODE_HEIGHT + 9, this);
+	}
+
+	public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height)
+	{
+		return false;
 	}
 }
