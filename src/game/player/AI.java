@@ -46,6 +46,8 @@ public class AI extends Player
 		
 		int randomMove = (int)(possibleMoves.size()*Math.random());
 		
+		System.out.println(possibleMoves.get(randomMove));
+		
 		return possibleMoves.get(randomMove);
 	}
 }
