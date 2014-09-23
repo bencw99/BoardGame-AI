@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -25,7 +26,7 @@ public class GamePanel extends JPanel implements KeyListener, MouseMotionListene
 	
     private static JFrame frame = new JFrame();
 	
-	public static void main(String[] args)
+	public static void main(String[] args) throws IOException
 	{
 		game = new Game();
 		
@@ -43,18 +44,19 @@ public class GamePanel extends JPanel implements KeyListener, MouseMotionListene
         
         while(true)
         {
-        	game.executeTurn();
-        	
-        	System.out.println(game.getTurn());
-        	
         	try
 			{
 				Thread.sleep(1000);
-			} catch (InterruptedException e)
+			} 
+        	catch (InterruptedException e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+        	
+        	System.out.println(game.getTurn());
+        	
+        	game.executeTurn();
         	
         	frame.repaint();
         }
