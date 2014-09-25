@@ -38,6 +38,8 @@ public class AI extends Player
 		
 		System.out.println(possibleMoves.get(randomMove));
 		
+		System.out.println("Jumped: " + possibleMoves.get(randomMove).getJumped());
+		
 		return possibleMoves.get(randomMove);
 	}
 }
