@@ -3,6 +3,7 @@ package game.piece;
 import game.Move;
 import game.board.Location;
 import game.board.Node;
+import game.player.Player;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -21,7 +22,23 @@ public abstract class Piece
 {
 	
 	/** The enum describing the loyalty of this piece **/
-	public static enum Loyalty {BLACK, RED};
+	public static enum Loyalty 
+	{
+		BLACK(1), 
+		RED(0);
+		
+		private int val;
+		
+		Loyalty(int val)
+		{
+			this.val = val;
+		}
+		
+		public int getVal()
+		{
+			return val;
+		}
+	};
 	
 	/** The node that this piece belongs to **/
 	private Node node;
@@ -89,6 +106,7 @@ public abstract class Piece
 	 * @return	the array list of possible nodes this piece can jump to
 	 */
 	protected abstract ArrayList<ArrayList<Node>> getNextJumps(Location loc);
+	
 	/**
 	 * Adds this instance to the given node
 	 * 
