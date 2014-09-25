@@ -145,19 +145,25 @@ public class Board
 	{
 		for(Node jumped : move.getJumped())
 		{
-			remove(jumped.getLoc());
+			kill(jumped.getLoc());
 		}
 		
 		ArrayList<Node> nodes = move.getNodes();
 		
 		if(nodes.get(nodes.size() - 1).getLoc().getRow() == grid.length - 1 && getPiece(nodes.get(0).getLoc()).getLoyalty() == Loyalty.RED)
 		{
-			add(new King(Loyalty.RED, nodes.get(0)), nodes.get(0).getLoc());
+			Piece newKing = new King(Loyalty.RED, nodes.get(0));
+			
+			add(newKing, nodes.get(0).getLoc());
+			game.getPlayers()[0].add(newKing);
 		}
 		
 		if(nodes.get(nodes.size() - 1).getLoc().getRow() == 0 && getPiece(nodes.get(0).getLoc()).getLoyalty() == Loyalty.BLACK)
 		{
-			add(new King(Loyalty.BLACK, nodes.get(0)), nodes.get(0).getLoc());
+			Piece newKing = new King(Loyalty.BLACK, nodes.get(0));
+			
+			add(newKing, nodes.get(0).getLoc());
+			game.getPlayers()[1].add(newKing);
 		}
 		
 		move(nodes.get(0).getLoc(), nodes.get(nodes.size() - 1).getLoc());
@@ -240,7 +246,29 @@ public class Board
 	{
 		Piece piece = getPiece(loc);
 		
-		add(null, loc);
+		if(piece != null)
+		{
+			add(null, loc);
+		}
+		
+		return piece;
+	}
+	
+	/**
+	 * Returns the piece at the given location and kills it from the board
+	 * 
+	 * @return the piece at the given location
+	 */ 
+	public Piece kill(Location loc)
+	{
+		Piece piece = getPiece(loc);
+		
+		if(piece != null)
+		{
+			game.getPlayers()[piece.getLoyalty().getVal()].remove(piece);
+			
+			add(null, loc);
+		}
 		
 		return piece;
 	}
