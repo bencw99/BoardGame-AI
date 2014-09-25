@@ -58,6 +58,11 @@ public class Node
 		}
 	}
 	
+	public String toString()
+	{
+		return ("(" + loc.getRow() + ", " + loc.getCol() + ")");
+	}
+	
 	/**
 	 * Adds the given piece to this node
 	 * 
