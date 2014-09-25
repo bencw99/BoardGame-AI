@@ -35,7 +35,7 @@ public class Soldier extends Piece implements ImageObserver
 			checkerImagesInit();
 		}
 		
-		image = (getLoyalty() == Loyalty.RED) ? RED_KING: BLACK_KING;
+		image = (getLoyalty() == Loyalty.RED) ? RED_CHECKER: BLACK_CHECKER;
 	}
 	
 	/**
