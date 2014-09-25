@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.IOException;
 
@@ -19,7 +20,7 @@ import javax.swing.JPanel;
  * 
  * @author Benjamin Cohen-Wang
  */
-public class GamePanel extends JPanel implements KeyListener, MouseMotionListener
+public class GamePanel extends JPanel implements KeyListener, MouseListener
 {
 	/** The game of this game panel **/
 	private static Game game;
@@ -38,28 +39,9 @@ public class GamePanel extends JPanel implements KeyListener, MouseMotionListene
         panel.setPreferredSize(new Dimension(640, 640));
         frame.add(panel);
         frame.addKeyListener(panel);
-        frame.addMouseMotionListener(panel);
+        frame.addMouseListener(panel);
         frame.setVisible(true);
         frame.pack();
-        
-        while(true)
-        {
-        	try
-			{
-				Thread.sleep(1000);
-			} 
-        	catch (InterruptedException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-        	
-        	System.out.println(game.getTurn());
-        	
-        	game.executeTurn();
-        	
-        	frame.repaint();
-        }
 	}
 	
 	/**
@@ -71,23 +53,21 @@ public class GamePanel extends JPanel implements KeyListener, MouseMotionListene
 	}
 
 	@Override
-	public void mouseDragged(MouseEvent arg0)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent arg0)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void keyPressed(KeyEvent arg0)
 	{
-		// TODO Auto-generated method stub
+        System.out.println(game.getTurn());
+    	
+        try 
+        {
+			game.executeTurn();
+		} 
+        catch (IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        	
+        frame.repaint();
 		
 	}
 
@@ -101,6 +81,49 @@ public class GamePanel extends JPanel implements KeyListener, MouseMotionListene
 	@Override
 	public void keyTyped(KeyEvent arg0)
 	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) 
+	{
+        System.out.println(game.getTurn());
+    	
+        try 
+        {
+			game.executeTurn();
+		} 
+        catch (IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        	
+        frame.repaint();
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
