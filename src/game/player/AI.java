@@ -53,10 +53,55 @@ public class AI extends Player
 	 * @param move	the move whose minimax val is evaluated
 	 * @return	the minimax val of the given move
 	 */
-	private static double getMinimaxVal(Move move)
+	private static double getMinimaxVal(Move move, int currentDepth)
 	{
+		/*
+		 * if(currentDepth >= MINIMAX_DEPTH)
+		 * {
+		 * 		return functionVal(move)
+		 * }
+		 * 
+		 * Board board = board resulting from move being executed
+		 * ArrayList<Move> nextMoves = get next moves executed on board
+		 * 
+		 * int extreme = nextMoves.get(0).minimaxVal
+		 * 
+		 * if(turn of these moves == getLoyalty())
+		 * {
+		 * 		for(Move nextMove : nextMoves)
+		 * 		{
+		 * 			if(nextMove.minimaxVal > extreme)
+		 * 			{
+		 * 				set extreme to new minimax
+		 * 			}
+		 * 		}
+		 * }
+		 * 
+		 * else
+		 * {
+		 *		for(Move nextMove : nextMoves)
+		 * 		{
+		 * 			if(nextMove.minimaxVal < extreme)
+		 * 			{
+		 * 				set extreme to new minimax
+		 * 			}
+		 * 		}
+		 * }
+		 * 
+		 * return minimax val of extreme
+		 */
 		
-		
+		return 0;
+	}
+	
+	/**
+	 * Returns the function value of the given move
+	 * 
+	 * @param move	the move whose function value is evaluated
+	 * @return	the function value of the given move
+	 */
+	private static double functionVal(Move move)
+	{
 		return 0;
 	}
 }
