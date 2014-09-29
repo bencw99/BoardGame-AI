@@ -108,7 +108,7 @@ public class Board
 				{
 					if(piecesLeft[0] > 0)
 					{
-						add(game.getPlayers()[0].getPieces().get(piecesLeft[0] - 1), grid[i][j].getLoc());
+						put(game.getPlayers()[0].getPieces().get(piecesLeft[0] - 1), grid[i][j].getLoc());
 						game.getPlayers()[0].getPieces().get(piecesLeft[0] - 1).add(grid[i][j]);
 					}
 						
@@ -125,7 +125,7 @@ public class Board
 				{
 					if(piecesLeft[1] > 0)
 					{
-						add(game.getPlayers()[1].getPieces().get(piecesLeft[1] - 1), grid[i][j].getLoc());
+						put(game.getPlayers()[1].getPieces().get(piecesLeft[1] - 1), grid[i][j].getLoc());
 						game.getPlayers()[1].getPieces().get(piecesLeft[1] - 1).add(grid[i][j]);
 					}
 						
@@ -145,25 +145,27 @@ public class Board
 	{
 		for(Node jumped : move.getJumped())
 		{
-			kill(jumped.getLoc());
+			remove(jumped.getLoc());
 		}
 		
 		ArrayList<Node> nodes = move.getNodes();
 		
 		if(nodes.get(nodes.size() - 1).getLoc().getRow() == grid.length - 1 && getPiece(nodes.get(0).getLoc()).getLoyalty() == Loyalty.RED)
 		{
+			remove(nodes.get(0).getLoc());
+			
 			Piece newKing = new King(Loyalty.RED, nodes.get(0));
 			
 			add(newKing, nodes.get(0).getLoc());
-			game.getPlayers()[0].add(newKing);
 		}
 		
 		if(nodes.get(nodes.size() - 1).getLoc().getRow() == 0 && getPiece(nodes.get(0).getLoc()).getLoyalty() == Loyalty.BLACK)
 		{
+			remove(nodes.get(0).getLoc());
+			
 			Piece newKing = new King(Loyalty.BLACK, nodes.get(0));
 			
 			add(newKing, nodes.get(0).getLoc());
-			game.getPlayers()[1].add(newKing);
 		}
 		
 		move(nodes.get(0).getLoc(), nodes.get(nodes.size() - 1).getLoc());
@@ -194,6 +196,23 @@ public class Board
 	 * @param loc	the location to be added to
 	 */
 	public void add(Piece piece, Location loc)
+	{
+		if(piece != null)
+		{
+			piece.add(getNode(loc));
+			game.getPlayers()[piece.getLoyalty().getVal()].add(piece);
+		}
+		
+		grid[loc.getRow()][loc.getCol()].add(piece);
+	}
+	
+	/**
+	 * Puts the given piece to the grid at the given node
+	 * 
+	 * @param piece	the piece to be put
+	 * @param loc	the location to be put in
+	 */
+	public void put(Piece piece, Location loc)
 	{
 		if(piece != null)
 		{
@@ -230,9 +249,11 @@ public class Board
 	 */ 
 	public Piece move(Location start, Location end)
 	{
-		Piece piece = remove(start);
+		Piece piece = getPiece(start);
 		
-		add(piece, end);
+		put(null, start);
+		
+		put(piece, end);
 		
 		return piece;
 	}
@@ -248,26 +269,9 @@ public class Board
 		
 		if(piece != null)
 		{
-			add(null, loc);
-		}
-		
-		return piece;
-	}
-	
-	/**
-	 * Returns the piece at the given location and kills it from the board
-	 * 
-	 * @return the piece at the given location
-	 */ 
-	public Piece kill(Location loc)
-	{
-		Piece piece = getPiece(loc);
-		
-		if(piece != null)
-		{
 			game.getPlayers()[piece.getLoyalty().getVal()].remove(piece);
 			
-			add(null, loc);
+			put(null, loc);
 		}
 		
 		return piece;
