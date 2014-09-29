@@ -33,7 +33,7 @@ public class Board
 	
 	/** The default height of nodes of this board **/
 	public static final int NODE_HEIGHT =  80;
-			
+
 	/**
 	 * Parameterized constructor, initializes grid to size 8 by 8, and game to given game
 	 * 
@@ -186,8 +186,6 @@ public class Board
 			}
 		}
 	}
-	
-	//ERROR: Add method causes the black checkers player to have its Players ArrayList point to red pieces when red pieces are added to previous black location
 	
 	/**
 	 * Adds the given piece to the grid at the given node

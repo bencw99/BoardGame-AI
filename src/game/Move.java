@@ -110,4 +110,13 @@ public class Move
 	{
 		return nodes;
 	}
+
+	/**
+	 * @return the board
+	 */
+	public Board getBoard() 
+	{
+		return board;
+	}
+	
 }
