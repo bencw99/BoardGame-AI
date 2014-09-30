@@ -291,4 +291,12 @@ public class Board
 			return false;
 		}
 	}
+	
+	/**
+	 * @return the game of this board
+	 */
+	public Game getGame()
+	{
+		return game;
+	}
 }

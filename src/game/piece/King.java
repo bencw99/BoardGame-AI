@@ -19,6 +19,9 @@ import game.piece.Piece.Loyalty;
  */
 public class King extends Piece implements ImageObserver
 {
+	/** The worth of a king **/
+	public static final double KING_WORTH = 2;
+	
 	/**
 	 * Default constructor
 	 * 
@@ -29,6 +32,7 @@ public class King extends Piece implements ImageObserver
 	public King(Loyalty loyalty) throws IOException
 	{
 		super(loyalty);
+		setWorth(KING_WORTH);
 		
 		if(!imagesInitialized)
 		{
@@ -48,6 +52,7 @@ public class King extends Piece implements ImageObserver
 	public King(Loyalty loyalty, Node node) throws IOException
 	{
 		super(loyalty, node);
+		setWorth(KING_WORTH);
 		
 		if(!imagesInitialized)
 		{

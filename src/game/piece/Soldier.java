@@ -20,6 +20,9 @@ import game.piece.Piece.Loyalty;
  */
 public class Soldier extends Piece implements ImageObserver
 {
+	/** The worth of a soldier **/
+	public static final double SOLDIER_WORTH = 1;
+	
 	/**
 	 * Default constructor
 	 * 
@@ -29,6 +32,7 @@ public class Soldier extends Piece implements ImageObserver
 	public Soldier(Loyalty loyalty) throws IOException
 	{
 		super(loyalty);
+		setWorth(SOLDIER_WORTH);
 		
 		if(!imagesInitialized)
 		{
@@ -48,6 +52,7 @@ public class Soldier extends Piece implements ImageObserver
 	public Soldier(Loyalty loyalty, Node node) throws IOException
 	{
 		super(loyalty, node);
+		setWorth(SOLDIER_WORTH);
 		
 		if(!imagesInitialized)
 		{

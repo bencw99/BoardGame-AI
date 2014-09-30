@@ -43,6 +43,9 @@ public abstract class Piece
 	/** The node that this piece belongs to **/
 	private Node node;
 	
+	/** The worth of this piece **/
+	private double worth;
+	
 	/** The loyalty of this piece **/
 	private Loyalty loyalty;
 	
@@ -126,6 +129,14 @@ public abstract class Piece
 	}
 
 	/**
+	 * @return the worth
+	 */
+	public double getWorth() 
+	{
+		return worth;
+	}
+
+	/**
 	 * @return the loyalty of this piece
 	 */
 	public Loyalty getLoyalty()
@@ -133,6 +144,14 @@ public abstract class Piece
 		return loyalty;
 	}
 	
+	/**
+	 * @param worth the worth to set
+	 */
+	public void setWorth(double worth) 
+	{
+		this.worth = worth;
+	}
+
 	/**
 	 * Initializes checkers images
 	 * 

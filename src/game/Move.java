@@ -4,6 +4,7 @@ import game.board.Board;
 import game.board.Location;
 import game.board.Node;
 import game.piece.Piece;
+import game.piece.Piece.Loyalty;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,9 @@ public class Move
 	/** The array list of pieces jumped in this move **/
 	private ArrayList<Node> jumped;
 	
+	/** The loyalty of this move **/
+	private Loyalty loyalty;
+	
 	/** The board this move is executed on **/
 	private Board board;
 	
@@ -33,6 +37,17 @@ public class Move
 	{
 		this.nodes = nodes;
 		this.board = board;
+		
+		// BIG ERROR : FIX
+		try
+		{
+			this.loyalty = this.nodes.get(0).getPiece().getLoyalty();
+		}
+		catch(NullPointerException e)
+		{
+			System.out.println("HERE IS AN EXCEPTION BRO");
+			System.out.println(nodes);
+		}
 		
 		loadJumped();
 	}
@@ -119,4 +134,11 @@ public class Move
 		return board;
 	}
 	
+	/**
+	 * @return the loyalty
+	 */
+	public Loyalty getLoyalty() 
+	{
+		return loyalty;
+	}
 }
