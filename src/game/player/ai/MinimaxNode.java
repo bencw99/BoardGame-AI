@@ -2,12 +2,13 @@ package game.player.ai;
 
 import java.util.ArrayList;
 
+import game.Game;
+import game.Game.Turn;
 import game.Move;
 import game.board.Board;
 import game.piece.Piece.Loyalty;
-
 /**
- * QA class representing a node in the minimax algorithm
+ * A class representing a node in the minimax algorithm
  * 
  * @author Benjamin Cohen-Wang
  */
@@ -32,12 +33,13 @@ public class MinimaxNode
 	}
 	
 	/**
+	 * Returns the loyalty associated with 
 	 * 
-	 * @return
+	 * @return	the loyalty of this node
 	 */
-	public Loyalty getLoyalty()
+	public Turn getTurn()
 	{
-		return null;
+		return board.getGame().getTurn();
 	}
 	
 	/**
