@@ -9,6 +9,7 @@ import game.piece.Piece;
 import game.piece.Piece.Loyalty;
 import game.piece.Soldier;
 import game.player.*;
+import game.player.ai.AI;
 
 /**
  * A class representing a checkers game
