@@ -40,6 +40,11 @@ public class Game
 			return val;
 		}
 		
+		public Loyalty getLoyalty()
+		{
+			return val == 0 ? Loyalty.RED: Loyalty.BLACK;
+		}
+		
 		public Turn getOther()
 		{
 			if(this == PLAYER1)
