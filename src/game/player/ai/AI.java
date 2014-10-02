@@ -1,9 +1,10 @@
-package game.player;
+package game.player.ai;
 
 import game.Move;
 import game.board.Board;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
+import game.player.Player;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -92,14 +93,44 @@ public class AI extends Player
 //		}
 //		
 //		return extreme;
+		return 0;
+	}
+	
+	/**
+	 * Returns the minimax val of the given node
+	 * 
+	 * @param node	the minimaxNode whose minimax value is evaluated
+	 */
+	private double getMinimaxVal(MinimaxNode node)
+	{
+		Stack<MinimaxNode> stack = new Stack<MinimaxNode>();
 		
-		Stack<Move> stack = new Stack<Move>();
-		
-		stack.push(move);
+		stack.push(node);
 		
 		while(!stack.isEmpty())
 		{
+			MinimaxNode currentNode = stack.pop();
 			
+			ArrayList<Move> nextMoves = currentNode.getNextMoves();
+			
+			double extreme = getMinimaxVal(currentNode.getNextNode(nextMoves.get(0)));
+			  
+			if(getLoyalty() == currentNode.getLoyalty())
+			{
+				for(Move nextMove : nextMoves)
+				{
+					//Evaluate minimax of nextMove
+					//Set extreme to max
+				}
+			} 
+			else
+			{
+				for(Move nextMove : nextMoves)
+				{
+					//Evaluate minimax of nextMove
+					//Set extreme to min
+				}
+			}
 		}
 		
 		return 0;
