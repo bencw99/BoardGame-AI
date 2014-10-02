@@ -35,6 +35,14 @@ public class Board
 	public static final int NODE_HEIGHT =  80;
 
 	/**
+	 * Default constructor, initializes grid to size 8 by 8
+	 */
+	public Board()
+	{
+		this(DEFAULT_GRID_LENGTH, null);
+	}
+	
+	/**
 	 * Parameterized constructor, initializes grid to size 8 by 8, and game to given game
 	 * 
 	 * @param game	the game of this board
@@ -298,5 +306,15 @@ public class Board
 	public Game getGame()
 	{
 		return game;
+	}
+	
+	/**
+	 * Sets this board to have the given game
+	 * 
+	 * @param game	the game to set this instance to
+	 */
+	public void setGame(Game game)
+	{
+		this.game = game;
 	}
 }
