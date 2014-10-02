@@ -114,8 +114,8 @@ public class AI extends Player
 			ArrayList<Move> nextMoves = currentNode.getNextMoves();
 			
 			double extreme = getMinimaxVal(currentNode.getNextNode(nextMoves.get(0)));
-			  
-			if(getLoyalty() == currentNode.getLoyalty())
+
+			if(getLoyalty() == currentNode.getTurn().getLoyalty())
 			{
 				for(Move nextMove : nextMoves)
 				{
