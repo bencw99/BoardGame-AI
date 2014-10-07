@@ -107,6 +107,18 @@ public class Game
 	}
 	
 	/**
+	 * Parameterized constructor, makes this game a copy of the given game
+	 * 
+	 * @param game	the game whose copy is made
+	 */
+	public Game(Game game)
+	{
+		this.board = new Board(game.getBoard());
+		this.board.setGame(this);
+		
+	}
+	
+	/**
 	 * Parameterized constructor, initializes fields to given parameters 
 	 * 
 	 * @param board	the board that the board of this game is set to

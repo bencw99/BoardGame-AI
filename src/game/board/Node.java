@@ -43,6 +43,15 @@ public class Node
 	}
 	
 	/**
+	 * Parameterized constructor, initializes node to given node copy
+	 */
+	public Node(Node node, Board board)
+	{
+		this(new Location(node.loc), board);
+		
+	}
+	
+	/**
 	 * Draws this node
 	 * 
 	 * @param graphics	 the graphics object to be drawn on

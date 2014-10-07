@@ -14,6 +14,17 @@ public class Location
 	private int col;
 	
 	/**
+	 * Parameterized constructor, initializes row and column to given location values
+	 * 
+	 * @param loc	the location whose value is constructed
+	 */
+	public Location(Location loc)
+	{
+		this.row = loc.row;
+		this.col = loc.col;
+	}
+	
+	/**
 	 * Parameterized constructor, initializes row and column to given values
 	 * 
 	 * @param row	the row of this location

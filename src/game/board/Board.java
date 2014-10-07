@@ -33,14 +33,6 @@ public class Board
 	
 	/** The default height of nodes of this board **/
 	public static final int NODE_HEIGHT =  80;
-
-	/**
-	 * Default constructor, initializes grid to size 8 by 8
-	 */
-	public Board()
-	{
-		this(DEFAULT_GRID_LENGTH, null);
-	}
 	
 	/**
 	 * Parameterized constructor, initializes grid to size 8 by 8, and game to given game
@@ -61,6 +53,24 @@ public class Board
 	public Board(int length, Game game)
 	{
 		this(length, length, game);
+	}
+	
+	/**
+	 * Parameterized constructor, initializes board to copy of given Board but with no game
+	 * 
+	 * @param board	the board whose copy is made
+	 */
+	public Board(Board board)
+	{
+		this.grid = new Node[board.grid.length][board.grid[0].length];
+		
+		for(int i = 0; i < grid.length; i ++)
+		{
+			for(int j = 0; j < grid[0].length; j ++)
+			{
+				
+			}
+		}
 	}
 	
 	/**

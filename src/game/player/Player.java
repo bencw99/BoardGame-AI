@@ -39,6 +39,22 @@ public abstract class Player
 	}
 	
 	/**
+	 * Parameterized constructor, initializes this to copy of given player
+	 * 
+	 * @param player	the player whose copy is constructed
+	 */
+	public Player(Player player)
+	{
+		this.loyalty = player.getLoyalty();
+		this.name = player.getName();
+		this.pieces = new ArrayList<Piece>();
+		for(int i = 0; i < player.pieces.size(); i ++)
+		{
+			
+		}
+	}
+	
+	/**
 	 * Returns the possible moves of this player
 	 * 
 	 * @return	the arrayList of possible moves of this player
@@ -72,6 +88,13 @@ public abstract class Player
 	}
 	
 	/**
+	 * Returns the move executed this turn
+	 * 
+	 * @return	the move to be executed this turn
+	 */
+	public abstract Move getThisTurnMove();
+	
+	/**
 	 * Removes the given piece from pieces ArrayList
 	 * 
 	 * @param piece	the piece to be removed
@@ -90,13 +113,6 @@ public abstract class Player
 	{
 		pieces.add(piece);
 	}
-
-	/**
-	 * Returns the move executed this turn
-	 * 
-	 * @return	the move to be executed this turn
-	 */
-	public abstract Move getThisTurnMove();
 	
 	/**
 	 * @return the name
