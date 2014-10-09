@@ -319,6 +319,14 @@ public class Board
 	}
 	
 	/**
+	 * @return the grid of this board
+	 */
+	public Node[][] getGrid()
+	{
+		return grid;
+	}
+	
+	/**
 	 * Sets this board to have the given game
 	 * 
 	 * @param game	the game to set this instance to

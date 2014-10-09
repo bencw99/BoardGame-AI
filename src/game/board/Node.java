@@ -43,12 +43,12 @@ public class Node
 	}
 	
 	/**
-	 * Parameterized constructor, initializes node to given node copy
+	 * Parameterized constructor, initializes node to given node copy (has no board)
 	 */
-	public Node(Node node, Board board)
+	public Node(Node node)
 	{
-		this(new Location(node.loc), board);
-		
+		this.color = node.color;
+		this.loc = node.loc;
 	}
 	
 	/**
