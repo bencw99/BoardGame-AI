@@ -1,12 +1,17 @@
 package game.player.ai;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
-import game.Game;
 import game.Game.Turn;
 import game.Move;
 import game.board.Board;
-import game.piece.Piece.Loyalty;
+import game.board.Location;
+import game.board.Node;
+import game.piece.King;
+import game.piece.Piece;
+import game.piece.Soldier;
+import game.player.Player;
 /**
  * A class representing a node in the minimax algorithm
  * 
@@ -17,19 +22,67 @@ public class MinimaxNode
 	/** The minimax depth of this minimax node **/
 	private int minimaxDepth;
 	
-	/** The board of this minimax node **/
-	private Board board;
+	/** The turn of this minimax node **/
+	private Turn turn;
+	
+	/** The array of nodes composing the board grid **/
+	private Node[][] grid;
+	
+	/** The array of Arraylists containing the pieces of this grid **/
+	ArrayList<ArrayList<Piece>> playerPieces;
 	
 	/**
 	 * Parameterized constructor, initializes board and minimax depth to given values
 	 * 
 	 * @param minimaxDepth	the minimaxDepth to be set to
 	 * @param board			the board to be set to
+	 * @throws IOException 
 	 */
-	public MinimaxNode(int minimaxDepth, Board board)
+	public MinimaxNode(int minimaxDepth, Board board) throws IOException
 	{
 		this.minimaxDepth = minimaxDepth;
-		this.board = board;
+		this.turn = board.getGame().getTurn();
+		
+		Node[][] boardGrid = board.getGrid();
+		grid = new Node[boardGrid.length][boardGrid[0].length];
+		
+		for(int i = 0; i < grid.length; i ++)
+		{
+			for(int j = 0; j < grid[0].length; j ++)
+			{
+				grid[i][j] = new Node(boardGrid[i][j]);
+			}
+		}
+		
+		playerPieces = new ArrayList<ArrayList<Piece>>();
+		
+		for(Player player : board.getGame().getPlayers())
+		{
+			ArrayList<Piece> pieces = new ArrayList<Piece>();
+			
+			for(Piece piece : player.getPieces())
+			{
+				Piece newPiece = null;
+				
+				if(piece.getWorth() == Soldier.SOLDIER_WORTH)
+				{
+					newPiece = new Soldier(player.getLoyalty());
+				}
+				
+				if(piece.getWorth() == King.KING_WORTH)
+				{
+					newPiece = new King(player.getLoyalty());
+				}
+				
+				Location loc = piece.getNode().getLoc();
+				
+				pieces.add(newPiece);
+				grid[loc.getRow()][loc.getCol()].add(newPiece);
+				newPiece.add(grid[loc.getRow()][loc.getCol()]);
+			}
+			
+			playerPieces.add(pieces);
+		}
 	}
 	
 	/**
@@ -39,7 +92,7 @@ public class MinimaxNode
 	 */
 	public Turn getTurn()
 	{
-		return board.getGame().getTurn();
+		return turn;
 	}
 	
 	/**
@@ -68,13 +121,5 @@ public class MinimaxNode
 	public int getMinimaxDepth() 
 	{
 		return minimaxDepth;
-	}
-
-	/**
-	 * @return the board
-	 */
-	public Board getBoard() 
-	{
-		return board;
 	}
 }
