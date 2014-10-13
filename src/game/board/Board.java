@@ -60,15 +60,16 @@ public class Board
 	 * 
 	 * @param board	the board whose copy is made
 	 */
-	public Board(Board board)
+	public Board(Board board, Game game)
 	{
 		this.grid = new Node[board.grid.length][board.grid[0].length];
+		this.game = game;
 		
 		for(int i = 0; i < grid.length; i ++)
 		{
 			for(int j = 0; j < grid[0].length; j ++)
 			{
-				
+				this.grid[i][j] = new Node(board.grid[i][j], this);
 			}
 		}
 	}
