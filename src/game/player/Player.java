@@ -1,4 +1,5 @@
 package game.player;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import game.Move;
@@ -75,8 +76,9 @@ public abstract class Player
 	 * Returns the move executed this turn
 	 * 
 	 * @return	the move to be executed this turn
+	 * @throws IOException 
 	 */
-	public abstract Move getThisTurnMove();
+	public abstract Move getThisTurnMove() throws IOException;
 	
 	/**
 	 * Removes the given piece from pieces ArrayList
