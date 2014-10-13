@@ -20,7 +20,7 @@ import game.piece.Piece.Loyalty;
 public class King extends Piece implements ImageObserver
 {
 	/** The worth of a king **/
-	public static final double KING_WORTH = 2;
+	public static final int KING_WORTH = 2;
 	
 	/**
 	 * Default constructor
@@ -63,6 +63,17 @@ public class King extends Piece implements ImageObserver
 	}
 
 	/**
+	 * Parameterized constructor, initializes this to a copy of the given piece
+	 * 
+	 * @param piece	the piece to be copied
+	 * @param node	the node to be added to
+	 */
+	public King(Piece piece, Node node)
+	{
+		super(piece.getLoyalty(), node);
+	}
+	
+	/**
 	 * Returns the possible nodes this piece can go to
 	 * 
 	 * @return	the array list of possible moves this piece execute
@@ -85,7 +96,7 @@ public class King extends Piece implements ImageObserver
 						move.add(getNode());
 						move.add(getNode().getBoard().getNode(currentLoc));
 						
-						possibleMoves.add(new Move(move, getNode().getBoard()));
+						possibleMoves.add(new Move(move, getNode().getBoard(), getLoyalty()));
 					}
 				}
 			}
@@ -95,7 +106,7 @@ public class King extends Piece implements ImageObserver
 		{
 			if(move.size() > 1)
 			{
-				possibleMoves.add(new Move(move, getNode().getBoard()));
+				possibleMoves.add(new Move(move, getNode().getBoard(), getLoyalty()));
 			}
 		}
 		
@@ -144,40 +155,37 @@ public class King extends Piece implements ImageObserver
 				}
 			}
 		}
+
+		for(Location jump : jumps)
+		{
+			ArrayList<ArrayList<Node>> movesOfCurrent = getNextJumps(jump);
+			
+			for(ArrayList<Node> thisMoveOfCurrent : movesOfCurrent)
+			{
+				boolean validMove = true;
+				
+				for(Node jumped : (new Move(thisMoveOfCurrent, getNode().getBoard(), getLoyalty())).getJumped())
+				{
+					if(jumped.getLoc().equals(new Location((loc.getRow() + jump.getRow())/2, (loc.getCol() + jump.getCol())/2)))
+					{
+						validMove = false;
+					}
+				}
+				
+				if(validMove)
+				{
+					thisMoveOfCurrent.add(0, getNode().getBoard().getNode(loc));
+					retVal.add(thisMoveOfCurrent);
+				}
+			}
+		}
 		
-		if(jumps.isEmpty())
+		if(retVal.isEmpty())
 		{
 			ArrayList<Node> thisLoc = new ArrayList<Node>();
 			thisLoc.add(getNode().getBoard().getNode(loc));
 			
 			retVal.add(thisLoc);
-			
-			return retVal;
-		}
-		else
-		{
-			for(Location jump : jumps)
-			{
-				ArrayList<ArrayList<Node>> movesOfCurrent = getNextJumps(jump);
-				
-				for(ArrayList<Node> thisMoveOfCurrent : movesOfCurrent)
-				{
-					boolean validMove = true;
-					
-					for(Node jumped : (new Move(thisMoveOfCurrent, getNode().getBoard())).getJumped())
-					{
-						if(jumped.getLoc().equals(new Location((loc.getRow() + jump.getRow())/2, (loc.getCol() + jump.getCol())/2)))
-						{
-							validMove = false;
-						}
-					}
-					if(validMove)
-					{
-						thisMoveOfCurrent.add(0, getNode().getBoard().getNode(loc));
-						retVal.add(thisMoveOfCurrent);
-					}
-				}
-			}
 		}
 		
 		return retVal;
