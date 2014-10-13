@@ -28,26 +28,17 @@ public class Move
 	private Board board;
 	
 	/**
-	 * Parameterized Constructor, initializes start and end nodes, board, and interNodes
+	 * Parameterized Constructor, initializes start and end nodes, board, interNodes, and loyalty
 	 * 
 	 * @param interNodes	the array list of nodes jumped through
 	 * @param board	the board this move occurs in
+	 * @param loyalty	the loyalty of this move
 	 */
-	public Move(ArrayList<Node> nodes, Board board)
+	public Move(ArrayList<Node> nodes, Board board, Loyalty loyalty)
 	{
 		this.nodes = nodes;
 		this.board = board;
-		
-		// BIG ERROR : FIX
-		try
-		{
-			this.loyalty = this.nodes.get(0).getPiece().getLoyalty();
-		}
-		catch(NullPointerException e)
-		{
-			System.out.println("HERE IS AN EXCEPTION BRO");
-			System.out.println(nodes);
-		}
+		this.loyalty = loyalty;
 		
 		loadJumped();
 	}
