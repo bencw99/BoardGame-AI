@@ -21,7 +21,7 @@ import game.piece.Piece.Loyalty;
 public class Soldier extends Piece implements ImageObserver
 {
 	/** The worth of a soldier **/
-	public static final double SOLDIER_WORTH = 1;
+	public static final int SOLDIER_WORTH = 1;
 	
 	/**
 	 * Default constructor
@@ -63,6 +63,17 @@ public class Soldier extends Piece implements ImageObserver
 	}
 	
 	/**
+	 * Parameterized constructor, initializes this to a copy of the given piece
+	 * 
+	 * @param piece	the piece to be copied
+	 * @param node	the node to be added to
+	 */
+	public Soldier(Piece piece, Node node)
+	{
+		super(piece.getLoyalty(), node);
+	}
+	
+	/**
 	 * Returns the possible nodes this piece can go to
 	 * 
 	 * @return	the array list of possible moves this piece execute
@@ -85,7 +96,7 @@ public class Soldier extends Piece implements ImageObserver
 					move.add(getNode());
 					move.add(getNode().getBoard().getNode(currentLoc));
 					
-					possibleMoves.add(new Move(move, getNode().getBoard()));
+					possibleMoves.add(new Move(move, getNode().getBoard(), getLoyalty()));
 				}
 			}
 		}
@@ -96,8 +107,8 @@ public class Soldier extends Piece implements ImageObserver
 		{
 			if(move.size() > 1)
 			{
-				jumpMoves.add(new Move(move, getNode().getBoard()));
-				possibleMoves.add(new Move(move, getNode().getBoard()));
+				jumpMoves.add(new Move(move, getNode().getBoard(), getLoyalty()));
+				possibleMoves.add(new Move(move, getNode().getBoard(), getLoyalty()));
 			}
 		}
 		

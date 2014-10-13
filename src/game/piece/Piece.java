@@ -44,7 +44,7 @@ public abstract class Piece
 	private Node node;
 	
 	/** The worth of this piece **/
-	private double worth;
+	private int worth;
 	
 	/** The loyalty of this piece **/
 	private Loyalty loyalty;
@@ -90,6 +90,17 @@ public abstract class Piece
 	}
 	
 	/**
+	 * Parameterized constructor, initializes this to a copy of the given piece
+	 * 
+	 * @param piece	the piece to be copied
+	 * @param node	the node to be added to
+	 */
+	public Piece(Piece piece, Node node)
+	{
+		this(piece.loyalty, node);
+	}
+	
+	/**
 	 * Returns the possible move this piece can do
 	 * 
 	 * @return	the array list of possible moves this piece execute
@@ -131,7 +142,7 @@ public abstract class Piece
 	/**
 	 * @return the worth
 	 */
-	public double getWorth() 
+	public int getWorth() 
 	{
 		return worth;
 	}
@@ -147,7 +158,7 @@ public abstract class Piece
 	/**
 	 * @param worth the worth to set
 	 */
-	public void setWorth(double worth) 
+	public void setWorth(int worth) 
 	{
 		this.worth = worth;
 	}
