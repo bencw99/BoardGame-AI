@@ -1,11 +1,12 @@
 package game.player.ai;
 
+import game.Game;
 import game.Move;
-import game.board.Board;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
 import game.player.Player;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -35,87 +36,112 @@ public class AI extends Player
 	 * Returns the move executed this turn
 	 * 
 	 * @return	the move to be executed this turn
+	 * @throws IOException 
 	 */
-	public Move getThisTurnMove()
+	public Move getThisTurnMove() throws IOException
 	{	
 		ArrayList<Move> possibleMoves = getPossibleMoves();
 		
-		int randomMove = (int)(possibleMoves.size()*Math.random());
+		Move[] possibleMovesArray = new Move[possibleMoves.size()];
 		
-		System.out.println(possibleMoves.get(randomMove));
+		MinimaxNode[] possibleNextNodes = new MinimaxNode[possibleMoves.size()];
 		
-		System.out.println("Jumped: " + possibleMoves.get(randomMove).getJumped());
+		MinimaxNode currentNode = new MinimaxNode(0, new Game(getPieces().get(0).getNode().getBoard().getGame()));
 		
-		return possibleMoves.get(randomMove);
+		for(int i = 0; i < possibleMoves.size(); i ++)
+		{
+			possibleMovesArray[i] = possibleMoves.get(i);
+			possibleNextNodes[i] = currentNode.getNextNode(possibleMoves.get(i));
+		}
+		
+		double maxMinimaxVal = getMinimaxVal(possibleNextNodes[0]);
+		int maxMinimaxIndex = 0;
+		
+		for(int i = 1; i < possibleNextNodes.length; i ++)
+		{
+			double currentVal = getMinimaxVal(possibleNextNodes[i]);
+			
+			if(currentVal > maxMinimaxVal)
+			{
+				maxMinimaxVal = currentVal;
+				maxMinimaxIndex = i;
+			}
+		}
+		
+		return possibleMovesArray[maxMinimaxIndex];
 	}
 	
 	/**
 	 * Returns the minimax val of the given move
 	 * 
-	 * @param move	the move whose minimax val is evaluated
+	 * @param minimaxNode	the move whose minimax val is evaluated
 	 * @return	the minimax val of the given move
+	 * @throws IOException 
 	 */
-	private double getMinimaxVal(Move move, int currentDepth)
+	private double getMinimaxVal(MinimaxNode node) throws IOException
 	{
-//		if(currentDepth >= MINIMAX_DEPTH)
-//		{
-//		  		return functionVal(move);
-//		}
-//		  
-//		Board board = board resulting from move being executed;
-//		ArrayList<Move> nextMoves = get next moves executed on board;
-//		
-//		double extreme = getMinimaxVal(nextMoves.get(0), currentDepth + 1);
-//		  
-//		if(getLoyalty() == move.getLoyalty())
-//		{
-//			for(Move nextMove : nextMoves)
-//			{
-//				double maxCand = getMinimaxVal(nextMove, currentDepth + 1);;
-//				
-//				if(maxCand > extreme)
-//		  		{
-//		  			extreme = maxCand;
-//		  		}
-//			}
-//		} 
-//		else
-//		{
-//			for(Move nextMove : nextMoves)
-//			{
-//				double maxCand = getMinimaxVal(nextMove, currentDepth + 1);;
-//					
-//				if(maxCand < extreme)
-//				{
-//					extreme = maxCand;
-//				}
-//			}
-//		}
-//		
-//		return extreme;
-		return 0;
+		if(node.getMinimaxDepth() >= MINIMAX_DEPTH)
+		{
+		  	return functionVal(node);
+		}
+		
+		ArrayList<Move> nextMoves = node.getNextMoves();
+		
+		double extreme = getMinimaxVal(node.getNextNode(nextMoves.get(0)));
+		  
+		if(getLoyalty().getVal() == node.getGame().getTurn().getVal())
+		{
+			for(Move nextMove : nextMoves)
+			{
+				double maxCand = getMinimaxVal(node.getNextNode(nextMove));
+				
+				if(maxCand > extreme)
+		  		{
+		  			extreme = maxCand;
+		  		}
+			}
+		} 
+		else
+		{
+			for(Move nextMove : nextMoves)
+			{
+				double minCand = getMinimaxVal(node.getNextNode(nextMove));
+					
+				if(minCand < extreme)
+				{
+					extreme = minCand;
+				}
+			}
+		}
+		
+		return extreme;
 	}
 	
 	/**
 	 * Returns the minimax val of the given node
 	 * 
 	 * @param node	the minimaxNode whose minimax value is evaluated
+	 * @throws IOException 
 	 */
-	private double getMinimaxVal(MinimaxNode node)
+	private double getMinimaxVal(MinimaxNode node, int sameMethodSignaturePreventing) throws IOException
 	{
 		Stack<MinimaxNode> stack = new Stack<MinimaxNode>();
 		
 		stack.push(node);
 		
+		MinimaxNode currentNode = stack.peek();
+		
+		ArrayList<Move> nextMoves = currentNode.getNextMoves();
+		
+		double extreme = getMinimaxVal(currentNode.getNextNode(nextMoves.get(0)));
+		
 		while(!stack.isEmpty())
 		{
-			MinimaxNode currentNode = stack.pop();
+			currentNode = stack.pop();
 			
-			ArrayList<Move> nextMoves = currentNode.getNextMoves();
+			nextMoves = currentNode.getNextMoves();
 			
-			double extreme = getMinimaxVal(currentNode.getNextNode(nextMoves.get(0)));
-
-			if(getLoyalty() == currentNode.getTurn().getLoyalty())
+			if(getLoyalty().getVal() == currentNode.getGame().getTurn().getVal())
 			{
 				for(Move nextMove : nextMoves)
 				{
@@ -133,7 +159,7 @@ public class AI extends Player
 			}
 		}
 		
-		return 0;
+		return extreme;
 	}
 	
 	/**
@@ -142,14 +168,14 @@ public class AI extends Player
 	 * @param move	the move whose function value is evaluated
 	 * @return	the function value of the given move
 	 */
-	private static double functionVal(Move move)
+	private static double functionVal(MinimaxNode node)
 	{
-		Player[] players = move.getBoard().getGame().getPlayers();
+		Player[] players = node.getGame().getPlayers();
 		double functionVal = 0;
 		
 		for(Player player : players)
 		{
-			if(player.getLoyalty() == move.getLoyalty())
+			if(player.getLoyalty().getVal() == node.getGame().getTurn().getVal())
 			{
 				for(Piece piece : player.getPieces())
 				{
