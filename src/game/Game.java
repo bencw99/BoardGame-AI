@@ -61,14 +61,7 @@ public class Game
 		{
 			int random = (int)(2*Math.random());
 			
-			if(random == 0)
-			{
-				return PLAYER1;
-			}
-			else
-			{
-				return PLAYER2;
-			}
+			return random == 0 ? PLAYER1 : PLAYER2;
 		}
 	}
 	
@@ -113,9 +106,15 @@ public class Game
 	 */
 	public Game(Game game)
 	{
-		this.board = new Board(game.getBoard());
-		this.board.setGame(this);
+		this.players = new Player[game.getPlayers().length];
 		
+		for(int i = 0; i < players.length; i ++)
+		{
+			players[i] = new AI(null, game.getPlayers()[i].getLoyalty(), new ArrayList<Piece>());
+		}
+		
+		this.board = new Board(game.getBoard(), this);
+		this.turn = game.turn;
 	}
 	
 	/**
