@@ -1,6 +1,8 @@
 package game.board;
 
+import game.piece.King;
 import game.piece.Piece;
+import game.piece.Soldier;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -45,10 +47,31 @@ public class Node
 	/**
 	 * Parameterized constructor, initializes node to given node copy (has no board)
 	 */
-	public Node(Node node)
+	public Node(Node node, Board board)
 	{
 		this.color = node.color;
-		this.loc = node.loc;
+		this.loc = new Location(node.loc);
+		this.board = board;
+		
+		if(node.getPiece() == null)
+		{
+			piece = null;
+		}
+		else
+		{
+			switch(node.getPiece().getWorth())
+			{
+			case King.KING_WORTH:
+				this.piece = new King(node.getPiece(), this);
+				this.board.getGame().getPlayers()[this.piece.getLoyalty().getVal()].add(this.piece);
+				break;
+				
+			case Soldier.SOLDIER_WORTH:
+				this.piece = new Soldier(node.getPiece(), this);
+				this.board.getGame().getPlayers()[this.piece.getLoyalty().getVal()].add(this.piece);
+				break;
+			}
+		}
 	}
 	
 	/**
