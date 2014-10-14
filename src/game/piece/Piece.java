@@ -119,7 +119,7 @@ public abstract class Piece
 	 * 
 	 * @return	the array list of possible nodes this piece can jump to
 	 */
-	protected abstract ArrayList<ArrayList<Node>> getNextJumps(Location loc);
+//	protected abstract ArrayList<ArrayList<Node>> getNextJumps(Location loc);
 	
 	/**
 	 * Adds this instance to the given node

@@ -21,7 +21,7 @@ import game.piece.Piece.Loyalty;
 public class Soldier extends Piece implements ImageObserver
 {
 	/** The worth of a soldier **/
-	public static final int SOLDIER_WORTH = 1;
+	public static final int SOLDIER_WORTH = 11;
 	
 	/**
 	 * Default constructor

@@ -171,7 +171,7 @@ public class AI extends Player
 	private double functionVal(MinimaxNode node)
 	{
 		Player[] players = node.getGame().getPlayers();
-		double functionVal = 0;
+		double functionVal = node.getGame().getTurn().getVal() == getLoyalty().getVal() ? 3 : -3;
 		
 		for(Player player : players)
 		{
@@ -190,8 +190,6 @@ public class AI extends Player
 				}
 			}
 		}
-		
-		System.out.println(functionVal);
 		
 		return functionVal;
 	}
