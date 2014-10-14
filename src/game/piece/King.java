@@ -20,7 +20,7 @@ import game.piece.Piece.Loyalty;
 public class King extends Piece implements ImageObserver
 {
 	/** The worth of a king **/
-	public static final int KING_WORTH = 2;
+	public static final int KING_WORTH = 20;
 	
 	/**
 	 * Default constructor
@@ -103,7 +103,7 @@ public class King extends Piece implements ImageObserver
 			}
 		}
 		
-		for(ArrayList<Node> move : getNextJumps(getNode().getLoc()))
+		for(ArrayList<Node> move : getNextJumps(getNode().getLoc(), getNode().getLoc()))
 		{
 			if(move.size() > 1)
 			{
@@ -136,7 +136,7 @@ public class King extends Piece implements ImageObserver
 	 * 
 	 * @return	the array list of possible nodes this piece can jump to
 	 */
-	protected ArrayList<ArrayList<Node>> getNextJumps(Location loc)
+	protected ArrayList<ArrayList<Node>> getNextJumps(Location loc, Location pastJumpLoc)
 	{
 		ArrayList<ArrayList<Node>> retVal = new ArrayList<ArrayList<Node>>();
 		
@@ -152,7 +152,10 @@ public class King extends Piece implements ImageObserver
 				
 				if(getNode().getBoard().isValid(possibleJumpLoc) && getNode().getBoard().getPiece(possibleJumpLoc) == null && getNode().getBoard().getPiece(interJumpLoc) != null && getNode().getBoard().getPiece(interJumpLoc).getLoyalty() != this.getLoyalty())
 				{
-					jumps.add(possibleJumpLoc);
+					if((possibleJumpLoc.getRow() != pastJumpLoc.getRow()) || (possibleJumpLoc.getCol() != pastJumpLoc.getCol()))
+					{
+						jumps.add(possibleJumpLoc);
+					}
 				}
 			}
 		}
@@ -160,7 +163,7 @@ public class King extends Piece implements ImageObserver
 		/*
 		 * Bug Summary:
 		 * 
-		 * Despite the testing that occurs to remove various invalid moves resulting from recursion and rejumping a singles space,
+		 * Despite the testing that occurs to remove various invalid moves resulting from recursion and rejumping a single space,
 		 * An overflow occurs because the method is called recursively before this testing takes place, hence it works for single
 		 * jumps, but not for 2+ jumps of a king
 		 * 
@@ -169,7 +172,7 @@ public class King extends Piece implements ImageObserver
 		
 		for(Location jump : jumps)
 		{
-			ArrayList<ArrayList<Node>> movesOfCurrent = getNextJumps(jump);
+			ArrayList<ArrayList<Node>> movesOfCurrent = getNextJumps(jump, loc);
 			
 			for(ArrayList<Node> thisMoveOfCurrent : movesOfCurrent)
 			{
