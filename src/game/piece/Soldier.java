@@ -71,6 +71,7 @@ public class Soldier extends Piece implements ImageObserver
 	public Soldier(Piece piece, Node node)
 	{
 		super(piece.getLoyalty(), node);
+		setWorth(SOLDIER_WORTH);
 	}
 	
 	/**

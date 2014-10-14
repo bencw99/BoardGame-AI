@@ -71,6 +71,7 @@ public class King extends Piece implements ImageObserver
 	public King(Piece piece, Node node)
 	{
 		super(piece.getLoyalty(), node);
+		setWorth(KING_WORTH);
 	}
 	
 	/**
