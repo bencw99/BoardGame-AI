@@ -168,14 +168,14 @@ public class AI extends Player
 	 * @param move	the move whose function value is evaluated
 	 * @return	the function value of the given move
 	 */
-	private static double functionVal(MinimaxNode node)
+	private double functionVal(MinimaxNode node)
 	{
 		Player[] players = node.getGame().getPlayers();
 		double functionVal = 0;
 		
 		for(Player player : players)
 		{
-			if(player.getLoyalty().getVal() == node.getGame().getTurn().getVal())
+			if(player.getLoyalty().getVal() == getLoyalty().getVal())
 			{
 				for(Piece piece : player.getPieces())
 				{
