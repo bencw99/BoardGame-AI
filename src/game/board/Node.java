@@ -55,22 +55,19 @@ public class Node
 		
 		if(node.getPiece() == null)
 		{
-			piece = null;
+			this.piece = null;
 		}
 		else
 		{
-			switch(node.getPiece().getWorth())
+			if(node.getPiece() instanceof Soldier)
 			{
-			case King.KING_WORTH:
-				this.piece = new King(node.getPiece(), this);
-				this.board.getGame().getPlayers()[this.piece.getLoyalty().getVal()].add(this.piece);
-				break;
-				
-			case Soldier.SOLDIER_WORTH:
 				this.piece = new Soldier(node.getPiece(), this);
-				this.board.getGame().getPlayers()[this.piece.getLoyalty().getVal()].add(this.piece);
-				break;
 			}
+			if(node.getPiece() instanceof King)
+			{
+				this.piece = new King(node.getPiece(), this);
+			}
+			this.board.getGame().getPlayers()[this.piece.getLoyalty().getVal()].add(this.piece);
 		}
 	}
 	
