@@ -17,16 +17,17 @@ import game.player.ai.AI;
  * @author Benjamin Cohen-Wang
  */
 public class Game
-{
+{	
 	/**
 	 * An enum representing whose turn it is
 	 * 
 	 * @author Benjamin Cohen-Wang
 	 */
-	public enum Turn
+	public static enum Turn
 	{
 		PLAYER1(0),
-		PLAYER2(1);
+		PLAYER2(1),
+		OVER(-1);
 		
 		private int val;
 		
@@ -147,13 +148,16 @@ public class Game
 	 */
 	public void executeTurn() throws IOException
 	{
-		Player thisPlayer = players[turn.getVal()];
-		
-		Move move = thisPlayer.getThisTurnMove();
-		
-		board.executeMove(move);
-		
-		turn = turn.getOther();
+		if(!(turn == Turn.OVER))
+		{
+			Player thisPlayer = players[turn.getVal()];
+			
+			Move move = thisPlayer.getThisTurnMove();
+			
+			board.executeMove(move);
+			
+			turn = turn.getOther();
+		}
 	}
 	
 	/**
