@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import game.Game;
 import game.Move;
+import game.Game.Turn;
 import game.piece.Piece;
 import game.player.Player;
 /**
@@ -46,7 +47,12 @@ public class MinimaxNode
 	{
 		Game newGame = new Game(game);
 		
-		newGame.getBoard().executeMove(move);
+		if(!(game.getTurn() == Turn.OVER))
+		{	
+			newGame.getBoard().executeMove(move);
+			
+			newGame.setTurn(newGame.getTurn().getOther());
+		}
 		
 		return new MinimaxNode(minimaxDepth + 1, newGame);
 	}
