@@ -8,6 +8,7 @@ import game.Move;
 import game.Game.Turn;
 import game.piece.Piece;
 import game.player.Player;
+import game.player.Player.State;
 /**
  * A class representing a node in the minimax algorithm
  * 
@@ -47,12 +48,9 @@ public class MinimaxNode
 	{
 		Game newGame = new Game(game);
 		
-		if(!(game.getTurn() == Turn.OVER))
-		{	
-			newGame.getBoard().executeMove(move);
+		newGame.getBoard().executeMove(move);
 			
-			newGame.setTurn(newGame.getTurn().getOther());
-		}
+		newGame.setTurn(newGame.getTurn().getOther());
 		
 		return new MinimaxNode(minimaxDepth + 1, newGame);
 	}
@@ -66,7 +64,14 @@ public class MinimaxNode
 	{	
 		Player currentPlayer = game.getPlayers()[game.getTurn().getVal()];
 		
-		return currentPlayer.getPossibleMoves();
+		ArrayList<Move> possibleMoves = currentPlayer.getPossibleMoves();
+		
+		if(possibleMoves.isEmpty())
+		{
+			currentPlayer.setState(State.DEFEATED);
+		}
+		
+		return possibleMoves;
 	}
 	
 	/**

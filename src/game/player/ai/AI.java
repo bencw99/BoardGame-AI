@@ -18,7 +18,9 @@ import java.util.Stack;
 public class AI extends Player
 {
 	/** The depth of the minimax search **/
-	private static final int MINIMAX_DEPTH = 7;
+	private static final int DEFAULT_MINIMAX_DEPTH = 7;
+	
+	private final int minimaxDepth;
 	
 	/**
 	 * Parameterized constructor, initializes name, pieces, and loyalty
@@ -29,7 +31,21 @@ public class AI extends Player
 	 */
 	public AI(String name, Loyalty loyalty, ArrayList<Piece> pieces)
 	{
+		this(name, loyalty, pieces, DEFAULT_MINIMAX_DEPTH);
+	}
+	
+	/**
+	 * Parameterized constructor, initializes name, pieces, and loyalty
+	 * 
+	 * @param name	the name of this player
+	 * @param loyalty	the loyalty of this player
+	 * @param pieces	the pieces of this player
+	 * @param minimaxDepth	the minimaxDepth of this ai
+	 */
+	public AI(String name, Loyalty loyalty, ArrayList<Piece> pieces, int minimaxDepth)
+	{
 		super(name, loyalty, pieces);
+		this.minimaxDepth = minimaxDepth;
 	}
 
 	/**
@@ -41,6 +57,11 @@ public class AI extends Player
 	public Move getThisTurnMove() throws IOException
 	{	
 		ArrayList<Move> possibleMoves = getPossibleMoves();
+		
+		if(isDefeated())
+		{
+			return null;
+		}
 		
 		Move[] possibleMovesArray = new Move[possibleMoves.size()];
 		
@@ -55,7 +76,9 @@ public class AI extends Player
 		}
 		
 		double maxMinimaxVal = getMinimaxVal(possibleNextNodes[0]);
-		int maxMinimaxIndex = 0;
+		
+		ArrayList<Integer> maxMovesIndeces = new ArrayList<Integer>();
+		maxMovesIndeces.add(0);
 		
 		for(int i = 1; i < possibleNextNodes.length; i ++)
 		{
@@ -63,12 +86,20 @@ public class AI extends Player
 			
 			if(currentVal > maxMinimaxVal)
 			{
+				maxMovesIndeces.clear();
+				maxMovesIndeces.add(i);
 				maxMinimaxVal = currentVal;
-				maxMinimaxIndex = i;
+			}
+			
+			if(currentVal == maxMinimaxVal)
+			{
+				maxMovesIndeces.add(i);
 			}
 		}
 		
-		return possibleMovesArray[maxMinimaxIndex];
+		int random = (int)(maxMovesIndeces.size()*Math.random());
+		
+		return possibleMovesArray[maxMovesIndeces.get(random)];
 	}
 	
 	/**
@@ -80,12 +111,17 @@ public class AI extends Player
 	 */
 	private double getMinimaxVal(MinimaxNode node) throws IOException
 	{
-		if(node.getMinimaxDepth() >= MINIMAX_DEPTH)
+		if(node.getMinimaxDepth() >= minimaxDepth)
 		{
 		  	return functionVal(node);
 		}
 		
 		ArrayList<Move> nextMoves = node.getNextMoves();
+		
+		if(node.getGame().getPlayers()[node.getGame().getTurn().getVal()].isDefeated())
+		{
+		  	return functionVal(node);
+		}
 		
 		double extreme = getMinimaxVal(node.getNextNode(nextMoves.get(0)));
 		  
@@ -172,6 +208,11 @@ public class AI extends Player
 	{
 		Player[] players = node.getGame().getPlayers();
 		double functionVal = node.getGame().getTurn().getVal() == getLoyalty().getVal() ? 3 : -3;
+		
+		if(isDefeated())
+		{
+			return Double.MIN_VALUE;
+		}
 		
 		for(Player player : players)
 		{
