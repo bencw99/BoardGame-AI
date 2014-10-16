@@ -26,8 +26,7 @@ public class Game
 	public static enum Turn
 	{
 		PLAYER1(0),
-		PLAYER2(1),
-		OVER(-1);
+		PLAYER2(1);
 		
 		private int val;
 		
@@ -93,8 +92,8 @@ public class Game
 		}
 		
 		players = new Player[2];
-		players[0] = new Human("Player 1", Loyalty.RED, p1Pieces);
-		players[1] = new AI("Player 2", Loyalty.BLACK, p2Pieces);	
+		players[0] = new AI("Player 1", Loyalty.RED, p1Pieces, 3);
+		players[1] = new AI("Player 2", Loyalty.BLACK, p2Pieces, 7);	
 		
 		board = new Board(this);
 		
@@ -148,15 +147,19 @@ public class Game
 	 */
 	public void executeTurn() throws IOException
 	{
-		if(!(turn == Turn.OVER))
-		{
-			Player thisPlayer = players[turn.getVal()];
-			
-			Move move = thisPlayer.getThisTurnMove();
-			
+		Player thisPlayer = players[turn.getVal()];
+		
+		Move move = thisPlayer.getThisTurnMove();
+	
+		if(!thisPlayer.isDefeated())
+		{		
 			board.executeMove(move);
-			
+				
 			turn = turn.getOther();
+		}
+		else
+		{
+			System.out.println(turn + " is " + thisPlayer.getState());
 		}
 	}
 	

@@ -2,6 +2,7 @@ package game.player;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import game.Game;
 import game.Move;
 import game.piece.*;
 import game.piece.Piece.Loyalty;
@@ -13,6 +14,14 @@ import game.piece.Piece.Loyalty;
  */
 public abstract class Player
 {
+	
+	/** The enum representing the state of a player **/
+	public static enum State
+	{
+		PLAYING,
+		DEFEATED
+	}
+	
 	/** The name of this player **/
 	private String name;
 	
@@ -20,7 +29,10 @@ public abstract class Player
 	private Loyalty loyalty;
 	
 	/** The pieces of this player **/
-	ArrayList<Piece> pieces;
+	private ArrayList<Piece> pieces;
+	
+	/**The state of this player **/
+	private State state;
 	
 	/** The default number of pieces on the checkers grid **/
 	public final static int DEFAULT_PIECE_NUM = 12;
@@ -37,6 +49,7 @@ public abstract class Player
 		this.name = name;
 		this.loyalty = loyalty;
 		this.pieces = pieces;
+		this.state = State.PLAYING;
 	}
 	
 	/**
@@ -60,6 +73,11 @@ public abstract class Player
 				
 				possibleMoves.add(possibleMove);
 			}
+		}
+		
+		if(possibleMoves.isEmpty())
+		{
+			state = State.DEFEATED;
 		}
 		
 		if(jumpMoves.isEmpty())
@@ -107,6 +125,14 @@ public abstract class Player
 	{
 		return name;
 	}
+	
+	/**
+	 * @return the state
+	 */
+	public State getState()
+	{
+		return state;
+	}
 
 	/**
 	 * @return the loyalty
@@ -131,6 +157,14 @@ public abstract class Player
 	{
 		this.name = name;
 	}
+	
+	/**
+	 * @param state the state to set
+	 */
+	public void setState(State state)
+	{
+		this.state = state;
+	}
 
 	/**
 	 * @param loyalty the loyalty to set
@@ -146,5 +180,20 @@ public abstract class Player
 	public void setPieces(ArrayList<Piece> pieces)
 	{
 		this.pieces = pieces;
+	}
+	
+	/**
+	 * @return	whether or not this player is defeated
+	 */
+	public boolean isDefeated()
+	{
+		if(state == State.DEFEATED)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 }

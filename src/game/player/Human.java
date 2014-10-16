@@ -3,6 +3,7 @@ package game.player;
 import game.Move;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
+import game.player.Player.State;
 
 import java.util.ArrayList;
 
@@ -33,10 +34,13 @@ public class Human extends Player
 	public Move getThisTurnMove()
 	{
 		ArrayList<Move> possibleMoves = getPossibleMoves();
+
+		if(isDefeated())
+		{
+			return null;
+		}
 		
 		int randomMove = (int)(possibleMoves.size()*Math.random());
-		
-		System.out.println(possibleMoves.get(randomMove));
 		
 		return possibleMoves.get(randomMove);
 	}
