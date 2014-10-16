@@ -2,14 +2,8 @@ package gui;
 
 import game.Game;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.IOException;
 
 import javax.swing.JFrame;
@@ -41,6 +35,7 @@ public class GamePanel extends JPanel implements KeyListener, MouseListener
         frame.addKeyListener(panel);
         frame.addMouseListener(panel);
         frame.setVisible(true);
+        frame.setLocation(new Point(500, 100));
         frame.pack();
 	}
 	
