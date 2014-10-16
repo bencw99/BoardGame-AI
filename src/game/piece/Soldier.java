@@ -1,6 +1,5 @@
 package game.piece;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.ImageObserver;
@@ -11,7 +10,6 @@ import game.Move;
 import game.board.Board;
 import game.board.Location;
 import game.board.Node;
-import game.piece.Piece.Loyalty;
 
 /**
  * A class describing a checkers soldier piece

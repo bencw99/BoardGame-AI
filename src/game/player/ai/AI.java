@@ -18,7 +18,7 @@ import java.util.Stack;
 public class AI extends Player
 {
 	/** The depth of the minimax search **/
-	private static final int MINIMAX_DEPTH = 6;
+	private static final int MINIMAX_DEPTH = 7;
 	
 	/**
 	 * Parameterized constructor, initializes name, pieces, and loyalty

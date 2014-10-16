@@ -5,7 +5,6 @@ import game.Move;
 import game.piece.King;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
-import game.piece.Soldier;
 
 import java.awt.Color;
 import java.awt.Graphics;

@@ -10,7 +10,6 @@ import game.Move;
 import game.board.Board;
 import game.board.Location;
 import game.board.Node;
-import game.piece.Piece.Loyalty;
 
 /**
  * A class describing a checkers king piece
@@ -180,7 +179,7 @@ public class King extends Piece implements ImageObserver
 				
 				for(Node jumped : (new Move(thisMoveOfCurrent, getNode().getBoard(), getLoyalty())).getJumped())
 				{
-					if(jumped.getLoc().equals(new Location((loc.getRow() + jump.getRow())/2, (loc.getCol() + jump.getCol())/2)))
+					if(jumped.getLoc().getRow() == (loc.getRow() + jump.getRow())/2 && jumped.getLoc().getCol() == (loc.getCol() + jump.getCol())/2)
 					{
 						validMove = false;
 					}

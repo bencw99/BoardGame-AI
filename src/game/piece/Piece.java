@@ -1,9 +1,7 @@
 package game.piece;
 
 import game.Move;
-import game.board.Location;
 import game.board.Node;
-import game.player.Player;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -113,13 +111,6 @@ public abstract class Piece
 	 * @param graphics	the grapics object to be drawn on
 	 */
 	public abstract void draw(Graphics graphics);
-
-	/**
-	 * Returns the possible nodes this piece can jump to
-	 * 
-	 * @return	the array list of possible nodes this piece can jump to
-	 */
-//	protected abstract ArrayList<ArrayList<Node>> getNextJumps(Location loc);
 	
 	/**
 	 * Adds this instance to the given node

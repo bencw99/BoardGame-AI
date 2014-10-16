@@ -3,7 +3,6 @@ package game;
 import game.board.Board;
 import game.board.Location;
 import game.board.Node;
-import game.piece.Piece;
 import game.piece.Piece.Loyalty;
 
 import java.util.ArrayList;
