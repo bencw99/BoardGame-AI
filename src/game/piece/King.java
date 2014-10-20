@@ -102,7 +102,7 @@ public class King extends Piece implements ImageObserver
 			}
 		}
 		
-		for(ArrayList<Node> move : getNextJumps(getNode().getLoc(), getNode().getLoc()))
+		for(ArrayList<Node> move : getNextJumps(getNode().getLoc(), new ArrayList<Location>()))
 		{
 			if(move.size() > 1)
 			{
@@ -135,7 +135,7 @@ public class King extends Piece implements ImageObserver
 	 * 
 	 * @return	the array list of possible nodes this piece can jump to
 	 */
-	protected ArrayList<ArrayList<Node>> getNextJumps(Location loc, Location pastJumpLoc)
+	protected ArrayList<ArrayList<Node>> getNextJumps(Location loc, ArrayList<Location> pastJumpLocs)
 	{
 		ArrayList<ArrayList<Node>> retVal = new ArrayList<ArrayList<Node>>();
 		
@@ -151,7 +151,17 @@ public class King extends Piece implements ImageObserver
 				
 				if(getNode().getBoard().isValid(possibleJumpLoc) && getNode().getBoard().getPiece(possibleJumpLoc) == null && getNode().getBoard().getPiece(interJumpLoc) != null && getNode().getBoard().getPiece(interJumpLoc).getLoyalty() != this.getLoyalty())
 				{
-					if((possibleJumpLoc.getRow() != pastJumpLoc.getRow()) || (possibleJumpLoc.getCol() != pastJumpLoc.getCol()))
+					boolean isValid = true;
+					
+					for(Location pastJumpLoc : pastJumpLocs)
+					{
+						if((interJumpLoc.getRow() == pastJumpLoc.getRow()) && (interJumpLoc.getCol() == pastJumpLoc.getCol()))
+						{
+							isValid = false;
+						}
+					}
+						
+					if(isValid)
 					{
 						jumps.add(possibleJumpLoc);
 					}
@@ -171,19 +181,23 @@ public class King extends Piece implements ImageObserver
 		
 		for(Location jump : jumps)
 		{
-			ArrayList<ArrayList<Node>> movesOfCurrent = getNextJumps(jump, loc);
+			ArrayList<Location> newPastJumpLocs = (ArrayList<Location>) pastJumpLocs.clone();
+			
+			newPastJumpLocs.add(new Location((loc.getRow() + jump.getRow())/2, (loc.getCol() + jump.getCol())/2));
+			
+			ArrayList<ArrayList<Node>> movesOfCurrent = getNextJumps(jump, newPastJumpLocs);
 			
 			for(ArrayList<Node> thisMoveOfCurrent : movesOfCurrent)
 			{
 				boolean validMove = true;
 				
-				for(Node jumped : (new Move(thisMoveOfCurrent, getNode().getBoard(), getLoyalty())).getJumped())
-				{
-					if(jumped.getLoc().getRow() == (loc.getRow() + jump.getRow())/2 && jumped.getLoc().getCol() == (loc.getCol() + jump.getCol())/2)
-					{
-						validMove = false;
-					}
-				}
+//				for(Node jumped : (new Move(thisMoveOfCurrent, getNode().getBoard(), getLoyalty())).getJumped())
+//				{
+//					if(jumped.getLoc().getRow() == (loc.getRow() + jump.getRow())/2 && jumped.getLoc().getCol() == (loc.getCol() + jump.getCol())/2)
+//					{
+//						validMove = false;
+//					}
+//				}
 				
 				if(validMove)
 				{
