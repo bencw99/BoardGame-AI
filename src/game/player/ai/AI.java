@@ -209,6 +209,24 @@ public class AI extends Player
 		Player[] players = node.getGame().getPlayers();
 		double functionVal = node.getGame().getTurn().getVal() == getLoyalty().getVal() ? 3 : -3;
 		
+		boolean hasWon = true;
+		
+		for(Player enemy : players)
+		{
+			if(enemy.getLoyalty() != this.getLoyalty())
+			{
+				if(!enemy.isDefeated())
+				{
+					hasWon = false;
+				}
+			}
+		}
+		
+		if(hasWon)
+		{
+			return Double.MAX_VALUE;
+		}
+		
 		if(isDefeated())
 		{
 			return Double.MIN_VALUE;
