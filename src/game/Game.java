@@ -92,8 +92,8 @@ public class Game
 		}
 		
 		players = new Player[2];
-		players[0] = new AI("Player 1", Loyalty.RED, p1Pieces, 5);
-		players[1] = new AI("Player 2", Loyalty.BLACK, p2Pieces, 6);	
+		players[0] = new Human("Player 1", Loyalty.RED, p1Pieces);
+		players[1] = new AI("Player 2", Loyalty.BLACK, p2Pieces, 7);	
 		
 		board = new Board(this);
 		
@@ -150,6 +150,11 @@ public class Game
 		Player thisPlayer = players[turn.getVal()];
 		
 		Move move = thisPlayer.getThisTurnMove();
+		
+		while(move == null)
+		{
+			move = thisPlayer.getThisTurnMove();
+		}
 	
 		if(!thisPlayer.isDefeated())
 		{		
