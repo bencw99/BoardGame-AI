@@ -168,16 +168,6 @@ public class King extends Piece implements ImageObserver
 				}
 			}
 		}
-
-		/*
-		 * Bug Summary:
-		 * 
-		 * Despite the testing that occurs to remove various invalid moves resulting from recursion and rejumping a single space,
-		 * An overflow occurs because the method is called recursively before this testing takes place, hence it works for single
-		 * jumps, but not for 2+ jumps of a king
-		 * 
-		 * To fix this error, incorporate testing into recursive calls to prevent new calls when move is not even valid
-		 */
 		
 		for(Location jump : jumps)
 		{
@@ -189,21 +179,8 @@ public class King extends Piece implements ImageObserver
 			
 			for(ArrayList<Node> thisMoveOfCurrent : movesOfCurrent)
 			{
-				boolean validMove = true;
-				
-//				for(Node jumped : (new Move(thisMoveOfCurrent, getNode().getBoard(), getLoyalty())).getJumped())
-//				{
-//					if(jumped.getLoc().getRow() == (loc.getRow() + jump.getRow())/2 && jumped.getLoc().getCol() == (loc.getCol() + jump.getCol())/2)
-//					{
-//						validMove = false;
-//					}
-//				}
-				
-				if(validMove)
-				{
-					thisMoveOfCurrent.add(0, getNode().getBoard().getNode(loc));
-					retVal.add(thisMoveOfCurrent);
-				}
+				thisMoveOfCurrent.add(0, getNode().getBoard().getNode(loc));
+				retVal.add(thisMoveOfCurrent);
 			}
 		}
 
