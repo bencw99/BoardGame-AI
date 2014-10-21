@@ -1,6 +1,11 @@
 package gui;
 
 import game.Game;
+import game.board.Board;
+import game.board.Location;
+import game.board.Node;
+import game.player.Human;
+import game.player.Player;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -21,6 +26,15 @@ public class GamePanel extends JPanel implements KeyListener, MouseListener
 	
     private static JFrame frame = new JFrame();
 	
+    public GamePanel()
+    {
+    	super();
+    	
+//        addMouseListener((MouseListener) game.getPlayers()[0]);
+//        addMouseMotionListener((MouseMotionListener) game.getPlayers()[0]);
+//        addKeyListener((KeyListener) game.getPlayers()[0]);
+    }
+    
 	public static void main(String[] args) throws IOException
 	{
 		game = new Game();
@@ -34,6 +48,9 @@ public class GamePanel extends JPanel implements KeyListener, MouseListener
         frame.add(panel);
         frame.addKeyListener(panel);
         frame.addMouseListener(panel);
+        frame.addMouseListener((MouseListener) game.getPlayers()[0]);
+        frame.addMouseMotionListener((MouseMotionListener) game.getPlayers()[0]);
+        frame.addKeyListener((KeyListener) game.getPlayers()[0]);
         frame.setVisible(true);
         frame.setLocation(new Point(500, 100));
         frame.pack();
@@ -81,19 +98,22 @@ public class GamePanel extends JPanel implements KeyListener, MouseListener
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent arg0) 
+	public void mouseClicked(MouseEvent event) 
 	{
-        System.out.println(game.getTurn());
-    	
-        try 
+		int x = event.getX();
+		int y = event.getY();
+		
+		int row = (x - x % Board.NODE_WIDTH)/Board.NODE_WIDTH;
+		int col = (y - y % Board.NODE_HEIGHT)/Board.NODE_HEIGHT;
+		
+		Location loc = new Location(row, col);
+        
+        Player player = game.getPlayers()[game.getTurn().getVal()];
+        
+        if(player instanceof Human)
         {
-			game.executeTurn();
-		} 
-        catch (IOException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        	
+        }
         	
         frame.repaint();
 		
