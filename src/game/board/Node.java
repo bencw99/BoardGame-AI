@@ -78,10 +78,8 @@ public class Node
 	 */
 	public void draw(Graphics graphics)
 	{
-		graphics.setColor(new Color(128, 0, 0));
-		graphics.fillRect(getLoc().getRow()*Board.NODE_WIDTH, getLoc().getCol()*Board.NODE_HEIGHT, Board.NODE_WIDTH, Board.NODE_HEIGHT);
 		graphics.setColor(color);
-		graphics.fillRect(getLoc().getRow()*Board.NODE_WIDTH + 1, getLoc().getCol()*Board.NODE_HEIGHT + 1, Board.NODE_WIDTH - 2, Board.NODE_HEIGHT - 2);
+		graphics.fillRect(getLoc().getRow()*Board.NODE_WIDTH, getLoc().getCol()*Board.NODE_HEIGHT, Board.NODE_WIDTH, Board.NODE_HEIGHT);
 		
 		if(piece != null)
 		{
