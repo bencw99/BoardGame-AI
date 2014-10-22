@@ -26,6 +26,11 @@ public class Node
 	/** The color of this node **/
 	private Color color;
 	
+	/** The boolean determining whether or not this node is highlighted **/
+	private boolean isHighlighted;
+	
+	private static final Color DEFAULT_HIGHLIGHT_COLOR = new Color(255, 255, 255);
+	
 	/**
 	 * Parameterized constructor, initializes Node location
 	 */
@@ -80,6 +85,12 @@ public class Node
 	{
 		graphics.setColor(color);
 		graphics.fillRect(getLoc().getRow()*Board.NODE_WIDTH, getLoc().getCol()*Board.NODE_HEIGHT, Board.NODE_WIDTH, Board.NODE_HEIGHT);
+		
+		if(isHighlighted)
+		{
+			graphics.setColor(DEFAULT_HIGHLIGHT_COLOR);
+			graphics.drawRect(getLoc().getRow()*Board.NODE_WIDTH, getLoc().getCol()*Board.NODE_HEIGHT, Board.NODE_WIDTH - 1, Board.NODE_HEIGHT - 1);
+		}
 		
 		if(piece != null)
 		{
@@ -141,5 +152,15 @@ public class Node
 	public Color getColor()
 	{
 		return color;
+	}
+	
+	/**
+	 * Sets the highlight of this node
+	 * 
+	 * @param isHighlighted	the highlight state to be state
+	 */
+	public void setHighlighted(boolean isHighlighted)
+	{
+		this.isHighlighted = isHighlighted;
 	}
 }

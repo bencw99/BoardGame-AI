@@ -18,7 +18,6 @@ import javax.imageio.ImageIO;
  */
 public abstract class Piece 
 {
-	
 	/** The enum describing the loyalty of this piece **/
 	public static enum Loyalty 
 	{
