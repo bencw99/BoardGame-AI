@@ -24,7 +24,7 @@ public class GamePanel extends JPanel implements KeyListener, MouseListener
 	/** The game of this game panel **/
 	private static Game game;
 	
-    private static JFrame frame = new JFrame();
+    public static JFrame frame = new JFrame();
 	
     public GamePanel()
     {
@@ -46,14 +46,31 @@ public class GamePanel extends JPanel implements KeyListener, MouseListener
         GamePanel panel = new GamePanel();
         panel.setPreferredSize(new Dimension(640, 640));
         frame.add(panel);
-        frame.addKeyListener(panel);
-        frame.addMouseListener(panel);
-        frame.addMouseListener((MouseListener) game.getPlayers()[0]);
-        frame.addMouseMotionListener((MouseMotionListener) game.getPlayers()[0]);
+        panel.addMouseListener((MouseListener) game.getPlayers()[0]);
+        panel.addMouseMotionListener((MouseMotionListener) game.getPlayers()[0]);
         frame.addKeyListener((KeyListener) game.getPlayers()[0]);
         frame.setVisible(true);
         frame.setLocation(new Point(500, 100));
         frame.pack();
+        
+        boolean gameOver = false;
+        
+        while(!gameOver)
+        {
+            System.out.println(game.getTurn());
+        	
+            try 
+            {
+    			game.executeTurn();
+    		} 
+            catch (IOException e) 
+    		{
+    			e.printStackTrace();
+    		}
+            	
+            frame.repaint();
+        }
+        
 	}
 	
 	/**
@@ -67,19 +84,6 @@ public class GamePanel extends JPanel implements KeyListener, MouseListener
 	@Override
 	public void keyPressed(KeyEvent arg0)
 	{
-        System.out.println(game.getTurn());
-    	
-        try 
-        {
-			game.executeTurn();
-		} 
-        catch (IOException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        	
-        frame.repaint();
 		
 	}
 
