@@ -22,9 +22,6 @@ public class MinimaxNode
 	/** The game of this minimax node **/
 	private Game game;
 	
-	/** The array of Arraylists containing the pieces of this grid **/
-	ArrayList<ArrayList<Piece>> playerPieces;
-	
 	/**
 	 * Parameterized constructor, initializes board and minimax depth to given values
 	 * 

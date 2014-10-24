@@ -46,9 +46,17 @@ public class GamePanel extends JPanel implements KeyListener, MouseListener
         GamePanel panel = new GamePanel();
         panel.setPreferredSize(new Dimension(640, 640));
         frame.add(panel);
-        panel.addMouseListener((MouseListener) game.getPlayers()[0]);
-        panel.addMouseMotionListener((MouseMotionListener) game.getPlayers()[0]);
-        frame.addKeyListener((KeyListener) game.getPlayers()[0]);
+        for(Player player : game.getPlayers())
+        {
+        	if(player instanceof Human)
+        	{
+        		System.out.println("Human player registered");
+        		
+		        panel.addMouseListener((MouseListener) player);
+		        panel.addMouseMotionListener((MouseMotionListener) player);
+		        frame.addKeyListener((KeyListener) player);
+        	}
+        }
         frame.setVisible(true);
         frame.setLocation(new Point(500, 100));
         frame.pack();
@@ -56,9 +64,7 @@ public class GamePanel extends JPanel implements KeyListener, MouseListener
         boolean gameOver = false;
         
         while(!gameOver)
-        {
-            System.out.println(game.getTurn());
-        	
+        {	
             try 
             {
     			game.executeTurn();

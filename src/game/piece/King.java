@@ -16,7 +16,7 @@ import game.board.Node;
  * 
  * @author Benjamin Cohen-Wang
  */
-public class King extends Piece implements ImageObserver
+public class King extends Piece
 {
 	/** The worth of a king **/
 	public static final int KING_WORTH = 20;
@@ -193,15 +193,5 @@ public class King extends Piece implements ImageObserver
 		}
 		
 		return retVal;
-	}
-
-	public void draw(Graphics graphics) 
-	{
-		graphics.drawImage(image, getNode().getLoc().getRow()*Board.NODE_WIDTH + 9, getNode().getLoc().getCol()*Board.NODE_HEIGHT + 9, this);
-	}
-
-	public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height)
-	{
-		return false;
 	}
 }

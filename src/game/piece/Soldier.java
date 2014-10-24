@@ -16,7 +16,7 @@ import game.board.Node;
  * 
  * @author Benjamin Cohen-Wang
  */
-public class Soldier extends Piece implements ImageObserver
+public class Soldier extends Piece
 {
 	/** The worth of a soldier **/
 	public static final int SOLDIER_WORTH = 11;
@@ -170,15 +170,5 @@ public class Soldier extends Piece implements ImageObserver
 		}
 		
 		return retVal;
-	}
-
-	public void draw(Graphics graphics) 
-	{
-		graphics.drawImage(image, getNode().getLoc().getRow()*Board.NODE_WIDTH + 9, getNode().getLoc().getCol()*Board.NODE_HEIGHT + 9, this);
-	}
-
-	public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height)
-	{
-		return false;
 	}
 }

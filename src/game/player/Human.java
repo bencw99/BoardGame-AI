@@ -196,8 +196,8 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 			int x = event.getX();
 			int y = event.getY();
 			
-			int row = (x - x % Board.NODE_WIDTH)/Board.NODE_WIDTH;
-			int col = (y - y % Board.NODE_HEIGHT)/Board.NODE_HEIGHT;
+			int row = (y - y % Board.NODE_HEIGHT)/Board.NODE_HEIGHT;
+			int col = (x - x % Board.NODE_WIDTH)/Board.NODE_WIDTH;
 			
 			Location loc = new Location(row, col);
 			

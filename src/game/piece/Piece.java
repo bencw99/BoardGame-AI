@@ -1,10 +1,13 @@
 package game.piece;
 
 import game.Move;
+import game.board.Board;
 import game.board.Node;
 
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,7 +19,7 @@ import javax.imageio.ImageIO;
  * 
  * @author Benjamin Cohen-Wang
  */
-public abstract class Piece 
+public abstract class Piece implements ImageObserver 
 {
 	/** The enum describing the loyalty of this piece **/
 	public static enum Loyalty 
@@ -98,18 +101,21 @@ public abstract class Piece
 	}
 	
 	/**
+	 * Draws this piece
+	 * 
+	 * @param graphics	the grapics object to be drawn on
+	 */
+	public void draw(Graphics graphics) 
+	{
+		graphics.drawImage(image, getNode().getLoc().getCol()*Board.NODE_HEIGHT + 9, getNode().getLoc().getRow()*Board.NODE_WIDTH + 9, this);
+	}
+	
+	/**
 	 * Returns the possible move this piece can do
 	 * 
 	 * @return	the array list of possible moves this piece execute
 	 */
 	public abstract ArrayList<Move> getPossibleMoves();
-	
-	/**
-	 * Draws this piece
-	 * 
-	 * @param graphics	the grapics object to be drawn on
-	 */
-	public abstract void draw(Graphics graphics);
 	
 	/**
 	 * Adds this instance to the given node
@@ -151,6 +157,11 @@ public abstract class Piece
 	public void setWorth(int worth) 
 	{
 		this.worth = worth;
+	}
+
+	public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height)
+	{
+		return false;
 	}
 
 	/**

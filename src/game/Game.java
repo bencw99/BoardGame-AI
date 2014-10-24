@@ -92,8 +92,8 @@ public class Game
 		}
 		
 		players = new Player[2];
-		players[0] = new Human("Player 1", Loyalty.RED, p1Pieces);
-		players[1] = new AI("Player 2", Loyalty.BLACK, p2Pieces, 7);	
+		players[0] = new AI("Player 1", Loyalty.RED, p1Pieces);
+		players[1] = new AI("Player 2", Loyalty.BLACK, p2Pieces, 7);
 		
 		board = new Board(this);
 		
@@ -146,8 +146,10 @@ public class Game
 	 * @throws IOException 
 	 */
 	public void executeTurn() throws IOException
-	{
+	{	
 		Player thisPlayer = players[turn.getVal()];
+		
+		System.out.println(thisPlayer.getName());
 		
 		Move move = thisPlayer.getThisTurnMove();
 		
@@ -164,7 +166,7 @@ public class Game
 		}
 		else
 		{
-			System.out.println(turn + " is " + thisPlayer.getState());
+			System.out.println(thisPlayer.getName() + " is " + thisPlayer.getState());
 		}
 	}
 	

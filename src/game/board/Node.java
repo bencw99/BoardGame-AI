@@ -84,12 +84,12 @@ public class Node
 	public void draw(Graphics graphics)
 	{
 		graphics.setColor(color);
-		graphics.fillRect(getLoc().getRow()*Board.NODE_WIDTH, getLoc().getCol()*Board.NODE_HEIGHT, Board.NODE_WIDTH, Board.NODE_HEIGHT);
+		graphics.fillRect(getLoc().getCol()*Board.NODE_HEIGHT, getLoc().getRow()*Board.NODE_WIDTH, Board.NODE_HEIGHT, Board.NODE_WIDTH);
 		
 		if(isHighlighted)
 		{
 			graphics.setColor(DEFAULT_HIGHLIGHT_COLOR);
-			graphics.drawRect(getLoc().getRow()*Board.NODE_WIDTH, getLoc().getCol()*Board.NODE_HEIGHT, Board.NODE_WIDTH - 1, Board.NODE_HEIGHT - 1);
+			graphics.drawRect(getLoc().getCol()*Board.NODE_HEIGHT, getLoc().getRow()*Board.NODE_WIDTH, Board.NODE_HEIGHT - 1, Board.NODE_WIDTH - 1);
 		}
 		
 		if(piece != null)
