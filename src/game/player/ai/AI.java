@@ -84,7 +84,7 @@ public class AI extends Player
 			possibleNextNodes[i] = currentNode.getNextNode(possibleMoves.get(i));
 		}
 		
-		double maxMinimaxVal = getMinimaxVal(possibleNextNodes[0], Double.MAX_VALUE);
+		double maxMinimaxVal = getMinimaxVal(possibleNextNodes[0], Double.MIN_VALUE);
 		
 		ArrayList<Integer> maxMovesIndeces = new ArrayList<Integer>();
 		maxMovesIndeces.add(0);
@@ -110,10 +110,6 @@ public class AI extends Player
 		
 		return possibleMovesArray[maxMovesIndeces.get(random)];
 	}
-
-	/**
-	 * Pruned gets destroyed, check pruning
-	 */
 	
 	/**
 	 * Returns the minimax val of the given move
@@ -140,7 +136,7 @@ public class AI extends Player
 		
 		if(getLoyalty().getVal() == node.getGame().getTurn().getVal())
 		{
-			extreme = Double.MIN_VALUE;
+			extreme = getMinimaxVal(node.getNextNode(nextMoves.get(0)), Double.MIN_VALUE);
 			
 			for(Move nextMove : nextMoves)
 			{	
@@ -159,7 +155,7 @@ public class AI extends Player
 		} 
 		else
 		{
-			extreme = Double.MAX_VALUE;
+			extreme = getMinimaxVal(node.getNextNode(nextMoves.get(0)), Double.MAX_VALUE);
 			
 			for(Move nextMove : nextMoves)
 			{
