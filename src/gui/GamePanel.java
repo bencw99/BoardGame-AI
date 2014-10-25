@@ -25,14 +25,16 @@ public class GamePanel extends JPanel implements KeyListener, MouseListener
 	private static Game game;
 	
     public static JFrame frame = new JFrame();
+    
+    public static boolean gameOver = false;
+    
+    public static int redWinCounter = 0;
+    
+    public static int blackWinCounter = 0;
 	
     public GamePanel()
     {
     	super();
-    	
-//        addMouseListener((MouseListener) game.getPlayers()[0]);
-//        addMouseMotionListener((MouseMotionListener) game.getPlayers()[0]);
-//        addKeyListener((KeyListener) game.getPlayers()[0]);
     }
     
 	public static void main(String[] args) throws IOException
@@ -60,8 +62,6 @@ public class GamePanel extends JPanel implements KeyListener, MouseListener
         frame.setVisible(true);
         frame.setLocation(new Point(500, 100));
         frame.pack();
-        
-        boolean gameOver = false;
         
         while(!gameOver)
         {	
