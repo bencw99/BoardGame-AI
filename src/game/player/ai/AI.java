@@ -84,7 +84,7 @@ public class AI extends Player
 			possibleNextNodes[i] = currentNode.getNextNode(possibleMoves.get(i));
 		}
 		
-		double maxMinimaxVal = getMinimaxVal(possibleNextNodes[0], Double.MIN_VALUE);
+		double maxMinimaxVal = getMinimaxVal(possibleNextNodes[0], Integer.MIN_VALUE);
 		
 		ArrayList<Integer> maxMovesIndeces = new ArrayList<Integer>();
 		maxMovesIndeces.add(0);
@@ -136,7 +136,7 @@ public class AI extends Player
 		
 		if(getLoyalty().getVal() == node.getGame().getTurn().getVal())
 		{
-			extreme = getMinimaxVal(node.getNextNode(nextMoves.get(0)), Double.MIN_VALUE);
+			extreme = getMinimaxVal(node.getNextNode(nextMoves.get(0)), Integer.MIN_VALUE);
 			
 			for(Move nextMove : nextMoves)
 			{	
@@ -155,7 +155,7 @@ public class AI extends Player
 		} 
 		else
 		{
-			extreme = getMinimaxVal(node.getNextNode(nextMoves.get(0)), Double.MAX_VALUE);
+			extreme = getMinimaxVal(node.getNextNode(nextMoves.get(0)), Integer.MAX_VALUE);
 			
 			for(Move nextMove : nextMoves)
 			{
@@ -182,7 +182,7 @@ public class AI extends Player
 	 * @param node	the minimaxNode whose minimax value is evaluated
 	 * @throws IOException 
 	 */
-	private double getMinimaxVal(MinimaxNode node, int sameMethodSignaturePreventing) throws IOException
+	private double getMinimaxVal(MinimaxNode node, String sameMethodSignaturePreventing) throws IOException
 	{
 		Stack<MinimaxNode> stack = new Stack<MinimaxNode>();
 		
