@@ -2,10 +2,8 @@ package game.player.ai;
 
 import game.Game;
 import game.Move;
-import game.piece.King;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
-import game.piece.Soldier;
 import game.player.Player;
 
 import java.io.IOException;
@@ -20,12 +18,10 @@ import java.util.Stack;
 public class AI extends Player
 {
 	/** The depth of the minimax search **/
-	private static final int DEFAULT_MINIMAX_DEPTH = 7;
+	private static final int DEFAULT_MINIMAX_DEPTH = 8;
 	
 	/** The minimax depth of this ai instance **/
 	private final int minimaxDepth;
-	
-	boolean isPruned;
 	
 	/**
 	 * Parameterized constructor, initializes name, pieces, and loyalty
@@ -37,8 +33,6 @@ public class AI extends Player
 	public AI(String name, Loyalty loyalty, ArrayList<Piece> pieces)
 	{
 		this(name, loyalty, pieces, DEFAULT_MINIMAX_DEPTH);
-		
-		isPruned = true;
 	}
 	
 	/**
@@ -53,8 +47,6 @@ public class AI extends Player
 	{
 		super(name, loyalty, pieces);
 		this.minimaxDepth = minimaxDepth;
-		
-		isPruned = false;
 	}
 
 	/**
@@ -146,11 +138,6 @@ public class AI extends Player
 		  		{
 		  			extreme = maxCand;
 		  		}
-				
-				if(extreme > alphaVal && isPruned)
-				{
-					break;
-				}
 			}
 		} 
 		else
@@ -164,11 +151,6 @@ public class AI extends Player
 				if(minCand < extreme)
 				{
 					extreme = minCand;
-				}
-				
-				if(extreme < alphaVal && isPruned)
-				{
-					break;
 				}
 			}
 		}

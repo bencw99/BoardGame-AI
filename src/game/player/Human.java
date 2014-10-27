@@ -7,7 +7,6 @@ import game.board.Node;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
 import gui.GamePanel;
-import input.HumanMoveInput;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -15,8 +14,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
-
-import javax.swing.JOptionPane;
 
 /**
  * A class representing a Human player associated with a checkers game
@@ -58,7 +55,7 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 		moveLocs = new ArrayList<Location>();
 		
 		while(!moveRegistered)
-		{	
+		{
 			try
 			{
 				Thread.sleep(100);
