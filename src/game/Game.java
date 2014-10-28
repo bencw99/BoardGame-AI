@@ -93,7 +93,7 @@ public class Game
 		
 		players = new Player[2];
 		players[0] = new AI("AI", Loyalty.RED, p1Pieces);
-		players[1] = new Human("Human", Loyalty.BLACK, p2Pieces);
+		players[1] = new AI("Human", Loyalty.BLACK, p2Pieces, 5);
 		
 		board = new Board(this);
 		

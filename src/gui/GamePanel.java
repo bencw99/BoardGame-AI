@@ -63,18 +63,34 @@ public class GamePanel extends JPanel implements KeyListener, MouseListener
         frame.setLocation(new Point(500, 100));
         frame.pack();
         
-        while(!gameOver)
-        {	
-            try 
-            {
-    			game.executeTurn();
-    		} 
-            catch (IOException e) 
-    		{
-    			e.printStackTrace();
-    		}
-            	
-            frame.repaint();
+        for(int i = 0; i < 100; i ++)
+        {
+        	game = new Game();
+        	
+	        while(!game.getPlayers()[0].isDefeated() &&       !game.getPlayers()[0].isDefeated())
+	        {	
+	            try 
+	            {
+	    			game.executeTurn();
+	    		} 
+	            catch (IOException e) 
+	    		{
+	    			e.printStackTrace();
+	    		}
+	            	
+//	            frame.repaint();
+	        }
+	        
+	        if(game.getPlayers()[0].isDefeated())
+	        {
+	        	redWinCounter ++;
+	        }
+	        else
+	        {
+	        	blackWinCounter ++;
+	        }
+	        
+	        System.out.println(redWinCounter + " " + blackWinCounter);
         }
         
 	}

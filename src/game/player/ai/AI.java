@@ -4,6 +4,7 @@ import game.Game;
 import game.Move;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
+import game.piece.Soldier;
 import game.player.Player;
 
 import java.io.IOException;
@@ -18,10 +19,12 @@ import java.util.Stack;
 public class AI extends Player
 {
 	/** The depth of the minimax search **/
-	private static final int DEFAULT_MINIMAX_DEPTH = 8;
+	private static final int DEFAULT_MINIMAX_DEPTH = 5;
 	
 	/** The minimax depth of this ai instance **/
 	private final int minimaxDepth;
+	
+	private int kingWorth;
 	
 	/**
 	 * Parameterized constructor, initializes name, pieces, and loyalty
@@ -33,6 +36,8 @@ public class AI extends Player
 	public AI(String name, Loyalty loyalty, ArrayList<Piece> pieces)
 	{
 		this(name, loyalty, pieces, DEFAULT_MINIMAX_DEPTH);
+		
+		kingWorth = 50;
 	}
 	
 	/**
@@ -47,6 +52,8 @@ public class AI extends Player
 	{
 		super(name, loyalty, pieces);
 		this.minimaxDepth = minimaxDepth;
+		
+		kingWorth = 20;
 	}
 
 	/**
@@ -243,14 +250,20 @@ public class AI extends Player
 			{
 				for(Piece piece : player.getPieces())
 				{
-					functionVal += piece.getWorth();
+					if(piece instanceof Soldier)
+						functionVal += piece.getWorth();
+					else
+						functionVal += kingWorth;
 				}
 			}
 			else
 			{
 				for(Piece piece : player.getPieces())
 				{
-					functionVal -= piece.getWorth();
+					if(piece instanceof Soldier)
+						functionVal -= piece.getWorth();
+					else
+						functionVal -= kingWorth;
 				}
 			}
 		}
