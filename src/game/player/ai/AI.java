@@ -24,8 +24,6 @@ public class AI extends Player
 	/** The minimax depth of this ai instance **/
 	private final int minimaxDepth;
 	
-	private int kingWorth;
-	
 	/**
 	 * Parameterized constructor, initializes name, pieces, and loyalty
 	 * 
@@ -37,7 +35,7 @@ public class AI extends Player
 	{
 		this(name, loyalty, pieces, DEFAULT_MINIMAX_DEPTH);
 		
-		kingWorth = 50;
+		kingWorth = 250;
 	}
 	
 	/**
@@ -53,7 +51,7 @@ public class AI extends Player
 		super(name, loyalty, pieces);
 		this.minimaxDepth = minimaxDepth;
 		
-		kingWorth = 20;
+		kingWorth = 150;
 	}
 
 	/**

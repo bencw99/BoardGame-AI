@@ -63,11 +63,13 @@ public class GamePanel extends JPanel implements KeyListener, MouseListener
         frame.setLocation(new Point(500, 100));
         frame.pack();
         
+        System.out.println("(" + game.getPlayers()[0].kingWorth + ") (" + game.getPlayers()[1].kingWorth + ")");
+        
         for(int i = 0; i < 100; i ++)
         {
         	game = new Game();
         	
-	        while(!game.getPlayers()[0].isDefeated() &&       !game.getPlayers()[0].isDefeated())
+	        while((!game.getPlayers()[0].isDefeated()) && (!game.getPlayers()[1].isDefeated()))
 	        {	
 	            try 
 	            {
@@ -78,6 +80,8 @@ public class GamePanel extends JPanel implements KeyListener, MouseListener
 	    			e.printStackTrace();
 	    		}
 	            	
+//		        System.out.println(game.getPlayers()[0].getState() + " " + game.getPlayers()[1].getState());
+	            
 //	            frame.repaint();
 	        }
 	        

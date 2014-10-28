@@ -149,13 +149,11 @@ public class Game
 	{	
 		Player thisPlayer = players[turn.getVal()];
 		
-		System.out.println(thisPlayer.getName());
-		
 		Move move = thisPlayer.getThisTurnMove();
 		
 		if(thisPlayer.isDefeated())
 		{	
-			System.out.println(thisPlayer.getName() + " is " + thisPlayer.getState());
+			return;
 		}
 		
 		while(move == null)
