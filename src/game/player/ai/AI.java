@@ -19,7 +19,7 @@ import java.util.Stack;
 public class AI extends Player
 {
 	/** The depth of the minimax search **/
-	private static final int DEFAULT_MINIMAX_DEPTH = 5;
+	private static final int DEFAULT_MINIMAX_DEPTH = 8;
 	
 	/** The minimax depth of this ai instance **/
 	private final int minimaxDepth;
@@ -35,7 +35,7 @@ public class AI extends Player
 	{
 		this(name, loyalty, pieces, DEFAULT_MINIMAX_DEPTH);
 		
-		kingWorth = 250;
+		kingWorth = 75;
 	}
 	
 	/**
@@ -51,7 +51,7 @@ public class AI extends Player
 		super(name, loyalty, pieces);
 		this.minimaxDepth = minimaxDepth;
 		
-		kingWorth = 150;
+		kingWorth = 5;
 	}
 
 	/**

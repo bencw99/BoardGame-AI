@@ -19,7 +19,7 @@ import game.board.Node;
 public class Soldier extends Piece
 {
 	/** The worth of a soldier **/
-	public static final int SOLDIER_WORTH = 11;
+	public static final int SOLDIER_WORTH = 3;
 	
 	/**
 	 * Default constructor

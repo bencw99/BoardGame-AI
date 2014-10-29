@@ -19,7 +19,7 @@ import game.board.Node;
 public class King extends Piece
 {
 	/** The worth of a king **/
-	public static final int KING_WORTH = 20;
+	public static final int KING_WORTH = 5;
 	
 	/**
 	 * Default constructor
