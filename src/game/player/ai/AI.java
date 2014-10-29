@@ -278,4 +278,33 @@ public class AI extends Player
 		
 		return functionVal;
 	}
+	
+	/**
+	 * A class implementing runnable allowing the threading of minmax evaluation
+	 * 
+	 * @author Benjamin Cohen-Wang
+	 */
+	public class MinimaxValue implements Runnable
+	{
+		/** The minimax node of this minimax value evaluation **/
+		MinimaxNode node;
+		
+		/**
+		 * Parameterized constructor, initializes MinimaxValue instance to given node
+		 * 
+		 * @param node	the node to be set to
+		 */
+		public MinimaxValue(MinimaxNode node)
+		{
+			this.node = node;
+		}
+
+		/**
+		 * Evaluates the minimax val of the node of this instance
+		 */
+		public void run()
+		{
+			
+		}
+	}
 }

@@ -62,39 +62,49 @@ public class GamePanel extends JPanel implements KeyListener, MouseListener
         frame.setLocation(new Point(500, 100));
         frame.pack();
         
-        System.out.println("(" + game.getPlayers()[0].kingWorth + ") (" + game.getPlayers()[1].kingWorth + ")");
-        
-        for(int i = 0; i < 100; i ++)
-        {
-        	game = new Game();
-        	
-	        while((!game.getPlayers()[0].isDefeated()) && (!game.getPlayers()[1].isDefeated()))
-	        {	
-	            try 
-	            {
-	    			game.executeTurn();
-	    		} 
-	            catch (IOException e) 
-	    		{
-	    			e.printStackTrace();
-	    		}
-	            	
-//		        System.out.println(game.getPlayers()[0].getState() + " " + game.getPlayers()[1].getState());
-	            
-//	            frame.repaint();
-	        }
-	        
-	        if(game.getPlayers()[0].isDefeated())
-	        {
-	        	redWinCounter ++;
-	        }
-	        else
-	        {
-	        	blackWinCounter ++;
-	        }
-	        
-	        System.out.println(redWinCounter + " " + blackWinCounter);
+        while((!game.getPlayers()[0].isDefeated()) && (!game.getPlayers()[1].isDefeated()))
+        {	
+            try 
+            {
+    			game.executeTurn();
+    		} 
+            catch (IOException e) 
+    		{
+    			e.printStackTrace();
+    		}
+            	
+            frame.repaint();
         }
+        
+//        System.out.println("(" + game.getPlayers()[0].kingWorth + ") (" + game.getPlayers()[1].kingWorth + ")");
+//        
+//        for(int i = 0; i < 100; i ++)
+//        {
+//        	game = new Game();
+//        	
+//	        while((!game.getPlayers()[0].isDefeated()) && (!game.getPlayers()[1].isDefeated()))
+//	        {	
+//	            try 
+//	            {
+//	    			game.executeTurn();
+//	    		} 
+//	            catch (IOException e) 
+//	    		{
+//	    			e.printStackTrace();
+//	    		}
+//	        }
+//	        
+//	        if(game.getPlayers()[0].isDefeated())
+//	        {
+//	        	redWinCounter ++;
+//	        }
+//	        else
+//	        {
+//	        	blackWinCounter ++;
+//	        }
+//	        
+//	        System.out.println(redWinCounter + " " + blackWinCounter);
+//        }
         
 	}
 	
