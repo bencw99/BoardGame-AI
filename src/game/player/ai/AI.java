@@ -143,6 +143,11 @@ public class AI extends Player
 		  		{
 		  			extreme = maxCand;
 		  		}
+				
+				if(alphaVal <= maxCand)
+				{
+					break;
+				}
 			}
 		} 
 		else
@@ -156,6 +161,11 @@ public class AI extends Player
 				if(minCand < extreme)
 				{
 					extreme = minCand;
+				}
+				
+				if(alphaVal >= minCand)
+				{
+					break;
 				}
 			}
 		}

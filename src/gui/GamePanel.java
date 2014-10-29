@@ -3,7 +3,6 @@ package gui;
 import game.Game;
 import game.board.Board;
 import game.board.Location;
-import game.board.Node;
 import game.player.Human;
 import game.player.Player;
 
