@@ -35,7 +35,7 @@ public class AI extends Player
 	{
 		this(name, loyalty, pieces, DEFAULT_MINIMAX_DEPTH);
 		
-		kingWorth = 75;
+		kingWorth = 5;
 	}
 	
 	/**
@@ -338,7 +338,7 @@ public class AI extends Player
 		
 		for(Player player : players)
 		{
-			if(player.getLoyalty().getVal() == getLoyalty().getVal())
+			if(player.getLoyalty() == getLoyalty())
 			{
 				for(Piece piece : player.getPieces())
 				{
