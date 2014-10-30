@@ -109,6 +109,90 @@ public class AI extends Player
 	}
 	
 	/**
+	 * Returns the move executed this turn
+	 * 
+	 * @return	the move to be executed this turn
+	 * @throws IOException 
+	 */
+	public Move getThisTurnMoveThreaded() throws IOException
+	{	
+		ArrayList<Move> possibleMoves = getPossibleMoves();
+		
+		if(isDefeated())
+		{
+			return null;
+		}
+		
+		Move[] possibleMovesArray = new Move[possibleMoves.size()];
+		
+		MinimaxNode[] possibleNextNodes = new MinimaxNode[possibleMoves.size()];
+		
+		MinimaxNode currentNode = new MinimaxNode(0, new Game(getPieces().get(0).getNode().getBoard().getGame()));
+		
+		for(int i = 0; i < possibleMoves.size(); i ++)
+		{
+			possibleMovesArray[i] = possibleMoves.get(i);
+			possibleNextNodes[i] = currentNode.getNextNode(possibleMoves.get(i));
+		}
+		
+		double maxMinimaxVal = getMinimaxVal(possibleNextNodes[0], Integer.MIN_VALUE);
+		
+		ArrayList<Integer> maxMovesIndeces = new ArrayList<Integer>();
+		maxMovesIndeces.add(0);
+		
+		MinimaxValueFinder[] minimaxThreads = new MinimaxValueFinder[possibleNextNodes.length];
+		
+		for(int i = 0; i < minimaxThreads.length; i ++)
+		{
+			minimaxThreads[i] = new MinimaxValueFinder(possibleNextNodes[i]);
+			minimaxThreads[i].start();
+		}
+		
+		boolean threadsHaveFinished = false;
+		
+		while(!threadsHaveFinished)
+		{
+			threadsHaveFinished = true;
+			
+			for(int i = 0; i < minimaxThreads.length; i ++)
+			{
+				if(minimaxThreads[i].isAlive())
+				{
+					threadsHaveFinished = false;
+				}
+			}
+		}
+
+		double[] minimaxValues = new double[minimaxThreads.length];
+		
+		for(int i = 0; i < minimaxThreads.length; i ++)
+		{
+			minimaxValues[i] = minimaxThreads[i].getMinimaxValue();
+		}
+		
+		for(int i = 0; i < minimaxValues.length; i ++)
+		{	
+			double currentVal = minimaxValues[i];
+			
+			if(currentVal > maxMinimaxVal)
+			{
+				maxMovesIndeces.clear();
+				maxMovesIndeces.add(i);
+				maxMinimaxVal = currentVal;
+			}
+			
+			if(currentVal == maxMinimaxVal)
+			{
+				maxMovesIndeces.add(i);
+			}
+		}
+		
+		int random = (int)(maxMovesIndeces.size()*Math.random());
+		
+		return possibleMovesArray[maxMovesIndeces.get(random)];
+	}
+	
+	/**
 	 * Returns the minimax val of the given move
 	 * 
 	 * @param minimaxNode	the move whose minimax val is evaluated
@@ -284,17 +368,20 @@ public class AI extends Player
 	 * 
 	 * @author Benjamin Cohen-Wang
 	 */
-	public class MinimaxValue implements Runnable
+	public class MinimaxValueFinder extends Thread
 	{
-		/** The minimax node of this minimax value evaluation **/
-		MinimaxNode node;
+		/** The minimax node of this minimax value finder **/
+		private MinimaxNode node;
+		
+		/** The minimax value of this minimax value finder **/
+		private double minimaxValue;
 		
 		/**
 		 * Parameterized constructor, initializes MinimaxValue instance to given node
 		 * 
 		 * @param node	the node to be set to
 		 */
-		public MinimaxValue(MinimaxNode node)
+		public MinimaxValueFinder(MinimaxNode node)
 		{
 			this.node = node;
 		}
@@ -304,7 +391,24 @@ public class AI extends Player
 		 */
 		public void run()
 		{
-			
+			try
+			{
+				minimaxValue = getMinimaxVal(node, Integer.MIN_VALUE);
+			} 
+			catch (IOException exception)
+			{
+				exception.printStackTrace();
+			}
+		}
+		
+		/**
+		 * Returns the minimax value of this instance
+		 * 
+		 * @return	the minimax value of this instance
+		 */
+		public double getMinimaxValue()
+		{
+			return minimaxValue;
 		}
 	}
 }
