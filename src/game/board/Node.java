@@ -15,7 +15,7 @@ import java.awt.Graphics;
 public class Node 
 {
 	/** The board containing this node **/
-	private Board board;
+	private CheckersBoard board;
 	
 	/** The location of this node **/
 	private Location loc;
@@ -34,7 +34,7 @@ public class Node
 	/**
 	 * Parameterized constructor, initializes Node location
 	 */
-	public Node(Location loc, Board board)
+	public Node(Location loc, CheckersBoard board)
 	{
 		this.loc = loc;
 		this.board = board;
@@ -43,7 +43,7 @@ public class Node
 	/**
 	 * Parameterized constructor, initializes color to given color, and location to given values
 	 */
-	public Node(Location loc, Board board, Color color)
+	public Node(Location loc, CheckersBoard board, Color color)
 	{
 		this(loc, board);
 		this.color = color;
@@ -52,7 +52,7 @@ public class Node
 	/**
 	 * Parameterized constructor, initializes node to given node copy (has no board)
 	 */
-	public Node(Node node, Board board)
+	public Node(Node node, CheckersBoard board)
 	{
 		this.color = node.color;
 		this.loc = new Location(node.loc);
@@ -84,12 +84,12 @@ public class Node
 	public void draw(Graphics graphics)
 	{
 		graphics.setColor(color);
-		graphics.fillRect(getLoc().getCol()*Board.NODE_HEIGHT, getLoc().getRow()*Board.NODE_WIDTH, Board.NODE_HEIGHT, Board.NODE_WIDTH);
+		graphics.fillRect(getLoc().getCol()*CheckersBoard.NODE_HEIGHT, getLoc().getRow()*CheckersBoard.NODE_WIDTH, CheckersBoard.NODE_HEIGHT, CheckersBoard.NODE_WIDTH);
 		
 		if(isHighlighted)
 		{
 			graphics.setColor(DEFAULT_HIGHLIGHT_COLOR);
-			graphics.drawRect(getLoc().getCol()*Board.NODE_HEIGHT, getLoc().getRow()*Board.NODE_WIDTH, Board.NODE_HEIGHT - 1, Board.NODE_WIDTH - 1);
+			graphics.drawRect(getLoc().getCol()*CheckersBoard.NODE_HEIGHT, getLoc().getRow()*CheckersBoard.NODE_WIDTH, CheckersBoard.NODE_HEIGHT - 1, CheckersBoard.NODE_WIDTH - 1);
 		}
 		
 		if(piece != null)
@@ -138,7 +138,7 @@ public class Node
 	 * 
 	 * @return the board of this node
 	 */ 
-	public Board getBoard()
+	public CheckersBoard getBoard()
 	{
 		return board;
 	}

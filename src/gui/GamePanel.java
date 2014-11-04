@@ -1,7 +1,7 @@
 package gui;
 
 import game.Game;
-import game.board.Board;
+import game.board.CheckersBoard;
 import game.board.Location;
 import game.player.Human;
 import game.player.Player;
@@ -142,8 +142,8 @@ public class GamePanel extends JPanel implements KeyListener, MouseListener
 		int x = event.getX();
 		int y = event.getY();
 		
-		int row = (x - x % Board.NODE_WIDTH)/Board.NODE_WIDTH;
-		int col = (y - y % Board.NODE_HEIGHT)/Board.NODE_HEIGHT;
+		int row = (x - x % CheckersBoard.NODE_WIDTH)/CheckersBoard.NODE_WIDTH;
+		int col = (y - y % CheckersBoard.NODE_HEIGHT)/CheckersBoard.NODE_HEIGHT;
 		
 		Location loc = new Location(row, col);
         

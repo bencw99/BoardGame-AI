@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import game.Move;
-import game.board.Board;
+import game.board.CheckersBoard;
 import game.board.Location;
 import game.board.Node;
 

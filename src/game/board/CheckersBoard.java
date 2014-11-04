@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * 
  * @author Benjamin Cohen-Wang
  */
-public class Board 
+public class CheckersBoard 
 {
 	/** The array of nodes composing the board grid **/
 	private Node[][] grid;
@@ -38,7 +38,7 @@ public class Board
 	 * 
 	 * @param game	the game of this board
 	 */
-	public Board(Game game)
+	public CheckersBoard(Game game)
 	{
 		this(DEFAULT_GRID_LENGTH, game);
 	}
@@ -49,7 +49,7 @@ public class Board
 	 * @param length	the side length of the grid
 	 * @param game	the game of this board
 	 */
-	public Board(int length, Game game)
+	public CheckersBoard(int length, Game game)
 	{
 		this(length, length, game);
 	}
@@ -59,7 +59,7 @@ public class Board
 	 * 
 	 * @param board	the board whose copy is made
 	 */
-	public Board(Board board, Game game)
+	public CheckersBoard(CheckersBoard board, Game game)
 	{
 		this.grid = new Node[board.grid.length][board.grid[0].length];
 		this.game = game;
@@ -79,7 +79,7 @@ public class Board
 	 * @param length	the side length of the grid
 	 * @param game	the game of this board
 	 */
-	public Board(int length, int width, Game game)
+	public CheckersBoard(int length, int width, Game game)
 	{
 		this.grid = new Node[length][width];
 		this.game = game;

@@ -66,7 +66,7 @@ public class Game
 	}
 	
 	/** The board this game takes place on **/
-	private Board board;
+	private CheckersBoard board;
 	
 	/** The array of players participating in this game **/
 	private Player[] players;
@@ -95,7 +95,7 @@ public class Game
 		players[0] = new AI("AI", Loyalty.RED, p1Pieces, 9);
 		players[1] = new Human("Human", Loyalty.BLACK, p2Pieces);
 		
-		board = new Board(this);
+		board = new CheckersBoard(this);
 		
 	}
 	
@@ -113,7 +113,7 @@ public class Game
 			players[i] = new AI(null, game.getPlayers()[i].getLoyalty(), new ArrayList<Piece>());
 		}
 		
-		this.board = new Board(game.getBoard(), this);
+		this.board = new CheckersBoard(game.getBoard(), this);
 		this.turn = game.turn;
 	}
 	
@@ -123,7 +123,7 @@ public class Game
 	 * @param board	the board that the board of this game is set to
 	 * @param players	the players of this game
 	 */
-	public Game(Board board, Player[] players)
+	public Game(CheckersBoard board, Player[] players)
 	{
 		this(board, players, Turn.getRandom());
 	}
@@ -134,7 +134,7 @@ public class Game
 	 * @param board	the board that the board of this game is set to
 	 * @param player1	the players of this game
 	 */
-	public Game(Board board, Player[] players, Turn turn)
+	public Game(CheckersBoard board, Player[] players, Turn turn)
 	{
 		this.board = board;
 		this.players = players;
@@ -182,7 +182,7 @@ public class Game
 	/**
 	 * @return the board
 	 */
-	public Board getBoard() 
+	public CheckersBoard getBoard() 
 	{
 		return board;
 	}
@@ -206,7 +206,7 @@ public class Game
 	/**
 	 * @param board the board to set
 	 */
-	public void setBoard(Board board) 
+	public void setBoard(CheckersBoard board) 
 	{
 		this.board = board;
 	}

@@ -1,7 +1,7 @@
 package game.piece;
 
 import game.Move;
-import game.board.Board;
+import game.board.CheckersBoard;
 import game.board.Node;
 
 import java.awt.Graphics;
@@ -107,7 +107,7 @@ public abstract class Piece implements ImageObserver
 	 */
 	public void draw(Graphics graphics) 
 	{
-		graphics.drawImage(image, getNode().getLoc().getCol()*Board.NODE_HEIGHT + 9, getNode().getLoc().getRow()*Board.NODE_WIDTH + 9, this);
+		graphics.drawImage(image, getNode().getLoc().getCol()*CheckersBoard.NODE_HEIGHT + 9, getNode().getLoc().getRow()*CheckersBoard.NODE_WIDTH + 9, this);
 	}
 	
 	/**
