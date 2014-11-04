@@ -1,9 +1,14 @@
 package game.board;
 
 import java.awt.Graphics;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import game.Game;
+import game.Move;
+import game.piece.King;
+import game.piece.Piece;
+import game.piece.Piece.Loyalty;
 
 /**
  * A superclass representing a general game board
