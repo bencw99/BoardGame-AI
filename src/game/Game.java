@@ -96,7 +96,6 @@ public class Game
 		players[1] = new Human("Human", Loyalty.BLACK, p2Pieces);
 		
 		board = new CheckersBoard(this);
-		
 	}
 	
 	/**

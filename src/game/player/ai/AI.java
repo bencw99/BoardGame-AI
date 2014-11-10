@@ -192,6 +192,13 @@ public class AI extends Player
 		return possibleMovesArray[maxMovesIndeces.get(random)];
 	}
 	
+	private double getAppropriateDepth(MinimaxNode node)
+	{
+		int numberOfMoves = node.getNextMoves().size();
+		
+		return minimaxDepth*Math.log(numberOfMoves)/Math.log(10);
+	}
+	
 	/**
 	 * Returns the minimax val of the given move
 	 * 
