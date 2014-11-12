@@ -21,8 +21,14 @@ public class AI extends Player
 	/** The depth of the minimax search **/
 	private static final int DEFAULT_MINIMAX_DEPTH = 9;
 	
+	/** The average number of moves at each point **/
+	private static final int AVERAGE_MOVE_NUM = 7;
+	
 	/** The minimax depth of this ai instance **/
 	private final int minimaxDepth;
+	
+	/** The minimax depth searched in the current turn **/
+	private int currentMinimaxDepth;
 	
 	/**
 	 * Parameterized constructor, initializes name, pieces, and loyalty
@@ -74,6 +80,10 @@ public class AI extends Player
 		MinimaxNode[] possibleNextNodes = new MinimaxNode[possibleMoves.size()];
 		
 		MinimaxNode currentNode = new MinimaxNode(0, new Game(getPieces().get(0).getNode().getBoard().getGame()));
+		
+		currentMinimaxDepth = getAppropriateDepth(currentNode);
+		
+		System.out.println(currentMinimaxDepth);
 		
 		for(int i = 0; i < possibleMoves.size(); i ++)
 		{
@@ -128,6 +138,8 @@ public class AI extends Player
 		MinimaxNode[] possibleNextNodes = new MinimaxNode[possibleMoves.size()];
 		
 		MinimaxNode currentNode = new MinimaxNode(0, new Game(getPieces().get(0).getNode().getBoard().getGame()));
+		
+		currentMinimaxDepth = getAppropriateDepth(currentNode);
 		
 		for(int i = 0; i < possibleMoves.size(); i ++)
 		{
@@ -192,11 +204,17 @@ public class AI extends Player
 		return possibleMovesArray[maxMovesIndeces.get(random)];
 	}
 	
-	private double getAppropriateDepth(MinimaxNode node)
+	/**
+	 * Computes an appropriate depth for the minimax search executed this turn
+	 * 
+	 * @param node	the node at which the search begins
+	 * @return	an appropriate depth from this node
+	 */
+	private int getAppropriateDepth(MinimaxNode node)
 	{
 		int numberOfMoves = node.getNextMoves().size();
 		
-		return minimaxDepth*Math.log(numberOfMoves)/Math.log(10);
+		return (int)(Math.round(minimaxDepth*Math.log(numberOfMoves)/Math.log(AVERAGE_MOVE_NUM)));
 	}
 	
 	/**
@@ -208,7 +226,7 @@ public class AI extends Player
 	 */
 	private double getMinimaxVal(MinimaxNode node, double alphaVal) throws IOException
 	{
-		if(node.getMinimaxDepth() >= minimaxDepth)
+		if(node.getMinimaxDepth() >= currentMinimaxDepth)
 		{
 		  	return functionVal(node);
 		}
