@@ -22,7 +22,7 @@ public class AI extends Player
 	private static final int DEFAULT_MINIMAX_DEPTH = 9;
 	
 	/** The average number of moves at each point **/
-	private static final int AVERAGE_MOVE_NUM = 7;
+	private static final int AVERAGE_MOVE_NUM = 8;
 	
 	/** The minimax depth of this ai instance **/
 	private final int minimaxDepth;
@@ -79,7 +79,7 @@ public class AI extends Player
 		
 		MinimaxNode[] possibleNextNodes = new MinimaxNode[possibleMoves.size()];
 		
-		MinimaxNode currentNode = new MinimaxNode(0, new Game(getPieces().get(0).getNode().getBoard().getGame()));
+		MinimaxNode currentNode = new MinimaxNode(0, new Game(getPieces().get(0).getNode().getBoard().getGame()), null);
 		
 		currentMinimaxDepth = getAppropriateDepth(currentNode);
 		
@@ -137,7 +137,7 @@ public class AI extends Player
 		
 		MinimaxNode[] possibleNextNodes = new MinimaxNode[possibleMoves.size()];
 		
-		MinimaxNode currentNode = new MinimaxNode(0, new Game(getPieces().get(0).getNode().getBoard().getGame()));
+		MinimaxNode currentNode = new MinimaxNode(0, new Game(getPieces().get(0).getNode().getBoard().getGame()), null);
 		
 		currentMinimaxDepth = getAppropriateDepth(currentNode);
 		
@@ -214,7 +214,11 @@ public class AI extends Player
 	{
 		int numberOfMoves = node.getNextMoves().size();
 		
-		return (int)(Math.round(minimaxDepth*Math.log(numberOfMoves)/Math.log(AVERAGE_MOVE_NUM)));
+		return (int)(Math.round(minimaxDepth*Math.log(AVERAGE_MOVE_NUM)/Math.log(numberOfMoves)));
+		
+//		int numberOfPieces = node.getGame().getPlayers()[getLoyalty().getVal()].getPieces().size();
+//		
+//		return (int)(Math.round(minimaxDepth*Math.log(10)/Math.log(numberOfPieces)));
 	}
 	
 	/**

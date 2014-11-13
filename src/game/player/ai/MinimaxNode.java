@@ -19,6 +19,12 @@ public class MinimaxNode
 	/** The minimax depth of this minimax node **/
 	private int minimaxDepth;
 	
+	/** The parent node of this minimax node **/
+	private MinimaxNode parent;
+	
+	/** The arraylist of children of this node **/
+	private ArrayList<MinimaxNode> children;
+	
 	/** The game of this minimax node **/
 	private Game game;
 	
@@ -28,10 +34,12 @@ public class MinimaxNode
 	 * @param minimaxDepth	the minimaxDepth to be set to
 	 * @param ame			the game to be set to
 	 */
-	public MinimaxNode(int minimaxDepth, Game game)
+	public MinimaxNode(int minimaxDepth, Game game, MinimaxNode parent)
 	{
 		this.minimaxDepth = minimaxDepth;
 		this.game = game;
+		this.parent = parent;
+		this.children = new ArrayList<MinimaxNode>();
 	}
 	
 	
@@ -49,7 +57,7 @@ public class MinimaxNode
 			
 		newGame.setTurn(newGame.getTurn().getOther());
 		
-		return new MinimaxNode(minimaxDepth + 1, newGame);
+		return new MinimaxNode(minimaxDepth + 1, newGame, this);
 	}
 	
 	/**
@@ -72,13 +80,37 @@ public class MinimaxNode
 	}
 	
 	/**
-	 * Returns the loyalty associated with 
-	 * 
-	 * @return	the loyalty of this node
+	 * Loads the children arraylist
+	 */
+	public void loadChildren()
+	{
+		for(Move move : getNextMoves())
+		{
+			try
+			{
+				children.add(getNextNode(move));
+			} 
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * @return	the game of this node
 	 */
 	public Game getGame()
 	{
 		return game;
+	}
+	
+	/**
+	 * @return	the parent of this node
+	 */
+	public MinimaxNode getParent()
+	{
+		return parent;
 	}
 	
 	/**
