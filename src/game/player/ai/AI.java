@@ -19,7 +19,7 @@ import java.util.Stack;
 public class AI extends Player
 {
 	/** The depth of the minimax search **/
-	private static final int DEFAULT_MINIMAX_DEPTH = 9;
+	private static final int DEFAULT_MINIMAX_DEPTH = 10;
 	
 	/** The average number of moves at each point **/
 	private static final int AVERAGE_MOVE_NUM = 8;
@@ -29,6 +29,9 @@ public class AI extends Player
 	
 	/** The minimax depth searched in the current turn **/
 	private int currentMinimaxDepth;
+	
+	/** The transposition table of this AI **/
+	private ArrayList<MinimaxNode> transpositionTable;
 	
 	/**
 	 * Parameterized constructor, initializes name, pieces, and loyalty
@@ -40,8 +43,6 @@ public class AI extends Player
 	public AI(String name, Loyalty loyalty, ArrayList<Piece> pieces)
 	{
 		this(name, loyalty, pieces, DEFAULT_MINIMAX_DEPTH);
-		
-		kingWorth = 5;
 	}
 	
 	/**
@@ -56,8 +57,6 @@ public class AI extends Player
 	{
 		super(name, loyalty, pieces);
 		this.minimaxDepth = minimaxDepth;
-		
-		kingWorth = 5;
 	}
 
 	/**
@@ -212,13 +211,7 @@ public class AI extends Player
 	 */
 	private int getAppropriateDepth(MinimaxNode node)
 	{
-		int numberOfMoves = node.getNextMoves().size();
-		
-		return (int)(Math.round(minimaxDepth*Math.log(AVERAGE_MOVE_NUM)/Math.log(numberOfMoves)));
-		
-//		int numberOfPieces = node.getGame().getPlayers()[getLoyalty().getVal()].getPieces().size();
-//		
-//		return (int)(Math.round(minimaxDepth*Math.log(10)/Math.log(numberOfPieces)));
+		return minimaxDepth;
 	}
 	
 	/**
@@ -371,20 +364,14 @@ public class AI extends Player
 			{
 				for(Piece piece : player.getPieces())
 				{
-					if(piece instanceof Soldier)
-						functionVal += piece.getWorth();
-					else
-						functionVal += kingWorth;
+					functionVal += piece.getWorth();
 				}
 			}
 			else
 			{
 				for(Piece piece : player.getPieces())
 				{
-					if(piece instanceof Soldier)
-						functionVal -= piece.getWorth();
-					else
-						functionVal -= kingWorth;
+					functionVal -= piece.getWorth();
 				}
 			}
 		}

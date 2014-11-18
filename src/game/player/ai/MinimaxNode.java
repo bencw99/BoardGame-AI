@@ -42,7 +42,6 @@ public class MinimaxNode
 		this.children = new ArrayList<MinimaxNode>();
 	}
 	
-	
 	/**
 	 * Returns the next node of the given move
 	 * 
@@ -80,7 +79,7 @@ public class MinimaxNode
 	}
 	
 	/**
-	 * Loads the children arraylist
+	 * Loads the children array list
 	 */
 	public void loadChildren()
 	{
@@ -97,6 +96,11 @@ public class MinimaxNode
 		}
 	}
 	
+	public boolean equals(MinimaxNode other)
+	{
+		return (other.getGame().getTurn().equals(this.getGame().getTurn()) && other.getGame().getBoard().equals(this.getGame().getBoard()));
+	}
+	
 	/**
 	 * @return	the game of this node
 	 */
@@ -111,6 +115,18 @@ public class MinimaxNode
 	public MinimaxNode getParent()
 	{
 		return parent;
+	}
+	
+	/**
+	 * @return	the parent of this node
+	 */
+	public ArrayList<MinimaxNode> getChildren()
+	{
+		if(children == null)
+		{
+			loadChildren();
+		}
+		return children;
 	}
 	
 	/**

@@ -14,8 +14,6 @@ import game.piece.Piece.Loyalty;
  */
 public abstract class Player
 {
-	public int kingWorth;
-	
 	/** The enum representing the state of a player **/
 	public static enum State
 	{
