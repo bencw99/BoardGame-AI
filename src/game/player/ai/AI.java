@@ -9,6 +9,7 @@ import game.player.Player;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Stack;
 
 /**
@@ -30,9 +31,6 @@ public class AI extends Player
 	/** The minimax depth searched in the current turn **/
 	private int currentMinimaxDepth;
 	
-	/** The transposition table of this AI **/
-	private ArrayList<MinimaxNode> transpositionTable;
-	
 	/**
 	 * Parameterized constructor, initializes name, pieces, and loyalty
 	 * 
@@ -43,6 +41,7 @@ public class AI extends Player
 	public AI(String name, Loyalty loyalty, ArrayList<Piece> pieces)
 	{
 		this(name, loyalty, pieces, DEFAULT_MINIMAX_DEPTH);
+		new HashMap<MinimaxNode, Double>();
 	}
 	
 	/**
@@ -57,6 +56,7 @@ public class AI extends Player
 	{
 		super(name, loyalty, pieces);
 		this.minimaxDepth = minimaxDepth;
+		new HashMap<MinimaxNode, Double>();
 	}
 
 	/**
@@ -81,8 +81,6 @@ public class AI extends Player
 		MinimaxNode currentNode = new MinimaxNode(0, new Game(getPieces().get(0).getNode().getBoard().getGame()), null);
 		
 		currentMinimaxDepth = getAppropriateDepth(currentNode);
-		
-		System.out.println(currentMinimaxDepth);
 		
 		for(int i = 0; i < possibleMoves.size(); i ++)
 		{
@@ -111,6 +109,8 @@ public class AI extends Player
 				maxMovesIndeces.add(i);
 			}
 		}
+		
+		updateTransposition();
 		
 		int random = (int)(maxMovesIndeces.size()*Math.random());
 		
@@ -222,7 +222,7 @@ public class AI extends Player
 	 * @throws IOException 
 	 */
 	private double getMinimaxVal(MinimaxNode node, double alphaVal) throws IOException
-	{
+	{	
 		if(node.getMinimaxDepth() >= currentMinimaxDepth)
 		{
 		  	return functionVal(node);
@@ -377,6 +377,14 @@ public class AI extends Player
 		}
 		
 		return functionVal;
+	}
+	
+	/**
+	 * Updates the transposition table of this ai
+	 */
+	public void updateTransposition()
+	{
+		
 	}
 	
 	/**

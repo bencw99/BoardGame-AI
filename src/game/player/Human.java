@@ -147,33 +147,7 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 
 	public void mouseDragged(MouseEvent event)
 	{
-		if(getPieces().get(0).getNode().getBoard().getGame().getTurn().getVal() == getLoyalty().getVal())
-		{
-//			int x = event.getX();
-//			int y = event.getY();
-//			
-//			int row = (x - x % Board.NODE_WIDTH)/Board.NODE_WIDTH;
-//			int col = (y - y % Board.NODE_HEIGHT)/Board.NODE_HEIGHT;
-//			
-//			Location loc = new Location(row, col);
-//			
-//			System.out.println("(" + row + ", " + col + ")");
-//			
-//			boolean isAlreadyAdded = false;
-//			
-//			for(Location currentMoveLoc : moveLocs)
-//			{
-//				if(loc.getRow() == currentMoveLoc.getRow() && loc.getCol() == currentMoveLoc.getCol())
-//				{
-//					isAlreadyAdded = true;
-//				}
-//			}
-//			
-//			if(!isAlreadyAdded)
-//			{
-//				moveLocs.add(loc);
-//			}
-		}
+
 	}
 
 	public void mouseMoved(MouseEvent event)

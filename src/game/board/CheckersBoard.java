@@ -16,16 +16,13 @@ import java.util.ArrayList;
  * 
  * @author Benjamin Cohen-Wang
  */
-public class CheckersBoard 
+public class CheckersBoard extends Board
 {
 	/** The array of nodes composing the board grid **/
 	private Node[][] grid;
 	
-	/** The game this board belong to **/
-	private Game game;
-	
 	/** The default length of the board grid **/
-	public static final int DEFAULT_GRID_LENGTH = 8;
+	public static final int CHECKERS_GRID_LENGTH = 8;
 	
 	/** The default width of nodes of this board **/
 	public static final int NODE_WIDTH =  80;
@@ -40,7 +37,7 @@ public class CheckersBoard
 	 */
 	public CheckersBoard(Game game)
 	{
-		this(DEFAULT_GRID_LENGTH, game);
+		this(CHECKERS_GRID_LENGTH, game);
 	}
 	
 	/**
@@ -61,8 +58,8 @@ public class CheckersBoard
 	 */
 	public CheckersBoard(CheckersBoard board, Game game)
 	{
+		super(board, game);
 		this.grid = new Node[board.grid.length][board.grid[0].length];
-		this.game = game;
 		
 		for(int i = 0; i < grid.length; i ++)
 		{
@@ -81,27 +78,8 @@ public class CheckersBoard
 	 */
 	public CheckersBoard(int length, int width, Game game)
 	{
+		super(game);
 		this.grid = new Node[length][width];
-		this.game = game;
-		
-		for(int i = 0; i < length; i ++)
-		{
-			for(int j = 0; j < width; j ++)
-			{
-				Color color;
-				
-				if((i + j) % 2 == 0)
-				{
-					color = Color.RED;
-				}
-				else
-				{
-					color = Color.BLACK;
-				}
-				
-				grid[i][j] = new Node(new Location(i, j), this, color); 
-			}
-		}
 		
 		loadBoard();
 	}
@@ -111,11 +89,11 @@ public class CheckersBoard
 	 */
 	public void loadBoard()
 	{
-		int[] piecesLeft = new int[game.getPlayers().length];
+		int[] piecesLeft = new int[getGame().getPlayers().length];
 		
 		for(int i = 0; i < piecesLeft.length; i ++)
 		{
-			piecesLeft[i] = game.getPlayers()[i].getPieces().size();
+			piecesLeft[i] = getGame().getPlayers()[i].getPieces().size();
 		}
 
 		for(int i = 0; i < grid.length; i ++)
@@ -126,8 +104,8 @@ public class CheckersBoard
 				{
 					if(piecesLeft[0] > 0)
 					{
-						put(game.getPlayers()[0].getPieces().get(piecesLeft[0] - 1), grid[i][j].getLoc());
-						game.getPlayers()[0].getPieces().get(piecesLeft[0] - 1).add(grid[i][j]);
+						put(getGame().getPlayers()[0].getPieces().get(piecesLeft[0] - 1), grid[i][j].getLoc());
+						getGame().getPlayers()[0].getPieces().get(piecesLeft[0] - 1).add(grid[i][j]);
 					}
 						
 					piecesLeft[0] --;
@@ -143,8 +121,8 @@ public class CheckersBoard
 				{
 					if(piecesLeft[1] > 0)
 					{
-						put(game.getPlayers()[1].getPieces().get(piecesLeft[1] - 1), grid[i][j].getLoc());
-						game.getPlayers()[1].getPieces().get(piecesLeft[1] - 1).add(grid[i][j]);
+						put(getGame().getPlayers()[1].getPieces().get(piecesLeft[1] - 1), grid[i][j].getLoc());
+						getGame().getPlayers()[1].getPieces().get(piecesLeft[1] - 1).add(grid[i][j]);
 					}
 						
 					piecesLeft[1] --;
@@ -216,7 +194,7 @@ public class CheckersBoard
 		if(piece != null)
 		{
 			piece.add(getNode(loc));
-			game.getPlayers()[piece.getLoyalty().getVal()].add(piece);
+			getGame().getPlayers()[piece.getLoyalty().getVal()].add(piece);
 		}
 		
 		grid[loc.getRow()][loc.getCol()].add(piece);
@@ -285,7 +263,7 @@ public class CheckersBoard
 		
 		if(piece != null)
 		{
-			game.getPlayers()[piece.getLoyalty().getVal()].remove(piece);
+			getGame().getPlayers()[piece.getLoyalty().getVal()].remove(piece);
 			
 			put(null, loc);
 		}
@@ -311,28 +289,35 @@ public class CheckersBoard
 	}
 	
 	/**
-	 * @return the game of this board
-	 */
-	public Game getGame()
-	{
-		return game;
-	}
-	
-	/**
 	 * @return the grid of this board
 	 */
 	public Node[][] getGrid()
 	{
 		return grid;
 	}
-	
+
 	/**
-	 * Sets this board to have the given game
-	 * 
-	 * @param game	the game to set this instance to
+	 * Initializes the array list of nodes of this game
 	 */
-	public void setGame(Game game)
+	public void initializeNodes()
 	{
-		this.game = game;
+		for(int i = 0; i < grid.length; i ++)
+		{
+			for(int j = 0; j < grid[0].length; j ++)
+			{
+				Color color;
+				
+				if((i + j) % 2 == 0)
+				{
+					color = Color.RED;
+				}
+				else
+				{
+					color = Color.BLACK;
+				}
+				
+				grid[i][j] = new Node(new Location(i, j), this, color); 
+			}
+		}
 	}
 }
