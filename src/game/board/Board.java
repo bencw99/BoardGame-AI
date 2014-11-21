@@ -29,7 +29,7 @@ public abstract class Board
 	public Board(Game game)
 	{
 		this.game = game;
-		initializeNodes();
+//		initializeNodes();
 	}
 	
 	/**

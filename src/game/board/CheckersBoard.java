@@ -80,7 +80,7 @@ public class CheckersBoard extends Board
 	{
 		super(game);
 		this.grid = new Node[length][width];
-		
+		initializeNodes();
 		loadBoard();
 	}
 	
