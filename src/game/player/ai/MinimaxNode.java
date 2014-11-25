@@ -39,7 +39,6 @@ public class MinimaxNode
 		this.minimaxDepth = minimaxDepth;
 		this.game = game;
 		this.parent = parent;
-		this.children = new ArrayList<MinimaxNode>();
 	}
 	
 	/**
@@ -83,6 +82,7 @@ public class MinimaxNode
 	 */
 	public void loadChildren()
 	{
+		this.children = new ArrayList<MinimaxNode>();
 		for(Move move : getNextMoves())
 		{
 			try

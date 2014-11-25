@@ -51,8 +51,6 @@ public class GamePanel extends JPanel implements KeyListener, MouseListener
         {
         	if(player instanceof Human)
         	{
-        		System.out.println("Human player registered");
-        		
 		        panel.addMouseListener((MouseListener) player);
 		        panel.addMouseMotionListener((MouseMotionListener) player);
 		        frame.addKeyListener((KeyListener) player);
