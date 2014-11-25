@@ -58,7 +58,7 @@ public class CheckersBoard extends Board
 	 */
 	public CheckersBoard(CheckersBoard board, Game game)
 	{
-		super(board, game);
+		super(game);
 		this.grid = new Node[board.grid.length][board.grid[0].length];
 		
 		for(int i = 0; i < grid.length; i ++)

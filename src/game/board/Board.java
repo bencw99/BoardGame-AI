@@ -29,15 +29,6 @@ public abstract class Board
 	public Board(Game game)
 	{
 		this.game = game;
-//		initializeNodes();
-	}
-	
-	/**
-	 * Parameterized constructor, initializes game to given game
-	 */
-	public Board(Board board, Game game)
-	{
-		this.game = game;
 	}
 	
 	/** 
