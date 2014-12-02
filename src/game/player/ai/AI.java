@@ -78,7 +78,7 @@ public class AI extends Player
 		
 		MinimaxNode[] possibleNextNodes = new MinimaxNode[possibleMoves.size()];
 		
-		MinimaxNode currentNode = new MinimaxNode(0, new Game(getPieces().get(0).getNode().getBoard().getGame()), null);
+		MinimaxNode currentNode = new MinimaxNode(0, new Game(getPieces().get(0).getNode().getBoard().getGame()), null, 0);
 		
 		currentMinimaxDepth = getAppropriateDepth(currentNode);
 		
@@ -136,7 +136,7 @@ public class AI extends Player
 		
 		MinimaxNode[] possibleNextNodes = new MinimaxNode[possibleMoves.size()];
 		
-		MinimaxNode currentNode = new MinimaxNode(0, new Game(getPieces().get(0).getNode().getBoard().getGame()), null);
+		MinimaxNode currentNode = new MinimaxNode(0, new Game(getPieces().get(0).getNode().getBoard().getGame()), null, 0);
 		
 		currentMinimaxDepth = getAppropriateDepth(currentNode);
 		
@@ -228,16 +228,20 @@ public class AI extends Player
 		  	return functionVal(node);
 		}
 		
-		ArrayList<Move> nextMoves = node.getNextMoves();
-		
 		if(node.getGame().getPlayers()[node.getGame().getTurn().getVal()].isDefeated())
 		{
 		  	return functionVal(node);
 		}
-		 
+		
+		ArrayList<Move> nextMoves = node.getNextMoves();
+		
+		boolean thisPlayersTurn = getLoyalty().getVal() == node.getGame().getTurn().getVal();
+		
+		heuristicSort(nextMoves, thisPlayersTurn);
+		
 		double extreme;
 		
-		if(getLoyalty().getVal() == node.getGame().getTurn().getVal())
+		if(thisPlayersTurn)
 		{
 			extreme = getMinimaxVal(node.getNextNode(nextMoves.get(0)), Integer.MIN_VALUE);
 			
@@ -379,6 +383,16 @@ public class AI extends Player
 		return functionVal;
 	}
 	
+	private void heuristicSort(ArrayList<Move> nextMoves, boolean thisPlayersTurn)
+	{
+		ArrayList<MinimaxNode> nodes = new ArrayList<MinimaxNode>();
+		
+		for(Move nextMove : nextMoves)
+		{
+			
+		}
+	}
+	
 	/**
 	 * Updates the transposition table of this ai
 	 */
@@ -386,6 +400,7 @@ public class AI extends Player
 	{
 		
 	}
+	
 	
 	/**
 	 * A class implementing runnable allowing the threading of minmax evaluation

@@ -22,11 +22,14 @@ public class MinimaxNode
 	/** The parent node of this minimax node **/
 	private MinimaxNode parent;
 	
+	/** The string identifying this node **/
+	private String identification;
+	
 	/** The arraylist of children of this node **/
 	private ArrayList<MinimaxNode> children;
 	
-	/** The game of this minimax node **/
-	private Game game;
+	/** The contents of this minimax node **/
+	private MinimaxNodeContents contents;
 	
 	/**
 	 * Parameterized constructor, initializes board and minimax depth to given values
@@ -34,11 +37,26 @@ public class MinimaxNode
 	 * @param minimaxDepth	the minimaxDepth to be set to
 	 * @param ame			the game to be set to
 	 */
-	public MinimaxNode(int minimaxDepth, Game game, MinimaxNode parent)
+	public MinimaxNode(int minimaxDepth, Game game, MinimaxNode parent, int identification)
 	{
 		this.minimaxDepth = minimaxDepth;
-		this.game = game;
+		this.contents = new MinimaxNodeContents(game);
 		this.parent = parent;
+		this.identification = (parent == null ? "" : parent.getIdentification()) + identification;
+	}
+	
+	/**
+	 * Parameterized constructor, initializes board and minimax depth to given values
+	 * 
+	 * @param minimaxDepth	the minimaxDepth to be set to
+	 * @param ame			the game to be set to
+	 */
+	public MinimaxNode(int minimaxDepth, MinimaxNodeContents contents, MinimaxNode parent, int identification)
+	{
+		this.minimaxDepth = minimaxDepth;
+		this.contents = contents;
+		this.parent = parent;
+		this.identification = (parent == null ? "" : parent.getIdentification()) + identification;
 	}
 	
 	/**
@@ -49,13 +67,9 @@ public class MinimaxNode
 	 */
 	public MinimaxNode getNextNode(Move move) throws IOException
 	{
-		Game newGame = new Game(game);
+		MinimaxNodeContents newContents = contents.getNextNode(move);
 		
-		newGame.getBoard().executeMove(move);
-			
-		newGame.setTurn(newGame.getTurn().getOther());
-		
-		return new MinimaxNode(minimaxDepth + 1, newGame, this);
+		return new MinimaxNode(minimaxDepth + 1, newContents, this, 0);
 	}
 	
 	/**
@@ -65,16 +79,7 @@ public class MinimaxNode
 	 */
 	public ArrayList<Move> getNextMoves()
 	{	
-		Player currentPlayer = game.getPlayers()[game.getTurn().getVal()];
-		
-		ArrayList<Move> possibleMoves = currentPlayer.getPossibleMoves();
-		
-		if(possibleMoves.isEmpty())
-		{
-			currentPlayer.setState(State.DEFEATED);
-		}
-		
-		return possibleMoves;
+		return contents.getNextMoves();
 	}
 	
 	/**
@@ -82,16 +87,17 @@ public class MinimaxNode
 	 */
 	public void loadChildren()
 	{
-		this.children = new ArrayList<MinimaxNode>();
-		for(Move move : getNextMoves())
+		if(children != null)
 		{
-			try
+			this.children = new ArrayList<MinimaxNode>();
+			
+			int currentChildID = 0;
+			
+			for(MinimaxNodeContents childContents : contents.getChildren())
 			{
-				children.add(getNextNode(move));
-			} 
-			catch (IOException e)
-			{
-				e.printStackTrace();
+				children.add(new MinimaxNode(minimaxDepth + 1, childContents, this, currentChildID));
+				
+				currentChildID ++;
 			}
 		}
 	}
@@ -106,7 +112,7 @@ public class MinimaxNode
 	 */
 	public Game getGame()
 	{
-		return game;
+		return contents.getGame();
 	}
 	
 	/**
@@ -122,10 +128,7 @@ public class MinimaxNode
 	 */
 	public ArrayList<MinimaxNode> getChildren()
 	{
-		if(children == null)
-		{
-			loadChildren();
-		}
+		loadChildren();
 		return children;
 	}
 	
@@ -135,5 +138,13 @@ public class MinimaxNode
 	public int getMinimaxDepth() 
 	{
 		return minimaxDepth;
+	}
+	
+	/**
+	 * @return the identification
+	 */
+	public String getIdentification()
+	{
+		return identification;
 	}
 }
