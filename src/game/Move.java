@@ -1,8 +1,10 @@
 package game;
 
+import game.board.Board;
 import game.board.CheckersBoard;
-import game.board.Location;
-import game.board.Node;
+import game.board.RectangularBoard;
+import game.board.node.Location;
+import game.board.node.Node;
 import game.piece.Piece.Loyalty;
 
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ public class Move
 	private Loyalty loyalty;
 	
 	/** The board this move is executed on **/
-	private CheckersBoard board;
+	private RectangularBoard board;
 	
 	/**
 	 * Parameterized Constructor, initializes start and end nodes, board, interNodes, and loyalty
@@ -33,7 +35,7 @@ public class Move
 	 * @param board	the board this move occurs in
 	 * @param loyalty	the loyalty of this move
 	 */
-	public Move(ArrayList<Node> nodes, CheckersBoard board, Loyalty loyalty)
+	public Move(ArrayList<Node> nodes, RectangularBoard board, Loyalty loyalty)
 	{
 		this.nodes = nodes;
 		this.board = board;
@@ -119,7 +121,7 @@ public class Move
 	/**
 	 * @return the board
 	 */
-	public CheckersBoard getBoard() 
+	public RectangularBoard getBoard() 
 	{
 		return board;
 	}

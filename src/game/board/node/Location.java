@@ -1,4 +1,4 @@
-package game.board;
+package game.board.node;
 
 /**
  * The class representing locations on the board

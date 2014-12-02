@@ -2,6 +2,8 @@ package game.board;
 
 import game.Game;
 import game.Move;
+import game.board.node.Location;
+import game.board.node.Node;
 import game.piece.King;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
@@ -16,11 +18,8 @@ import java.util.ArrayList;
  * 
  * @author Benjamin Cohen-Wang
  */
-public class CheckersBoard extends Board
-{
-	/** The array of nodes composing the board grid **/
-	private Node[][] grid;
-	
+public class CheckersBoard extends RectangularBoard
+{	
 	/** The default length of the board grid **/
 	public static final int CHECKERS_GRID_LENGTH = 8;
 	
@@ -58,16 +57,7 @@ public class CheckersBoard extends Board
 	 */
 	public CheckersBoard(CheckersBoard board, Game game)
 	{
-		super(game);
-		this.grid = new Node[board.grid.length][board.grid[0].length];
-		
-		for(int i = 0; i < grid.length; i ++)
-		{
-			for(int j = 0; j < grid[0].length; j ++)
-			{
-				this.grid[i][j] = new Node(board.grid[i][j], this);
-			}
-		}
+		super(board, game);
 	}
 	
 	/**
@@ -78,10 +68,7 @@ public class CheckersBoard extends Board
 	 */
 	public CheckersBoard(int length, int width, Game game)
 	{
-		super(game);
-		this.grid = new Node[length][width];
-		initializeNodes();
-		loadBoard();
+		super(length, width, game);
 	}
 	
 	/**
@@ -96,16 +83,16 @@ public class CheckersBoard extends Board
 			piecesLeft[i] = getGame().getPlayers()[i].getPieces().size();
 		}
 
-		for(int i = 0; i < grid.length; i ++)
+		for(int i = 0; i < getGrid().length; i ++)
 		{
-			for(int j = 0; j < grid[0].length; j ++)
+			for(int j = 0; j < getGrid()[0].length; j ++)
 			{	
-				if(grid[i][j].getColor() == Color.BLACK)
+				if(getGrid()[i][j].getColor() == Color.BLACK)
 				{
 					if(piecesLeft[0] > 0)
 					{
-						put(getGame().getPlayers()[0].getPieces().get(piecesLeft[0] - 1), grid[i][j].getLoc());
-						getGame().getPlayers()[0].getPieces().get(piecesLeft[0] - 1).add(grid[i][j]);
+						put(getGame().getPlayers()[0].getPieces().get(piecesLeft[0] - 1), getGrid()[i][j].getLoc());
+						getGame().getPlayers()[0].getPieces().get(piecesLeft[0] - 1).add(getGrid()[i][j]);
 					}
 						
 					piecesLeft[0] --;
@@ -113,16 +100,16 @@ public class CheckersBoard extends Board
 			}
 		}
 		
-		for(int i = grid.length - 1; i >= 0; i --)
+		for(int i = getGrid().length - 1; i >= 0; i --)
 		{
-			for(int j = grid[0].length - 1; j >= 0; j --)
+			for(int j = getGrid()[0].length - 1; j >= 0; j --)
 			{	
-				if(grid[i][j].getColor() == Color.BLACK)
+				if(getGrid()[i][j].getColor() == Color.BLACK)
 				{
 					if(piecesLeft[1] > 0)
 					{
-						put(getGame().getPlayers()[1].getPieces().get(piecesLeft[1] - 1), grid[i][j].getLoc());
-						getGame().getPlayers()[1].getPieces().get(piecesLeft[1] - 1).add(grid[i][j]);
+						put(getGame().getPlayers()[1].getPieces().get(piecesLeft[1] - 1), getGrid()[i][j].getLoc());
+						getGame().getPlayers()[1].getPieces().get(piecesLeft[1] - 1).add(getGrid()[i][j]);
 					}
 						
 					piecesLeft[1] --;
@@ -146,7 +133,7 @@ public class CheckersBoard extends Board
 		
 		ArrayList<Node> nodes = move.getNodes();
 		
-		if(nodes.get(nodes.size() - 1).getLoc().getRow() == grid.length - 1 && getPiece(nodes.get(0).getLoc()).getLoyalty() == Loyalty.RED)
+		if(nodes.get(nodes.size() - 1).getLoc().getRow() == getGrid().length - 1 && getPiece(nodes.get(0).getLoc()).getLoyalty() == Loyalty.RED)
 		{
 			remove(nodes.get(0).getLoc());
 			
@@ -166,144 +153,15 @@ public class CheckersBoard extends Board
 		
 		move(nodes.get(0).getLoc(), nodes.get(nodes.size() - 1).getLoc());
 	}
-	
-	/** 
-	 * Draws this board
-	 * 
-	 * @param graphics
-	 */
-	public void draw(Graphics graphics)
-	{
-		for(Node[] row : grid)
-		{
-			for(Node node: row)
-			{
-				node.draw(graphics);
-			}
-		}
-	}
-	
-	/**
-	 * Adds the given piece to the grid at the given node
-	 * 
-	 * @param piece	the piece to be added
-	 * @param loc	the location to be added to
-	 */
-	public void add(Piece piece, Location loc)
-	{
-		if(piece != null)
-		{
-			piece.add(getNode(loc));
-			getGame().getPlayers()[piece.getLoyalty().getVal()].add(piece);
-		}
-		
-		grid[loc.getRow()][loc.getCol()].add(piece);
-	}
-	
-	/**
-	 * Puts the given piece to the grid at the given node
-	 * 
-	 * @param piece	the piece to be put
-	 * @param loc	the location to be put in
-	 */
-	public void put(Piece piece, Location loc)
-	{
-		if(piece != null)
-		{
-			piece.add(getNode(loc));
-		}
-		
-		grid[loc.getRow()][loc.getCol()].add(piece);
-	}
-	
-	/**
-	 * Returns the node at the given location
-	 * 
-	 * @return the node at the given location
-	 */ 
-	public Node getNode(Location loc)
-	{
-		return grid[loc.getRow()][loc.getCol()];
-	}
-	
-	/**
-	 * Returns the piece at the given location
-	 * 
-	 * @return the piece at the given location
-	 */ 
-	public Piece getPiece(Location loc)
-	{
-		return grid[loc.getRow()][loc.getCol()].getPiece();
-	}
-	
-	/**
-	 * Moves the piece at the start location to the end location
-	 * 
-	 * @return the piece moved
-	 */ 
-	public Piece move(Location start, Location end)
-	{
-		Piece piece = getPiece(start);
-		
-		put(null, start);
-		
-		put(piece, end);
-		
-		return piece;
-	}
-	
-	/**
-	 * Returns the piece at the given location and removes it from the board
-	 * 
-	 * @return the piece at the given location
-	 */ 
-	public Piece remove(Location loc)
-	{
-		Piece piece = getPiece(loc);
-		
-		if(piece != null)
-		{
-			getGame().getPlayers()[piece.getLoyalty().getVal()].remove(piece);
-			
-			put(null, loc);
-		}
-		
-		return piece;
-	}
-	
-	/**
-	 * Returns the piece at the given location
-	 * 
-	 * @return the piece at the given location
-	 */ 
-	public boolean isValid(Location loc)
-	{
-		if(loc.getRow() >= 0 && loc.getRow() < grid.length && loc.getCol() >= 0 && loc.getCol() < grid[0].length)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-	
-	/**
-	 * @return the grid of this board
-	 */
-	public Node[][] getGrid()
-	{
-		return grid;
-	}
 
 	/**
 	 * Initializes the array list of nodes of this game
 	 */
 	public void initializeNodes()
 	{
-		for(int i = 0; i < grid.length; i ++)
+		for(int i = 0; i < getGrid().length; i ++)
 		{
-			for(int j = 0; j < grid[0].length; j ++)
+			for(int j = 0; j < getGrid()[0].length; j ++)
 			{
 				Color color;
 				
@@ -316,7 +174,7 @@ public class CheckersBoard extends Board
 					color = Color.BLACK;
 				}
 				
-				grid[i][j] = new Node(new Location(i, j), this, color); 
+				getGrid()[i][j] = new Node(new Location(i, j), this, color); 
 			}
 		}
 	}

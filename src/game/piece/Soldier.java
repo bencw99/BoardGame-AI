@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 import game.Move;
 import game.board.CheckersBoard;
-import game.board.Location;
-import game.board.Node;
+import game.board.node.Location;
+import game.board.node.Node;
 
 /**
  * A class describing a checkers soldier piece

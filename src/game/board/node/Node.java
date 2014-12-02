@@ -1,5 +1,8 @@
-package game.board;
+package game.board.node;
 
+import game.board.Board;
+import game.board.CheckersBoard;
+import game.board.RectangularBoard;
 import game.piece.King;
 import game.piece.Piece;
 import game.piece.Soldier;
@@ -15,7 +18,7 @@ import java.awt.Graphics;
 public class Node 
 {
 	/** The board containing this node **/
-	private CheckersBoard board;
+	private RectangularBoard board;
 	
 	/** The location of this node **/
 	private Location loc;
@@ -34,7 +37,7 @@ public class Node
 	/**
 	 * Parameterized constructor, initializes Node location
 	 */
-	public Node(Location loc, CheckersBoard board)
+	public Node(Location loc, RectangularBoard board)
 	{
 		this.loc = loc;
 		this.board = board;
@@ -43,7 +46,7 @@ public class Node
 	/**
 	 * Parameterized constructor, initializes color to given color, and location to given values
 	 */
-	public Node(Location loc, CheckersBoard board, Color color)
+	public Node(Location loc, RectangularBoard board, Color color)
 	{
 		this(loc, board);
 		this.color = color;
@@ -52,7 +55,7 @@ public class Node
 	/**
 	 * Parameterized constructor, initializes node to given node copy (has no board)
 	 */
-	public Node(Node node, CheckersBoard board)
+	public Node(Node node, RectangularBoard board)
 	{
 		this.color = node.color;
 		this.loc = new Location(node.loc);
@@ -138,7 +141,7 @@ public class Node
 	 * 
 	 * @return the board of this node
 	 */ 
-	public CheckersBoard getBoard()
+	public RectangularBoard getBoard()
 	{
 		return board;
 	}

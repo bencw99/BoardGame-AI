@@ -228,12 +228,12 @@ public class AI extends Player
 		  	return functionVal(node);
 		}
 		
+		ArrayList<Move> nextMoves = node.getNextMoves();
+		
 		if(node.getGame().getPlayers()[node.getGame().getTurn().getVal()].isDefeated())
 		{
 		  	return functionVal(node);
 		}
-		
-		ArrayList<Move> nextMoves = node.getNextMoves();
 		
 		boolean thisPlayersTurn = getLoyalty().getVal() == node.getGame().getTurn().getVal();
 		

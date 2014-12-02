@@ -2,7 +2,7 @@ package gui;
 
 import game.Game;
 import game.board.CheckersBoard;
-import game.board.Location;
+import game.board.node.Location;
 import game.player.Human;
 import game.player.Player;
 

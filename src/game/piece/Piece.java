@@ -2,7 +2,7 @@ package game.piece;
 
 import game.Move;
 import game.board.CheckersBoard;
-import game.board.Node;
+import game.board.node.Node;
 
 import java.awt.Graphics;
 import java.awt.Image;

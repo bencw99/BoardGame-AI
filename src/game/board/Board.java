@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import game.Game;
 import game.Move;
+import game.board.node.Node;
 import game.piece.King;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
@@ -29,6 +30,7 @@ public abstract class Board
 	public Board(Game game)
 	{
 		this.game = game;
+		this.nodes = new ArrayList<Node>();
 	}
 	
 	/** 

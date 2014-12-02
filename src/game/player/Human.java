@@ -2,8 +2,8 @@ package game.player;
 
 import game.Move;
 import game.board.CheckersBoard;
-import game.board.Location;
-import game.board.Node;
+import game.board.node.Location;
+import game.board.node.Node;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
 import gui.GamePanel;
