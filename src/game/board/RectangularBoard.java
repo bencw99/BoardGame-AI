@@ -25,6 +25,4 @@ public abstract class RectangularBoard extends Board
 		initializeNodes();
 		loadBoard();
 	}
-	
-	
 }
