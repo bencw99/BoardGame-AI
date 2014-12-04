@@ -1,6 +1,7 @@
 package game.board;
 
 import game.Game;
+import game.Move;
 
 public class ChessBoard	extends RectangularBoard
 {
@@ -16,6 +17,11 @@ public class ChessBoard	extends RectangularBoard
 	}
 
 	public void loadBoard()
+	{
+		
+	}
+
+	public void executeMove(Move move)
 	{
 		
 	}

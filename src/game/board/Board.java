@@ -47,6 +47,13 @@ public abstract class Board
 	}
 	
 	/**
+	 * Executes the given move
+	 * 
+	 * @param move	the move to be executed
+	 */
+	public abstract void executeMove(Move move);
+	
+	/**
 	 * Initializes the array list of nodes of this game
 	 */
 	public abstract void initializeNodes();

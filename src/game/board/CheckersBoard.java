@@ -124,7 +124,7 @@ public class CheckersBoard extends RectangularBoard
 	 * @param move	the move to be executed
 	 * @throws IOException 
 	 */
-	public void executeMove(Move move) throws IOException
+	public void executeMove(Move move)
 	{
 		for(Node jumped : move.getJumped())
 		{
@@ -137,7 +137,15 @@ public class CheckersBoard extends RectangularBoard
 		{
 			remove(nodes.get(0).getLoc());
 			
-			Piece newKing = new King(Loyalty.RED, nodes.get(0));
+			Piece newKing = null;
+			try
+			{
+				newKing = new King(Loyalty.RED, nodes.get(0));
+			} 
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
 			
 			add(newKing, nodes.get(0).getLoc());
 		}
@@ -146,7 +154,15 @@ public class CheckersBoard extends RectangularBoard
 		{
 			remove(nodes.get(0).getLoc());
 			
-			Piece newKing = new King(Loyalty.BLACK, nodes.get(0));
+			Piece newKing = null;
+			try
+			{
+				newKing = new King(Loyalty.BLACK, nodes.get(0));
+			} 
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
 			
 			add(newKing, nodes.get(0).getLoc());
 		}
