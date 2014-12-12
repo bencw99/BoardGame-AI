@@ -112,7 +112,7 @@ public class Game
 			players[i] = new AI(null, game.getPlayers()[i].getLoyalty(), new ArrayList<Piece>());
 		}
 		
-		if(this.board instanceof CheckersBoard)
+		if(game.getBoard() instanceof CheckersBoard)
 		{
 			this.board = new CheckersBoard((CheckersBoard)game.getBoard(), this);
 		}

@@ -83,7 +83,7 @@ public class AI extends Player
 		currentMinimaxDepth = getAppropriateDepth(currentNode);
 		
 		for(int i = 0; i < possibleMoves.size(); i ++)
-		{
+		{	
 			possibleMovesArray[i] = possibleMoves.get(i);
 			possibleNextNodes[i] = currentNode.getNextNode(possibleMoves.get(i));
 		}
