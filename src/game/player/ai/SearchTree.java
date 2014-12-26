@@ -1,5 +1,9 @@
 package game.player.ai;
 
+import game.Move;
+import game.piece.Piece;
+import game.player.Player;
+
 import java.util.ArrayList;
 
 /**
@@ -15,6 +19,9 @@ public class SearchTree
 	/** The depth of this search tree **/
 	private int depth;
 	
+	/** The player using this search tree **/
+	private AI player;
+	
 	/**
 	 * Parameterized constructor, initializes search tree to given root node
 	 * 
@@ -23,6 +30,7 @@ public class SearchTree
 	public SearchTree(MinimaxNode root)
 	{
 		this.root = root;
+		this.depth = 0;
 	}
 	
 	/**
@@ -30,12 +38,135 @@ public class SearchTree
 	 */
 	public void increaseDepth()
 	{
+		depth ++;
 		
+		performMinimax(root, Integer.MIN_VALUE);
 	}
 	
 	/**
+	 * Assigns minimax values to all nodes covered by the given depth
 	 * 
-	 * @return
+	 * @param minimaxDepth the depth to be searched
+	 */
+	public void performMinimax(MinimaxNode node, double alphaBetaVal)
+	{	
+		if(node.getMinimaxDepth() >= depth)
+		{
+		  	node.setValue(functionVal(node));
+		}
+	
+		ArrayList<MinimaxNode> children = node.getChildren();
+		
+		if(node.getGame().getPlayers()[node.getGame().getTurn().getVal()].isDefeated())
+		{
+		  	node.setValue(functionVal(node));
+		}
+		
+		boolean thisPlayersTurn = player.getLoyalty().getVal() == node.getGame().getTurn().getVal();
+		
+		double extreme;
+		
+		if(thisPlayersTurn)
+		{
+			extreme = Integer.MIN_VALUE;
+			
+			for(MinimaxNode nextNode : children)
+			{	
+				performMinimax(nextNode, extreme);
+				
+				if(nextNode.getValue() > extreme)
+		  		{
+		  			extreme = nextNode.getValue();
+		  		}
+				
+				if(alphaBetaVal <= nextNode.getValue())
+				{
+					break;
+				}
+			}
+		} 
+		else
+		{
+			extreme = Integer.MAX_VALUE;
+			
+			for(MinimaxNode nextNode : children)
+			{
+				performMinimax(nextNode, extreme);
+
+				if(nextNode.getValue() < extreme)
+				{
+					extreme = nextNode.getValue();
+				}
+				
+				if(alphaBetaVal >= nextNode.getValue())
+				{
+					break;
+				}
+			}
+		}
+		
+		node.setValue(extreme);
+	}
+	
+	/**
+	 * Returns the function value of the given move
+	 * 
+	 * @param move	the move whose function value is evaluated
+	 * @return	the function value of the given move
+	 */
+	private double functionVal(MinimaxNode node)
+	{
+		Player[] players = node.getGame().getPlayers();
+		double functionVal = 0;
+		
+		boolean hasWon = true;
+		
+		for(Player enemy : players)
+		{
+			if(enemy.getLoyalty() != player.getLoyalty())
+			{
+				if(!enemy.isDefeated())
+				{
+					hasWon = false;
+				}
+			}
+		}
+		
+		if(hasWon)
+		{
+			return Double.MAX_VALUE;
+		}
+		
+		if(player.isDefeated())
+		{
+			return Double.MIN_VALUE;
+		}
+		
+		for(Player player : players)
+		{
+			if(player.getLoyalty() == player.getLoyalty())
+			{
+				for(Piece piece : player.getPieces())
+				{
+					functionVal += piece.getWorth();
+				}
+			}
+			else
+			{
+				for(Piece piece : player.getPieces())
+				{
+					functionVal -= piece.getWorth();
+				}
+			}
+		}
+		
+		return functionVal;
+	}
+	
+	/**
+	 * Returns the node with the given identification
+	 * 
+	 * @return	the node containing the given identification string
 	 */
 	public MinimaxNode getNode(String identification)
 	{

@@ -133,35 +133,31 @@ public class AI extends Player
 	 */
 	public Move getThisTurnMove(int time) throws IOException
 	{	
+		long initialTime = System.nanoTime();
+		
 		MinimaxNode currentNode = new MinimaxNode(0, new Game(getPieces().get(0).getNode().getBoard().getGame()), null, 0);
 		
 		SearchTree tree = new SearchTree(currentNode);
-		
-		ArrayList<Move> possibleMoves = getPossibleMoves();
 		
 		if(isDefeated())
 		{
 			return null;
 		}
 		
-		Move[] possibleMovesArray = new Move[possibleMoves.size()];
-		
-		MinimaxNode[] possibleNextNodes = new MinimaxNode[possibleMoves.size()];
-		
-		for(int i = 0; i < possibleMoves.size(); i ++)
-		{	
-			possibleMovesArray[i] = possibleMoves.get(i);
-			possibleNextNodes[i] = currentNode.getNextNode(possibleMoves.get(i));
+		while(System.nanoTime() - initialTime < time)
+		{
+			tree.increaseDepth();
 		}
 		
-		double maxMinimaxVal = getMinimaxVal(possibleNextNodes[0], Integer.MIN_VALUE);
+		ArrayList<MinimaxNode> nextNodes = currentNode.getChildren();
 		
 		ArrayList<Integer> maxMovesIndeces = new ArrayList<Integer>();
-		maxMovesIndeces.add(0);
 		
-		for(int i = 1; i < possibleNextNodes.length; i ++)
+		double maxMinimaxVal = Double.MIN_VALUE;
+		
+		for(int i = 0; i < nextNodes.size(); i ++)
 		{
-			double currentVal = getMinimaxVal(possibleNextNodes[i], maxMinimaxVal);
+			double currentVal = nextNodes.get(i).getValue();
 			
 			if(currentVal > maxMinimaxVal)
 			{
@@ -178,7 +174,7 @@ public class AI extends Player
 		
 		int random = (int)(maxMovesIndeces.size()*Math.random());
 		
-		return possibleMovesArray[maxMovesIndeces.get(random)];
+		return currentNode.getNextMoves().get(maxMovesIndeces.get(random));
 	}
 	
 	/**

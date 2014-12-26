@@ -18,6 +18,9 @@ public class MinimaxNodeContents
 	/** The game of this minimax node **/
 	private Game game;
 	
+	/** THe array list of possible moves **/
+	private ArrayList<Move> possibleMoves;
+	
 	/** The arraylist of children of this node **/
 	private ArrayList<MinimaxNodeContents> children;
 	
@@ -56,13 +59,16 @@ public class MinimaxNodeContents
 	 */
 	public ArrayList<Move> getNextMoves()
 	{	
-		Player currentPlayer = game.getPlayers()[game.getTurn().getVal()];
-		
-		ArrayList<Move> possibleMoves = currentPlayer.getPossibleMoves();
-		
-		if(possibleMoves.isEmpty())
+		if(possibleMoves == null)
 		{
-			currentPlayer.setState(State.DEFEATED);
+			Player currentPlayer = game.getPlayers()[game.getTurn().getVal()];
+			
+			possibleMoves = currentPlayer.getPossibleMoves();
+			
+			if(possibleMoves.isEmpty())
+			{
+				currentPlayer.setState(State.DEFEATED);
+			}
 		}
 		
 		return possibleMoves;

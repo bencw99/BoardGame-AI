@@ -19,6 +19,9 @@ public class MinimaxNode
 	/** The minimax depth of this minimax node **/
 	private int minimaxDepth;
 	
+	/** The value of this minimax node **/
+	private double value;
+	
 	/** The parent node of this minimax node **/
 	private MinimaxNode parent;
 	
@@ -87,7 +90,7 @@ public class MinimaxNode
 	 */
 	public void loadChildren()
 	{
-		if(children != null)
+		if(children == null)
 		{
 			this.children = new ArrayList<MinimaxNode>();
 			
@@ -105,6 +108,14 @@ public class MinimaxNode
 	public boolean equals(MinimaxNode other)
 	{
 		return (other.getGame().getTurn().equals(this.getGame().getTurn()) && other.getGame().getBoard().equals(this.getGame().getBoard()));
+	}
+	
+	/**
+	 * @param value the value this minimax node is set to have
+	 */
+	public void setValue(double value)
+	{
+		this.value = value;
 	}
 	
 	/**
@@ -146,5 +157,13 @@ public class MinimaxNode
 	public String getIdentification()
 	{
 		return identification;
+	}
+	
+	/**
+	 * @return the value of this minimax node
+	 */
+	public double getValue()
+	{
+		return value;
 	}
 }
