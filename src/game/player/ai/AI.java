@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
+import java.util.Timer;
 
 /**
  * A class representing a Human player associated with a checkers game
@@ -19,8 +20,12 @@ import java.util.Stack;
  */
 public class AI extends Player
 {
+	public long moveTime = 0;
+	
+	public long totalTime = 0;
+	
 	/** The depth of the minimax search **/
-	private static final int DEFAULT_MINIMAX_DEPTH = 10;
+	private static final int DEFAULT_MINIMAX_DEPTH = 11;
 	
 	/** The average number of moves at each point **/
 	private static final int AVERAGE_MOVE_NUM = 8;
@@ -111,6 +116,65 @@ public class AI extends Player
 		}
 		
 		updateTransposition();
+		
+		int random = (int)(maxMovesIndeces.size()*Math.random());
+		
+		System.out.println("Moves: " + moveTime);
+		System.out.println("Total: " + totalTime);
+		
+		return possibleMovesArray[maxMovesIndeces.get(random)];
+	}
+	
+	/**
+	 * Returns the move executed this turn
+	 * 
+	 * @return	the move to be executed this turn
+	 * @throws IOException 
+	 */
+	public Move getThisTurnMove(int time) throws IOException
+	{	
+		MinimaxNode currentNode = new MinimaxNode(0, new Game(getPieces().get(0).getNode().getBoard().getGame()), null, 0);
+		
+		SearchTree tree = new SearchTree(currentNode);
+		
+		ArrayList<Move> possibleMoves = getPossibleMoves();
+		
+		if(isDefeated())
+		{
+			return null;
+		}
+		
+		Move[] possibleMovesArray = new Move[possibleMoves.size()];
+		
+		MinimaxNode[] possibleNextNodes = new MinimaxNode[possibleMoves.size()];
+		
+		for(int i = 0; i < possibleMoves.size(); i ++)
+		{	
+			possibleMovesArray[i] = possibleMoves.get(i);
+			possibleNextNodes[i] = currentNode.getNextNode(possibleMoves.get(i));
+		}
+		
+		double maxMinimaxVal = getMinimaxVal(possibleNextNodes[0], Integer.MIN_VALUE);
+		
+		ArrayList<Integer> maxMovesIndeces = new ArrayList<Integer>();
+		maxMovesIndeces.add(0);
+		
+		for(int i = 1; i < possibleNextNodes.length; i ++)
+		{
+			double currentVal = getMinimaxVal(possibleNextNodes[i], maxMinimaxVal);
+			
+			if(currentVal > maxMinimaxVal)
+			{
+				maxMovesIndeces.clear();
+				maxMovesIndeces.add(i);
+				maxMinimaxVal = currentVal;
+			}
+			
+			if(currentVal == maxMinimaxVal)
+			{
+				maxMovesIndeces.add(i);
+			}
+		}
 		
 		int random = (int)(maxMovesIndeces.size()*Math.random());
 		
@@ -221,14 +285,21 @@ public class AI extends Player
 	 * @return	the minimax val of the given move
 	 * @throws IOException 
 	 */
-	private double getMinimaxVal(MinimaxNode node, double alphaVal) throws IOException
+	private double getMinimaxVal(MinimaxNode node, double alphaBetaVal) throws IOException
 	{	
+		long movetime;
+		long totaltime = -System.nanoTime();
+		
 		if(node.getMinimaxDepth() >= currentMinimaxDepth)
 		{
 		  	return functionVal(node);
 		}
 		
+		movetime = -System.nanoTime();
+		
 		ArrayList<Move> nextMoves = node.getNextMoves();
+		
+		movetime += System.nanoTime();
 		
 		if(node.getGame().getPlayers()[node.getGame().getTurn().getVal()].isDefeated())
 		{
@@ -243,7 +314,7 @@ public class AI extends Player
 		
 		if(thisPlayersTurn)
 		{
-			extreme = getMinimaxVal(node.getNextNode(nextMoves.get(0)), Integer.MIN_VALUE);
+			extreme = Integer.MIN_VALUE;
 			
 			for(Move nextMove : nextMoves)
 			{	
@@ -254,7 +325,7 @@ public class AI extends Player
 		  			extreme = maxCand;
 		  		}
 				
-				if(alphaVal <= maxCand)
+				if(alphaBetaVal <= maxCand)
 				{
 					break;
 				}
@@ -262,7 +333,7 @@ public class AI extends Player
 		} 
 		else
 		{
-			extreme = getMinimaxVal(node.getNextNode(nextMoves.get(0)), Integer.MAX_VALUE);
+			extreme = Integer.MAX_VALUE;
 			
 			for(Move nextMove : nextMoves)
 			{
@@ -273,12 +344,17 @@ public class AI extends Player
 					extreme = minCand;
 				}
 				
-				if(alphaVal >= minCand)
+				if(alphaBetaVal >= minCand)
 				{
 					break;
 				}
 			}
 		}
+		
+		totaltime += System.nanoTime();
+		
+		this.moveTime += movetime;
+		this.totalTime += totaltime;
 		
 		return extreme;
 	}
@@ -407,7 +483,7 @@ public class AI extends Player
 	 * 
 	 * @author Benjamin Cohen-Wang
 	 */
-	public class MinimaxValueFinder extends Thread
+	private class MinimaxValueFinder extends Thread
 	{
 		/** The minimax node of this minimax value finder **/
 		private MinimaxNode node;
