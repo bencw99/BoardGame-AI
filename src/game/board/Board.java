@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import game.Game;
 import game.Move;
 import game.board.node.Node;
-import game.piece.King;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
+import game.piece.checkersPieces.King;
 
 /**
  * A superclass representing a general game board

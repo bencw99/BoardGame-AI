@@ -4,7 +4,7 @@ import game.Game;
 import game.Move;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
-import game.piece.Soldier;
+import game.piece.checkersPieces.Soldier;
 import game.player.Player;
 
 import java.io.IOException;

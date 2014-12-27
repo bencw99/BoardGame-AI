@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import game.board.*;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
-import game.piece.Soldier;
+import game.piece.checkersPieces.Soldier;
 import game.player.*;
 import game.player.ai.AI;
 

@@ -3,9 +3,9 @@ package game.board.node;
 import game.board.Board;
 import game.board.CheckersBoard;
 import game.board.RectangularBoard;
-import game.piece.King;
 import game.piece.Piece;
-import game.piece.Soldier;
+import game.piece.checkersPieces.King;
+import game.piece.checkersPieces.Soldier;
 
 import java.awt.Color;
 import java.awt.Graphics;

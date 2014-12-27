@@ -1,4 +1,4 @@
-package game.piece;
+package game.piece.checkersPieces;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -10,6 +10,8 @@ import game.Move;
 import game.board.CheckersBoard;
 import game.board.node.Location;
 import game.board.node.Node;
+import game.piece.Piece;
+import game.piece.Piece.Loyalty;
 
 /**
  * A class describing a checkers soldier piece
