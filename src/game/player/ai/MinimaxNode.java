@@ -25,6 +25,9 @@ public class MinimaxNode
 	/** The parent node of this minimax node **/
 	private MinimaxNode parent;
 	
+	/** The move relating this node to the parent **/
+	private Move move;
+	
 	/** The string identifying this node **/
 	private String identification;
 	
@@ -40,11 +43,12 @@ public class MinimaxNode
 	 * @param minimaxDepth	the minimaxDepth to be set to
 	 * @param ame			the game to be set to
 	 */
-	public MinimaxNode(int minimaxDepth, Game game, MinimaxNode parent, int identification)
+	public MinimaxNode(int minimaxDepth, Game game, MinimaxNode parent, Move move, int identification)
 	{
 		this.minimaxDepth = minimaxDepth;
 		this.contents = new MinimaxNodeContents(game);
 		this.parent = parent;
+		this.move = move;
 		this.identification = (parent == null ? "" : parent.getIdentification()) + identification;
 	}
 	
@@ -54,11 +58,12 @@ public class MinimaxNode
 	 * @param minimaxDepth	the minimaxDepth to be set to
 	 * @param ame			the game to be set to
 	 */
-	public MinimaxNode(int minimaxDepth, MinimaxNodeContents contents, MinimaxNode parent, int identification)
+	public MinimaxNode(int minimaxDepth, MinimaxNodeContents contents, MinimaxNode parent, Move move, int identification)
 	{
 		this.minimaxDepth = minimaxDepth;
 		this.contents = contents;
 		this.parent = parent;
+		this.move = move;
 		this.identification = (parent == null ? "" : parent.getIdentification()) + identification;
 	}
 	
@@ -70,9 +75,9 @@ public class MinimaxNode
 	 */
 	public MinimaxNode getNextNode(Move move) throws IOException
 	{
-		MinimaxNodeContents newContents = contents.getNextNode(move);
-		
-		return new MinimaxNode(minimaxDepth + 1, newContents, this, 0);
+		MinimaxNodeContents newContents = contents.getNextContents(move);
+
+		return new MinimaxNode(minimaxDepth + 1, newContents, this, move, 0);
 	}
 	
 	/**
@@ -96,9 +101,16 @@ public class MinimaxNode
 			
 			int currentChildID = 0;
 			
-			for(MinimaxNodeContents childContents : contents.getChildren())
+			for(Move nextMove : contents.getNextMoves())
 			{
-				children.add(new MinimaxNode(minimaxDepth + 1, childContents, this, currentChildID));
+				try
+				{
+					children.add(new MinimaxNode(minimaxDepth + 1, contents.getNextContents(nextMove), this, nextMove, currentChildID));
+				} 
+				catch (IOException e)
+				{
+					e.printStackTrace();
+				}
 				
 				currentChildID ++;
 			}

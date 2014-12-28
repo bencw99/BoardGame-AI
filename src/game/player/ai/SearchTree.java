@@ -66,6 +66,11 @@ public class SearchTree
 		
 		double extreme;
 		
+		if(node.getMinimaxDepth() + 1 < depth)
+		{
+			children = heuristicSort(children);
+		}
+		
 		if(thisPlayersTurn)
 		{
 			extreme = Integer.MIN_VALUE;
@@ -161,6 +166,35 @@ public class SearchTree
 		}
 		
 		return functionVal;
+	}
+	
+	private ArrayList<MinimaxNode> heuristicSort(ArrayList<MinimaxNode> children)
+	{
+		if(children.isEmpty())
+		{
+			return children;
+		}
+		
+		ArrayList<MinimaxNode> sorted = new ArrayList<MinimaxNode>();
+		
+		sorted.add(children.get(0));
+		
+		for(int i = 1; i < children.size(); i ++)
+		{
+			for(int j = sorted.size() - 1; j >= 0; j --)
+			{
+				if(children.get(i).getValue() <= sorted.get(j).getValue())
+				{
+					sorted.add(j + 1, children.get(i));
+				}
+				else if(j == 0)
+				{
+					sorted.add(0, children.get(i));
+				}
+			}
+		}
+		
+		return sorted;
 	}
 	
 	/**

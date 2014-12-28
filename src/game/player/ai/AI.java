@@ -83,7 +83,7 @@ public class AI extends Player
 		
 		MinimaxNode[] possibleNextNodes = new MinimaxNode[possibleMoves.size()];
 		
-		MinimaxNode currentNode = new MinimaxNode(0, new Game(getPieces().get(0).getNode().getBoard().getGame()), null, 0);
+		MinimaxNode currentNode = new MinimaxNode(0, new Game(getPieces().get(0).getNode().getBoard().getGame()), null, null, 0);
 		
 		currentMinimaxDepth = getAppropriateDepth(currentNode);
 		
@@ -135,7 +135,7 @@ public class AI extends Player
 	{	
 		long initialTime = System.nanoTime();
 		
-		MinimaxNode currentNode = new MinimaxNode(0, new Game(getPieces().get(0).getNode().getBoard().getGame()), null, 0);
+		MinimaxNode currentNode = new MinimaxNode(0, new Game(getPieces().get(0).getNode().getBoard().getGame()), null, null, 0);
 		
 		SearchTree tree = new SearchTree(currentNode);
 		
@@ -196,7 +196,7 @@ public class AI extends Player
 		
 		MinimaxNode[] possibleNextNodes = new MinimaxNode[possibleMoves.size()];
 		
-		MinimaxNode currentNode = new MinimaxNode(0, new Game(getPieces().get(0).getNode().getBoard().getGame()), null, 0);
+		MinimaxNode currentNode = new MinimaxNode(0, new Game(getPieces().get(0).getNode().getBoard().getGame()), null, null, 0);
 		
 		currentMinimaxDepth = getAppropriateDepth(currentNode);
 		
@@ -453,16 +453,6 @@ public class AI extends Player
 		}
 		
 		return functionVal;
-	}
-	
-	private void heuristicSort(ArrayList<Move> nextMoves, boolean thisPlayersTurn)
-	{
-		ArrayList<MinimaxNode> nodes = new ArrayList<MinimaxNode>();
-		
-		for(Move nextMove : nextMoves)
-		{
-			
-		}
 	}
 	
 	/**

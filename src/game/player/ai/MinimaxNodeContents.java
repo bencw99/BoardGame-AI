@@ -18,11 +18,8 @@ public class MinimaxNodeContents
 	/** The game of this minimax node **/
 	private Game game;
 	
-	/** THe array list of possible moves **/
-	private ArrayList<Move> possibleMoves;
-	
-	/** The arraylist of children of this node **/
-	private ArrayList<MinimaxNodeContents> children;
+	/** The arraylist of moves from this node **/
+	private ArrayList<Move> nextMoves;
 	
 	/**
 	 * Parameterized constructor, initializes board and minimax depth to given values
@@ -41,7 +38,7 @@ public class MinimaxNodeContents
 	 * @return	the minimax node resulting from the given move
 	 * @throws IOException 
 	 */
-	public MinimaxNodeContents getNextNode(Move move) throws IOException
+	public MinimaxNodeContents getNextContents(Move move) throws IOException
 	{
 		Game newGame = new Game(game);
 		
@@ -59,40 +56,19 @@ public class MinimaxNodeContents
 	 */
 	public ArrayList<Move> getNextMoves()
 	{	
-		if(possibleMoves == null)
-		{
-			Player currentPlayer = game.getPlayers()[game.getTurn().getVal()];
-			
-			possibleMoves = currentPlayer.getPossibleMoves();
-			
-			if(possibleMoves.isEmpty())
-			{
-				currentPlayer.setState(State.DEFEATED);
-			}
-		}
-		
-		return possibleMoves;
+		loadNextMoves();
+		return nextMoves;
 	}
 	
 	/**
-	 * Loads the children array list
+	 * Loads the next moves array list
 	 */
-	public void loadChildren()
+	public void loadNextMoves()
 	{
-		if(children != null)
+		if(nextMoves == null)
 		{
-			this.children = new ArrayList<MinimaxNodeContents>();
-			for(Move move : getNextMoves())
-			{
-				try
-				{
-					children.add(getNextNode(move));
-				} 
-				catch (IOException e)
-				{
-					e.printStackTrace();
-				}
-			}
+			Player currentPlayer = game.getPlayers()[game.getTurn().getVal()];
+			this.nextMoves = currentPlayer.getPossibleMoves();
 		}
 	}
 	
@@ -113,14 +89,5 @@ public class MinimaxNodeContents
 	public Game getGame()
 	{
 		return game;
-	}
-	
-	/**
-	 * @return	the parent of this node
-	 */
-	public ArrayList<MinimaxNodeContents> getChildren()
-	{
-		loadChildren();
-		return children;
 	}
 }
