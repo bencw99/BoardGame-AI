@@ -304,8 +304,6 @@ public class AI extends Player
 		
 		boolean thisPlayersTurn = getLoyalty().getVal() == node.getGame().getTurn().getVal();
 		
-		heuristicSort(nextMoves, thisPlayersTurn);
-		
 		double extreme;
 		
 		if(thisPlayersTurn)
