@@ -27,10 +27,11 @@ public class SearchTree
 	 * 
 	 * @param root	the root node this tree is initialized to
 	 */
-	public SearchTree(MinimaxNode root)
+	public SearchTree(MinimaxNode root, AI player)
 	{
 		this.root = root;
 		this.depth = 0;
+		this.player = player;
 	}
 	
 	/**
@@ -53,6 +54,7 @@ public class SearchTree
 		if(node.getMinimaxDepth() >= depth)
 		{
 		  	node.setValue(functionVal(node));
+		  	return;
 		}
 	
 		ArrayList<MinimaxNode> children = node.getChildren();
@@ -60,6 +62,7 @@ public class SearchTree
 		if(node.getGame().getPlayers()[node.getGame().getTurn().getVal()].isDefeated())
 		{
 		  	node.setValue(functionVal(node));
+		  	return;
 		}
 		
 		boolean thisPlayersTurn = player.getLoyalty().getVal() == node.getGame().getTurn().getVal();

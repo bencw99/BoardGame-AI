@@ -131,23 +131,29 @@ public class AI extends Player
 	 * @return	the move to be executed this turn
 	 * @throws IOException 
 	 */
-	public Move getThisTurnMove(int time) throws IOException
+	public Move getThisTurnMove(long time) throws IOException
 	{	
-		long initialTime = System.nanoTime();
+		long initialTime = System.currentTimeMillis();
 		
 		MinimaxNode currentNode = new MinimaxNode(0, new Game(getPieces().get(0).getNode().getBoard().getGame()), null, null, 0);
 		
-		SearchTree tree = new SearchTree(currentNode);
+		SearchTree tree = new SearchTree(currentNode, this);
 		
 		if(isDefeated())
 		{
 			return null;
 		}
 		
-		while(System.nanoTime() - initialTime < time)
+		System.out.println("Hi");
+		
+		while(System.currentTimeMillis() - initialTime < time)
 		{
+			System.out.println(System.currentTimeMillis() - initialTime);
+			
 			tree.increaseDepth();
 		}
+		
+		System.out.println("Hi");
 		
 		ArrayList<MinimaxNode> nextNodes = currentNode.getChildren();
 		

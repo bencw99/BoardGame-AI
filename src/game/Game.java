@@ -152,7 +152,7 @@ public class Game
 	{	
 		Player thisPlayer = players[turn.getVal()];
 		
-		Move move = thisPlayer.getThisTurnMove();
+		Move move = thisPlayer instanceof AI ? ((AI)thisPlayer).getThisTurnMove(500) : thisPlayer.getThisTurnMove();
 		
 		if(thisPlayer.isDefeated())
 		{	
