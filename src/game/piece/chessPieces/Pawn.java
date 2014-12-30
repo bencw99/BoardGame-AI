@@ -25,7 +25,6 @@ public class Pawn extends Piece
 	public Pawn(Loyalty loyalty)
 	{
 		super(loyalty);
-		setWorth(PAWN_WORTH);
 	}
 	
 	/**
@@ -37,7 +36,6 @@ public class Pawn extends Piece
 	public Pawn(Loyalty loyalty, Node node)
 	{
 		super(loyalty, node);
-		setWorth(PAWN_WORTH);
 	}
 	
 	/**
@@ -49,9 +47,13 @@ public class Pawn extends Piece
 	public Pawn(Piece piece, Node node)
 	{
 		super(piece.getLoyalty(), node);
-		setWorth(PAWN_WORTH);
 	}
 
+	/**
+	 * Returns the possible move this piece can do
+	 * 
+	 * @return	the array list of possible moves this piece execute
+	 */
 	public ArrayList<Move> getPossibleMoves()
 	{
 		ArrayList<Move> possibleMoves = new ArrayList<Move>();
