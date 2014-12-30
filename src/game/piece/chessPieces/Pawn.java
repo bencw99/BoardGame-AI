@@ -2,8 +2,10 @@ package game.piece.chessPieces;
 import java.util.ArrayList;
 
 import game.Move;
+import game.board.node.Location;
 import game.board.node.Node;
 import game.piece.Piece;
+import game.piece.Piece.Loyalty;
 
 /**
  * A class representing a checkers piece
@@ -13,7 +15,7 @@ import game.piece.Piece;
 public class Pawn extends Piece
 {
 	/** The worth of a pawn **/
-	public static final int PAWN_WORTH = 3;
+	public static final int PAWN_WORTH = 1;
 	
 	/**
 	 * Default constructor
@@ -52,6 +54,73 @@ public class Pawn extends Piece
 
 	public ArrayList<Move> getPossibleMoves()
 	{
-		return null;
+		ArrayList<Move> possibleMoves = new ArrayList<Move>();
+		
+		int orientation = getLoyalty() == Loyalty.RED ? 1 : -1;
+		
+		Location inFront = new Location(getNode().getLoc().getRow() + orientation, getNode().getLoc().getCol());
+		
+		if(getNode().getBoard().isValid(inFront))
+		{
+			if(getNode().getBoard().getNode(inFront).getPiece() == null)
+			{
+				ArrayList<Node> move = new ArrayList<Node>();
+				
+				move.add(getNode());
+				move.add(getNode().getBoard().getNode(inFront));
+				
+				possibleMoves.add(new Move(move, getNode().getBoard(), getLoyalty()));
+				
+				boolean hasNotMoved = true;
+				
+				if(getLoyalty() == Loyalty.RED && getNode().getLoc().getRow() != 1)
+				{
+					hasNotMoved = false;
+				}
+				
+				if(getLoyalty() == Loyalty.RED && getNode().getLoc().getRow() != getNode().getBoard().getGrid().length - 2)
+				{
+					hasNotMoved = false;
+				}
+				
+				if(hasNotMoved)
+				{
+					Location twoInFront = new Location(getNode().getLoc().getRow() + 2*orientation, getNode().getLoc().getCol());
+					
+					if(getNode().getBoard().isValid(twoInFront))
+					{
+						if(getNode().getBoard().getNode(twoInFront).getPiece() == null)
+						{
+							ArrayList<Node> firstMove = new ArrayList<Node>();
+							
+							firstMove.add(getNode());
+							firstMove.add(getNode().getBoard().getNode(twoInFront));
+							
+							possibleMoves.add(new Move(firstMove, getNode().getBoard(), getLoyalty()));
+						}
+					}
+				}
+			}
+		}
+		
+		for(int i = -1; i <= 1; i += 2)
+		{
+			Location jumpLoc = new Location(getNode().getLoc().getRow() + orientation, getNode().getLoc().getCol() + i);
+			
+			if(getNode().getBoard().isValid(jumpLoc))
+			{
+				if(getNode().getBoard().getNode(jumpLoc).getPiece() != null && getNode().getBoard().getNode(jumpLoc).getPiece().getLoyalty() != this.getLoyalty())
+				{
+					ArrayList<Node> jumpMove = new ArrayList<Node>();
+					
+					jumpMove.add(getNode());
+					jumpMove.add(getNode().getBoard().getNode(jumpLoc));
+					
+					possibleMoves.add(new Move(jumpMove, getNode().getBoard(), getLoyalty()));
+				}
+			}
+		}
+		
+		return possibleMoves;
 	}
 }
