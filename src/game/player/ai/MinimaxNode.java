@@ -178,4 +178,12 @@ public class MinimaxNode
 	{
 		return value;
 	}
+	
+	/**
+	 * @return the move to this minimax node
+	 */
+	public Move getMove()
+	{
+		return move;
+	}
 }

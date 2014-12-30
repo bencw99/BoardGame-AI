@@ -180,7 +180,7 @@ public class AI extends Player
 		
 		int random = (int)(maxMovesIndeces.size()*Math.random());
 		
-		return currentNode.getNextMoves().get(maxMovesIndeces.get(random));
+		return nextNodes.get(maxMovesIndeces.get(random)).getMove();
 	}
 	
 	/**
