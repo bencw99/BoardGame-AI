@@ -218,4 +218,12 @@ public class SearchTree
 		
 		return currentNode;
 	}
+	
+	/**
+	 * @return	the depth of this search tree
+	 */
+	public int getDepth()
+	{
+		return depth;
+	}
 }

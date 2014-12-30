@@ -115,8 +115,6 @@ public class AI extends Player
 			}
 		}
 		
-		updateTransposition();
-		
 		int random = (int)(maxMovesIndeces.size()*Math.random());
 		
 		System.out.println("Moves: " + moveTime);
@@ -143,18 +141,13 @@ public class AI extends Player
 		{
 			return null;
 		}
-		
-		System.out.println("Hi");
-		
+
 		while(System.currentTimeMillis() - initialTime < time)
 		{
-			System.out.println(System.currentTimeMillis() - initialTime);
-			
+			System.out.println("Time: " + (System.currentTimeMillis() - initialTime) + " Depth: " + tree.getDepth());
 			tree.increaseDepth();
 		}
-		
-		System.out.println("Hi");
-		
+
 		ArrayList<MinimaxNode> nextNodes = currentNode.getChildren();
 		
 		ArrayList<Integer> maxMovesIndeces = new ArrayList<Integer>();
@@ -458,15 +451,6 @@ public class AI extends Player
 		
 		return functionVal;
 	}
-	
-	/**
-	 * Updates the transposition table of this ai
-	 */
-	public void updateTransposition()
-	{
-		
-	}
-	
 	
 	/**
 	 * A class implementing runnable allowing the threading of minmax evaluation
