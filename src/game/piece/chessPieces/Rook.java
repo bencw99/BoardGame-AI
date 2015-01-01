@@ -2,9 +2,9 @@ package game.piece.chessPieces;
 
 import java.util.ArrayList;
 
-import game.Move;
 import game.board.node.Location;
 import game.board.node.Node;
+import game.move.CheckersMove;
 import game.piece.Piece;
 
 /**
@@ -51,9 +51,9 @@ public class Rook extends Piece
 	 * 
 	 * @return	the array list of possible moves this piece execute
 	 */
-	public ArrayList<Move> getPossibleMoves()
+	public ArrayList<CheckersMove> getPossibleMoves()
 	{
-		ArrayList<Move> possibleMoves = new ArrayList<Move>();
+		ArrayList<CheckersMove> possibleMoves = new ArrayList<CheckersMove>();
 		
 		boolean openSpace = true;
 		int count = 1;
@@ -73,7 +73,7 @@ public class Rook extends Piece
 				move.add(getNode());
 				move.add(getNode().getBoard().getNode(currentLoc));
 				
-				possibleMoves.add(new Move(move, getNode().getBoard(), getLoyalty()));
+				possibleMoves.add(new CheckersMove(move, getNode().getBoard(), getLoyalty()));
 			}
 			
 			count ++;
@@ -97,7 +97,7 @@ public class Rook extends Piece
 				move.add(getNode());
 				move.add(getNode().getBoard().getNode(currentLoc));
 				
-				possibleMoves.add(new Move(move, getNode().getBoard(), getLoyalty()));
+				possibleMoves.add(new CheckersMove(move, getNode().getBoard(), getLoyalty()));
 			}
 			
 			count ++;
@@ -121,7 +121,7 @@ public class Rook extends Piece
 				move.add(getNode());
 				move.add(getNode().getBoard().getNode(currentLoc));
 				
-				possibleMoves.add(new Move(move, getNode().getBoard(), getLoyalty()));
+				possibleMoves.add(new CheckersMove(move, getNode().getBoard(), getLoyalty()));
 			}
 			
 			count ++;
@@ -145,7 +145,7 @@ public class Rook extends Piece
 				move.add(getNode());
 				move.add(getNode().getBoard().getNode(currentLoc));
 				
-				possibleMoves.add(new Move(move, getNode().getBoard(), getLoyalty()));
+				possibleMoves.add(new CheckersMove(move, getNode().getBoard(), getLoyalty()));
 			}
 			
 			count ++;

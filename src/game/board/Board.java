@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import game.Game;
-import game.Move;
 import game.board.node.Node;
+import game.move.CheckersMove;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
 import game.piece.checkersPieces.King;
@@ -51,7 +51,7 @@ public abstract class Board
 	 * 
 	 * @param move	the move to be executed
 	 */
-	public abstract void executeMove(Move move);
+	public abstract void executeMove(CheckersMove move);
 	
 	/**
 	 * Initializes the array list of nodes of this game

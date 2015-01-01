@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.6" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
   realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
-  <class id="1" language="java" name="game.Move" project="Checkers AI" file="/Checkers AI/src/game/Move.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
+  <class id="1" language="java" name="game.move.CheckersMove" project="Checkers AI" 
+    file="/Checkers AI/src/game/move/CheckersMove.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="688" y="642"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      

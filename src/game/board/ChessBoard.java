@@ -1,7 +1,7 @@
 package game.board;
 
 import game.Game;
-import game.Move;
+import game.move.CheckersMove;
 
 public class ChessBoard	extends RectangularBoard
 {
@@ -21,7 +21,7 @@ public class ChessBoard	extends RectangularBoard
 		
 	}
 
-	public void executeMove(Move move)
+	public void executeMove(CheckersMove move)
 	{
 		
 	}

@@ -1,7 +1,7 @@
 package game.player.ai;
 
 import game.Game;
-import game.Move;
+import game.move.CheckersMove;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
 import game.piece.checkersPieces.Soldier;
@@ -70,16 +70,16 @@ public class AI extends Player
 	 * @return	the move to be executed this turn
 	 * @throws IOException 
 	 */
-	public Move getThisTurnMove() throws IOException
+	public CheckersMove getThisTurnMove() throws IOException
 	{	
-		ArrayList<Move> possibleMoves = getPossibleMoves();
+		ArrayList<CheckersMove> possibleMoves = getPossibleMoves();
 		
 		if(isDefeated())
 		{
 			return null;
 		}
 		
-		Move[] possibleMovesArray = new Move[possibleMoves.size()];
+		CheckersMove[] possibleMovesArray = new CheckersMove[possibleMoves.size()];
 		
 		MinimaxNode[] possibleNextNodes = new MinimaxNode[possibleMoves.size()];
 		
@@ -129,7 +129,7 @@ public class AI extends Player
 	 * @return	the move to be executed this turn
 	 * @throws IOException 
 	 */
-	public Move getThisTurnMove(long time) throws IOException
+	public CheckersMove getThisTurnMove(long time) throws IOException
 	{	
 		long initialTime = System.currentTimeMillis();
 		
@@ -182,16 +182,16 @@ public class AI extends Player
 	 * @return	the move to be executed this turn
 	 * @throws IOException 
 	 */
-	public Move getThisTurnMoveThreaded() throws IOException
+	public CheckersMove getThisTurnMoveThreaded() throws IOException
 	{	
-		ArrayList<Move> possibleMoves = getPossibleMoves();
+		ArrayList<CheckersMove> possibleMoves = getPossibleMoves();
 		
 		if(isDefeated())
 		{
 			return null;
 		}
 		
-		Move[] possibleMovesArray = new Move[possibleMoves.size()];
+		CheckersMove[] possibleMovesArray = new CheckersMove[possibleMoves.size()];
 		
 		MinimaxNode[] possibleNextNodes = new MinimaxNode[possibleMoves.size()];
 		
@@ -292,7 +292,7 @@ public class AI extends Player
 		
 		movetime = -System.nanoTime();
 		
-		ArrayList<Move> nextMoves = node.getNextMoves();
+		ArrayList<CheckersMove> nextMoves = node.getNextMoves();
 		
 		movetime += System.nanoTime();
 		
@@ -309,7 +309,7 @@ public class AI extends Player
 		{
 			extreme = Integer.MIN_VALUE;
 			
-			for(Move nextMove : nextMoves)
+			for(CheckersMove nextMove : nextMoves)
 			{	
 				double maxCand = getMinimaxVal(node.getNextNode(nextMove), extreme);
 				
@@ -328,7 +328,7 @@ public class AI extends Player
 		{
 			extreme = Integer.MAX_VALUE;
 			
-			for(Move nextMove : nextMoves)
+			for(CheckersMove nextMove : nextMoves)
 			{
 				double minCand = getMinimaxVal(node.getNextNode(nextMove), extreme);
 
@@ -366,7 +366,7 @@ public class AI extends Player
 		
 		MinimaxNode currentNode = stack.peek();
 		
-		ArrayList<Move> nextMoves = currentNode.getNextMoves();
+		ArrayList<CheckersMove> nextMoves = currentNode.getNextMoves();
 		
 		double extreme = getMinimaxVal(currentNode.getNextNode(nextMoves.get(0)), 0);
 		
@@ -378,7 +378,7 @@ public class AI extends Player
 			
 			if(getLoyalty().getVal() == currentNode.getGame().getTurn().getVal())
 			{
-				for(Move nextMove : nextMoves)
+				for(CheckersMove nextMove : nextMoves)
 				{
 					//Evaluate minimax of nextMove
 					//Set extreme to max
@@ -386,7 +386,7 @@ public class AI extends Player
 			} 
 			else
 			{
-				for(Move nextMove : nextMoves)
+				for(CheckersMove nextMove : nextMoves)
 				{
 					//Evaluate minimax of nextMove
 					//Set extreme to min

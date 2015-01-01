@@ -1,9 +1,9 @@
 package game.piece.chessPieces;
 import java.util.ArrayList;
 
-import game.Move;
 import game.board.node.Location;
 import game.board.node.Node;
+import game.move.CheckersMove;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
 
@@ -54,9 +54,9 @@ public class Pawn extends Piece
 	 * 
 	 * @return	the array list of possible moves this piece execute
 	 */
-	public ArrayList<Move> getPossibleMoves()
+	public ArrayList<CheckersMove> getPossibleMoves()
 	{
-		ArrayList<Move> possibleMoves = new ArrayList<Move>();
+		ArrayList<CheckersMove> possibleMoves = new ArrayList<CheckersMove>();
 		
 		int orientation = getLoyalty() == Loyalty.RED ? 1 : -1;
 		
@@ -71,7 +71,7 @@ public class Pawn extends Piece
 				move.add(getNode());
 				move.add(getNode().getBoard().getNode(inFront));
 				
-				possibleMoves.add(new Move(move, getNode().getBoard(), getLoyalty()));
+				possibleMoves.add(new CheckersMove(move, getNode().getBoard(), getLoyalty()));
 				
 				boolean hasNotMoved = true;
 				
@@ -98,7 +98,7 @@ public class Pawn extends Piece
 							firstMove.add(getNode());
 							firstMove.add(getNode().getBoard().getNode(twoInFront));
 							
-							possibleMoves.add(new Move(firstMove, getNode().getBoard(), getLoyalty()));
+							possibleMoves.add(new CheckersMove(firstMove, getNode().getBoard(), getLoyalty()));
 						}
 					}
 				}
@@ -118,7 +118,7 @@ public class Pawn extends Piece
 					jumpMove.add(getNode());
 					jumpMove.add(getNode().getBoard().getNode(jumpLoc));
 					
-					possibleMoves.add(new Move(jumpMove, getNode().getBoard(), getLoyalty()));
+					possibleMoves.add(new CheckersMove(jumpMove, getNode().getBoard(), getLoyalty()));
 				}
 			}
 		}

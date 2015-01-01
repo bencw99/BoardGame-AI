@@ -6,10 +6,10 @@ import java.awt.image.ImageObserver;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import game.Move;
 import game.board.CheckersBoard;
 import game.board.node.Location;
 import game.board.node.Node;
+import game.move.CheckersMove;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
 
@@ -80,9 +80,9 @@ public class King extends Piece
 	 * 
 	 * @return	the array list of possible moves this piece execute
 	 */
-	public ArrayList<Move> getPossibleMoves() 
+	public ArrayList<CheckersMove> getPossibleMoves() 
 	{
-		ArrayList<Move> possibleMoves = new ArrayList<Move>();
+		ArrayList<CheckersMove> possibleMoves = new ArrayList<CheckersMove>();
 		
 		for(int i = - 1; i <= 1; i += 2)
 		{
@@ -98,7 +98,7 @@ public class King extends Piece
 						move.add(getNode());
 						move.add(getNode().getBoard().getNode(currentLoc));
 						
-						possibleMoves.add(new Move(move, getNode().getBoard(), getLoyalty()));
+						possibleMoves.add(new CheckersMove(move, getNode().getBoard(), getLoyalty()));
 					}
 				}
 			}
@@ -108,13 +108,13 @@ public class King extends Piece
 		{
 			if(move.size() > 1)
 			{
-				possibleMoves.add(new Move(move, getNode().getBoard(), getLoyalty()));
+				possibleMoves.add(new CheckersMove(move, getNode().getBoard(), getLoyalty()));
 			}
 		}
 		
-		ArrayList<Move> jumpMoves = new ArrayList<Move>();
+		ArrayList<CheckersMove> jumpMoves = new ArrayList<CheckersMove>();
 		
-		for(Move possibleMove : possibleMoves)
+		for(CheckersMove possibleMove : possibleMoves)
 		{
 			if(!possibleMove.getJumped().isEmpty())
 			{

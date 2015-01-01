@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import game.board.*;
+import game.move.CheckersMove;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
 import game.piece.checkersPieces.Soldier;
@@ -152,7 +153,7 @@ public class Game
 	{	
 		Player thisPlayer = players[turn.getVal()];
 		
-		Move move = thisPlayer instanceof AI ? ((AI)thisPlayer).getThisTurnMove(1000) : thisPlayer.getThisTurnMove();
+		CheckersMove move = thisPlayer instanceof AI ? ((AI)thisPlayer).getThisTurnMove(1000) : thisPlayer.getThisTurnMove();
 		
 		if(thisPlayer.isDefeated())
 		{	

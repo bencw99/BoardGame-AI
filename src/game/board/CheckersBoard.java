@@ -1,9 +1,9 @@
 package game.board;
 
 import game.Game;
-import game.Move;
 import game.board.node.Location;
 import game.board.node.Node;
+import game.move.CheckersMove;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
 import game.piece.checkersPieces.King;
@@ -124,7 +124,7 @@ public class CheckersBoard extends RectangularBoard
 	 * @param move	the move to be executed
 	 * @throws IOException 
 	 */
-	public void executeMove(Move move)
+	public void executeMove(CheckersMove move)
 	{
 		for(Node jumped : move.getJumped())
 		{

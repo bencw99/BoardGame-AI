@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import game.Game;
-import game.Move;
 import game.Game.Turn;
+import game.move.CheckersMove;
 import game.piece.Piece;
 import game.player.Player;
 import game.player.Player.State;
@@ -26,7 +26,7 @@ public class MinimaxNode
 	private MinimaxNode parent;
 	
 	/** The move relating this node to the parent **/
-	private Move move;
+	private CheckersMove move;
 	
 	/** The string identifying this node **/
 	private String identification;
@@ -43,7 +43,7 @@ public class MinimaxNode
 	 * @param minimaxDepth	the minimaxDepth to be set to
 	 * @param ame			the game to be set to
 	 */
-	public MinimaxNode(int minimaxDepth, Game game, MinimaxNode parent, Move move, int identification)
+	public MinimaxNode(int minimaxDepth, Game game, MinimaxNode parent, CheckersMove move, int identification)
 	{
 		this.minimaxDepth = minimaxDepth;
 		this.contents = new MinimaxNodeContents(game);
@@ -58,7 +58,7 @@ public class MinimaxNode
 	 * @param minimaxDepth	the minimaxDepth to be set to
 	 * @param ame			the game to be set to
 	 */
-	public MinimaxNode(int minimaxDepth, MinimaxNodeContents contents, MinimaxNode parent, Move move, int identification)
+	public MinimaxNode(int minimaxDepth, MinimaxNodeContents contents, MinimaxNode parent, CheckersMove move, int identification)
 	{
 		this.minimaxDepth = minimaxDepth;
 		this.contents = contents;
@@ -73,7 +73,7 @@ public class MinimaxNode
 	 * @return	the minimax node resulting from the given move
 	 * @throws IOException 
 	 */
-	public MinimaxNode getNextNode(Move move) throws IOException
+	public MinimaxNode getNextNode(CheckersMove move) throws IOException
 	{
 		MinimaxNodeContents newContents = contents.getNextContents(move);
 
@@ -85,7 +85,7 @@ public class MinimaxNode
 	 * 
 	 * @return	the array list of edges from this node
 	 */
-	public ArrayList<Move> getNextMoves()
+	public ArrayList<CheckersMove> getNextMoves()
 	{	
 		return contents.getNextMoves();
 	}
@@ -101,7 +101,7 @@ public class MinimaxNode
 			
 			int currentChildID = 0;
 			
-			for(Move nextMove : contents.getNextMoves())
+			for(CheckersMove nextMove : contents.getNextMoves())
 			{
 				try
 				{
@@ -182,7 +182,7 @@ public class MinimaxNode
 	/**
 	 * @return the move to this minimax node
 	 */
-	public Move getMove()
+	public CheckersMove getMove()
 	{
 		return move;
 	}

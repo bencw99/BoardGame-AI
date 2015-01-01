@@ -1,6 +1,6 @@
 package game.player.ai;
 
-import game.Move;
+import game.move.CheckersMove;
 import game.piece.Piece;
 import game.player.Player;
 

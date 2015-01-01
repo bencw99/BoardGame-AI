@@ -1,9 +1,9 @@
 package game.player;
 
-import game.Move;
 import game.board.CheckersBoard;
 import game.board.node.Location;
 import game.board.node.Node;
+import game.move.CheckersMove;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
 import gui.GamePanel;
@@ -45,7 +45,7 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 	 * 
 	 * @return	the move to be executed this turn
 	 */
-	public Move getThisTurnMove()
+	public CheckersMove getThisTurnMove()
 	{
 		if(isDefeated())
 		{
@@ -73,11 +73,11 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 		
 		moveRegistered = false;
 		
-		ArrayList<Move> possibleMoves = getPossibleMoves();
+		ArrayList<CheckersMove> possibleMoves = getPossibleMoves();
 		
 		boolean isPossible = false;
 		
-		for(Move possibleMove : possibleMoves)
+		for(CheckersMove possibleMove : possibleMoves)
 		{
 			ArrayList<Node> thisMoveNodes = possibleMove.getNodes();
 			
@@ -133,7 +133,7 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 	 * 
 	 * @return the registered move for this turn
 	 */
-	public Move registerMouseMove()
+	public CheckersMove registerMouseMove()
 	{
 		ArrayList<Node> nodes = new ArrayList<Node>();
 		
@@ -142,7 +142,7 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 			nodes.add(getPieces().get(0).getNode().getBoard().getNode(loc));
 		}
 		
-		return new Move(nodes, getPieces().get(0).getNode().getBoard(), getLoyalty());
+		return new CheckersMove(nodes, getPieces().get(0).getNode().getBoard(), getLoyalty());
 	}
 
 	public void mouseDragged(MouseEvent event)

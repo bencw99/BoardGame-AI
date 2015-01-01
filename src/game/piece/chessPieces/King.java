@@ -2,9 +2,9 @@ package game.piece.chessPieces;
 
 import java.util.ArrayList;
 
-import game.Move;
 import game.board.node.Location;
 import game.board.node.Node;
+import game.move.CheckersMove;
 import game.piece.Piece;
 
 /**
@@ -51,9 +51,9 @@ public class King extends Piece
 	 * 
 	 * @return	the array list of possible moves this piece execute
 	 */
-	public ArrayList<Move> getPossibleMoves()
+	public ArrayList<CheckersMove> getPossibleMoves()
 	{
-		ArrayList<Move> possibleMoves = new ArrayList<Move>();
+		ArrayList<CheckersMove> possibleMoves = new ArrayList<CheckersMove>();
 		
 		for(int i = -1; i <= 1; i ++)
 		{
@@ -70,7 +70,7 @@ public class King extends Piece
 						move.add(getNode());
 						move.add(getNode().getBoard().getNode(moveLoc));
 						
-						possibleMoves.add(new Move(move, getNode().getBoard(), getLoyalty()));
+						possibleMoves.add(new CheckersMove(move, getNode().getBoard(), getLoyalty()));
 					}
 				}
 			}
