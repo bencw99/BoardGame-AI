@@ -36,6 +36,18 @@ public class Location
 		this.col = col;
 	}
 
+	public boolean equals(Location other)
+	{
+		if(this.row == other.row && this.col == other.col)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
 	public int getRow() 
 	{
 		return row;

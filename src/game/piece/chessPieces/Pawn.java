@@ -8,7 +8,7 @@ import game.piece.Piece;
 import game.piece.Piece.Loyalty;
 
 /**
- * A class representing a checkers piece
+ * A class representing a chess pawn
  * 
  * @author Benjamin Cohen-Wang
  */

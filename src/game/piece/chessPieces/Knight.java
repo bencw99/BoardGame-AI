@@ -3,10 +3,15 @@ package game.piece.chessPieces;
 import java.util.ArrayList;
 
 import game.Move;
+import game.board.node.Location;
 import game.board.node.Node;
 import game.piece.Piece;
-import game.piece.Piece.Loyalty;
 
+/**
+ * A class representing a chess knight
+ * 
+ * @author Benjamin Cohen-Wang
+ */
 public class Knight extends Piece
 {
 	/**
@@ -48,7 +53,44 @@ public class Knight extends Piece
 	 */
 	public ArrayList<Move> getPossibleMoves()
 	{
-		return null;
+		ArrayList<Move> possibleMoves = new ArrayList<Move>();
+		
+		for(int i = -2; i <= 2; i += 4)
+		{
+			for(int j = -1; j <= 1; j += 2)
+			{
+				Location moveLoc = new Location(getNode().getLoc().getRow() + i, getNode().getLoc().getCol() + j);
+				
+				if(getNode().getBoard().isValid(moveLoc))
+				{
+					ArrayList<Node> move = new ArrayList<Node>();
+					
+					move.add(getNode());
+					move.add(getNode().getBoard().getNode(moveLoc));
+					
+					possibleMoves.add(new Move(move, getNode().getBoard(), getLoyalty()));
+				}
+			}
+		}
+		
+		for(int i = -1; i <= 1; i += 2)
+		{
+			for(int j = -2; j <= 2; j += 4)
+			{
+				Location moveLoc = new Location(getNode().getLoc().getRow() + i, getNode().getLoc().getCol() + j);
+				
+				if(getNode().getBoard().isValid(moveLoc))
+				{
+					ArrayList<Node> move = new ArrayList<Node>();
+					
+					move.add(getNode());
+					move.add(getNode().getBoard().getNode(moveLoc));
+					
+					possibleMoves.add(new Move(move, getNode().getBoard(), getLoyalty()));
+				}
+			}
+		}
+		
+		return possibleMoves;
 	}
-	
 }
