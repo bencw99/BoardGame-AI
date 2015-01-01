@@ -65,6 +65,16 @@ public class Rook extends Piece
 			if(!getNode().getBoard().isValid(currentLoc) || getNode().getBoard().getNode(currentLoc).getPiece() != null)
 			{
 				openSpace = false;
+				
+				if(getNode().getBoard().isValid(currentLoc) && getNode().getBoard().getNode(currentLoc).getPiece().getLoyalty() != this.getLoyalty())
+				{
+					ArrayList<Node> move = new ArrayList<Node>();
+					
+					move.add(getNode());
+					move.add(getNode().getBoard().getNode(currentLoc));
+					
+					possibleMoves.add(new CheckersMove(move, getNode().getBoard(), getLoyalty()));
+				}
 			}
 			else
 			{
@@ -89,6 +99,16 @@ public class Rook extends Piece
 			if(!getNode().getBoard().isValid(currentLoc) || getNode().getBoard().getNode(currentLoc).getPiece() != null)
 			{
 				openSpace = false;
+				
+				if(getNode().getBoard().isValid(currentLoc) && getNode().getBoard().getNode(currentLoc).getPiece().getLoyalty() != this.getLoyalty())
+				{
+					ArrayList<Node> move = new ArrayList<Node>();
+					
+					move.add(getNode());
+					move.add(getNode().getBoard().getNode(currentLoc));
+					
+					possibleMoves.add(new CheckersMove(move, getNode().getBoard(), getLoyalty()));
+				}
 			}
 			else
 			{
@@ -113,6 +133,16 @@ public class Rook extends Piece
 			if(!getNode().getBoard().isValid(currentLoc) || getNode().getBoard().getNode(currentLoc).getPiece() != null)
 			{
 				openSpace = false;
+				
+				if(getNode().getBoard().isValid(currentLoc) && getNode().getBoard().getNode(currentLoc).getPiece().getLoyalty() != this.getLoyalty())
+				{
+					ArrayList<Node> move = new ArrayList<Node>();
+					
+					move.add(getNode());
+					move.add(getNode().getBoard().getNode(currentLoc));
+					
+					possibleMoves.add(new CheckersMove(move, getNode().getBoard(), getLoyalty()));
+				}
 			}
 			else
 			{
@@ -137,6 +167,16 @@ public class Rook extends Piece
 			if(!getNode().getBoard().isValid(currentLoc) || getNode().getBoard().getNode(currentLoc).getPiece() != null)
 			{
 				openSpace = false;
+				
+				if(getNode().getBoard().isValid(currentLoc) && getNode().getBoard().getNode(currentLoc).getPiece().getLoyalty() != this.getLoyalty())
+				{
+					ArrayList<Node> move = new ArrayList<Node>();
+					
+					move.add(getNode());
+					move.add(getNode().getBoard().getNode(currentLoc));
+					
+					possibleMoves.add(new CheckersMove(move, getNode().getBoard(), getLoyalty()));
+				}
 			}
 			else
 			{

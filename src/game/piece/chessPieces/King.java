@@ -63,7 +63,7 @@ public class King extends Piece
 				
 				if(!moveLoc.equals(getNode().getLoc()))
 				{
-					if(getNode().getBoard().isValid(moveLoc))
+					if(getNode().getBoard().isValid(moveLoc)  && getNode().getBoard().getNode(moveLoc).getPiece().getLoyalty() != this.getLoyalty())
 					{
 						ArrayList<Node> move = new ArrayList<Node>();
 						
