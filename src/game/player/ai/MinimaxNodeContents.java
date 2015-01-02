@@ -1,7 +1,7 @@
 package game.player.ai;
 
 import game.Game;
-import game.move.CheckersMove;
+import game.move.Move;
 import game.player.Player;
 import game.player.Player.State;
 
@@ -19,7 +19,7 @@ public class MinimaxNodeContents
 	private Game game;
 	
 	/** The arraylist of moves from this node **/
-	private ArrayList<CheckersMove> nextMoves;
+	private ArrayList<Move> nextMoves;
 	
 	/**
 	 * Parameterized constructor, initializes board and minimax depth to given values
@@ -38,7 +38,7 @@ public class MinimaxNodeContents
 	 * @return	the minimax node resulting from the given move
 	 * @throws IOException 
 	 */
-	public MinimaxNodeContents getNextContents(CheckersMove move) throws IOException
+	public MinimaxNodeContents getNextContents(Move move) throws IOException
 	{
 		Game newGame = new Game(game);
 		
@@ -54,7 +54,7 @@ public class MinimaxNodeContents
 	 * 
 	 * @return	the array list of edges from this node
 	 */
-	public ArrayList<CheckersMove> getNextMoves()
+	public ArrayList<Move> getNextMoves()
 	{	
 		loadNextMoves();
 		return nextMoves;

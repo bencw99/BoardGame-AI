@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 import game.board.node.Location;
 import game.board.node.Node;
-import game.move.CheckersMove;
+import game.move.ChessMove;
+import game.move.Move;
 import game.piece.Piece;
 
 /**
@@ -51,9 +52,9 @@ public class Rook extends Piece
 	 * 
 	 * @return	the array list of possible moves this piece execute
 	 */
-	public ArrayList<CheckersMove> getPossibleMoves()
+	public ArrayList<Move> getPossibleMoves()
 	{
-		ArrayList<CheckersMove> possibleMoves = new ArrayList<CheckersMove>();
+		ArrayList<Move> possibleMoves = new ArrayList<Move>();
 		
 		boolean openSpace = true;
 		int count = 1;
@@ -73,7 +74,7 @@ public class Rook extends Piece
 					move.add(getNode());
 					move.add(getNode().getBoard().getNode(currentLoc));
 					
-					possibleMoves.add(new CheckersMove(move, getNode().getBoard(), getLoyalty()));
+					possibleMoves.add(new ChessMove(move, getNode().getBoard(), getLoyalty()));
 				}
 			}
 			else
@@ -83,7 +84,7 @@ public class Rook extends Piece
 				move.add(getNode());
 				move.add(getNode().getBoard().getNode(currentLoc));
 				
-				possibleMoves.add(new CheckersMove(move, getNode().getBoard(), getLoyalty()));
+				possibleMoves.add(new ChessMove(move, getNode().getBoard(), getLoyalty()));
 			}
 			
 			count ++;
@@ -107,7 +108,7 @@ public class Rook extends Piece
 					move.add(getNode());
 					move.add(getNode().getBoard().getNode(currentLoc));
 					
-					possibleMoves.add(new CheckersMove(move, getNode().getBoard(), getLoyalty()));
+					possibleMoves.add(new ChessMove(move, getNode().getBoard(), getLoyalty()));
 				}
 			}
 			else
@@ -117,7 +118,7 @@ public class Rook extends Piece
 				move.add(getNode());
 				move.add(getNode().getBoard().getNode(currentLoc));
 				
-				possibleMoves.add(new CheckersMove(move, getNode().getBoard(), getLoyalty()));
+				possibleMoves.add(new ChessMove(move, getNode().getBoard(), getLoyalty()));
 			}
 			
 			count ++;
@@ -141,7 +142,7 @@ public class Rook extends Piece
 					move.add(getNode());
 					move.add(getNode().getBoard().getNode(currentLoc));
 					
-					possibleMoves.add(new CheckersMove(move, getNode().getBoard(), getLoyalty()));
+					possibleMoves.add(new ChessMove(move, getNode().getBoard(), getLoyalty()));
 				}
 			}
 			else
@@ -151,7 +152,7 @@ public class Rook extends Piece
 				move.add(getNode());
 				move.add(getNode().getBoard().getNode(currentLoc));
 				
-				possibleMoves.add(new CheckersMove(move, getNode().getBoard(), getLoyalty()));
+				possibleMoves.add(new ChessMove(move, getNode().getBoard(), getLoyalty()));
 			}
 			
 			count ++;
@@ -175,7 +176,7 @@ public class Rook extends Piece
 					move.add(getNode());
 					move.add(getNode().getBoard().getNode(currentLoc));
 					
-					possibleMoves.add(new CheckersMove(move, getNode().getBoard(), getLoyalty()));
+					possibleMoves.add(new ChessMove(move, getNode().getBoard(), getLoyalty()));
 				}
 			}
 			else
@@ -185,7 +186,7 @@ public class Rook extends Piece
 				move.add(getNode());
 				move.add(getNode().getBoard().getNode(currentLoc));
 				
-				possibleMoves.add(new CheckersMove(move, getNode().getBoard(), getLoyalty()));
+				possibleMoves.add(new ChessMove(move, getNode().getBoard(), getLoyalty()));
 			}
 			
 			count ++;

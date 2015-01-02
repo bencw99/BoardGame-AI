@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import game.Game;
 import game.move.CheckersMove;
+import game.move.Move;
 import game.piece.*;
 import game.piece.Piece.Loyalty;
 
@@ -56,14 +57,14 @@ public abstract class Player
 	 * 
 	 * @return	the arrayList of possible moves of this player
 	 */
-	public ArrayList<CheckersMove> getPossibleMoves()
+	public ArrayList<Move> getPossibleMoves()
 	{
-		ArrayList<CheckersMove> jumpMoves = new ArrayList<CheckersMove>();
-		ArrayList<CheckersMove> possibleMoves = new ArrayList<CheckersMove>();
+		ArrayList<Move> jumpMoves = new ArrayList<Move>();
+		ArrayList<Move> possibleMoves = new ArrayList<Move>();
 		
 		for(Piece piece : pieces)
 		{
-			for(CheckersMove possibleMove : piece.getPossibleMoves())
+			for(Move possibleMove : piece.getPossibleMoves())
 			{
 				if(!possibleMove.getJumped().isEmpty())
 				{
@@ -95,7 +96,7 @@ public abstract class Player
 	 * @return	the move to be executed this turn
 	 * @throws IOException 
 	 */
-	public abstract CheckersMove getThisTurnMove() throws IOException;
+	public abstract Move getThisTurnMove() throws IOException;
 	
 	/**
 	 * Removes the given piece from pieces ArrayList

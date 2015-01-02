@@ -3,13 +3,12 @@ package game.board;
 import game.Game;
 import game.board.node.Location;
 import game.board.node.Node;
-import game.move.CheckersMove;
+import game.move.Move;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
 import game.piece.checkersPieces.King;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -72,59 +71,12 @@ public class CheckersBoard extends RectangularBoard
 	}
 	
 	/**
-	 * Loads the board grid
-	 */
-	public void loadBoard()
-	{
-		int[] piecesLeft = new int[getGame().getPlayers().length];
-		
-		for(int i = 0; i < piecesLeft.length; i ++)
-		{
-			piecesLeft[i] = getGame().getPlayers()[i].getPieces().size();
-		}
-
-		for(int i = 0; i < getGrid().length; i ++)
-		{
-			for(int j = 0; j < getGrid()[0].length; j ++)
-			{	
-				if(getGrid()[i][j].getColor() == Color.BLACK)
-				{
-					if(piecesLeft[0] > 0)
-					{
-						put(getGame().getPlayers()[0].getPieces().get(piecesLeft[0] - 1), getGrid()[i][j].getLoc());
-						getGame().getPlayers()[0].getPieces().get(piecesLeft[0] - 1).add(getGrid()[i][j]);
-					}
-						
-					piecesLeft[0] --;
-				}
-			}
-		}
-		
-		for(int i = getGrid().length - 1; i >= 0; i --)
-		{
-			for(int j = getGrid()[0].length - 1; j >= 0; j --)
-			{	
-				if(getGrid()[i][j].getColor() == Color.BLACK)
-				{
-					if(piecesLeft[1] > 0)
-					{
-						put(getGame().getPlayers()[1].getPieces().get(piecesLeft[1] - 1), getGrid()[i][j].getLoc());
-						getGame().getPlayers()[1].getPieces().get(piecesLeft[1] - 1).add(getGrid()[i][j]);
-					}
-						
-					piecesLeft[1] --;
-				}
-			}
-		}
-	}
-	
-	/**
 	 * Executes the given move
 	 * 
 	 * @param move	the move to be executed
 	 * @throws IOException 
 	 */
-	public void executeMove(CheckersMove move)
+	public void executeMove(Move move)
 	{
 		for(Node jumped : move.getJumped())
 		{

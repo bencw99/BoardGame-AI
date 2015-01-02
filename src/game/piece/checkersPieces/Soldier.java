@@ -10,6 +10,7 @@ import game.board.CheckersBoard;
 import game.board.node.Location;
 import game.board.node.Node;
 import game.move.CheckersMove;
+import game.move.Move;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
 
@@ -79,9 +80,9 @@ public class Soldier extends Piece
 	 * 
 	 * @return	the array list of possible moves this piece execute
 	 */
-	public ArrayList<CheckersMove> getPossibleMoves()
+	public ArrayList<Move> getPossibleMoves()
 	{
-		ArrayList<CheckersMove> possibleMoves = new ArrayList<CheckersMove>();
+		ArrayList<Move> possibleMoves = new ArrayList<Move>();
 		
 		int orientation = getLoyalty() == Loyalty.RED ? 1 : -1;
 		
@@ -102,7 +103,7 @@ public class Soldier extends Piece
 			}
 		}
 		
-		ArrayList<CheckersMove> jumpMoves = new ArrayList<CheckersMove>();
+		ArrayList<Move> jumpMoves = new ArrayList<Move>();
 		
 		for(ArrayList<Node> move : getNextJumps(getNode().getLoc()))
 		{

@@ -1,15 +1,11 @@
 package game.board;
 
 import java.awt.Graphics;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import game.Game;
 import game.board.node.Node;
-import game.move.CheckersMove;
-import game.piece.Piece;
-import game.piece.Piece.Loyalty;
-import game.piece.checkersPieces.King;
+import game.move.Move;
 
 /**
  * A superclass representing a general game board
@@ -51,7 +47,7 @@ public abstract class Board
 	 * 
 	 * @param move	the move to be executed
 	 */
-	public abstract void executeMove(CheckersMove move);
+	public abstract void executeMove(Move move);
 	
 	/**
 	 * Initializes the array list of nodes of this game
@@ -59,7 +55,7 @@ public abstract class Board
 	public abstract void initializeNodes();
 	
 	/**
-	 * Loads the initial posiition of this board
+	 * Loads the initial position of this board
 	 */
 	public abstract void loadBoard();
 	

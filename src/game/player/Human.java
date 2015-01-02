@@ -4,6 +4,7 @@ import game.board.CheckersBoard;
 import game.board.node.Location;
 import game.board.node.Node;
 import game.move.CheckersMove;
+import game.move.Move;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
 import gui.GamePanel;
@@ -73,11 +74,11 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 		
 		moveRegistered = false;
 		
-		ArrayList<CheckersMove> possibleMoves = getPossibleMoves();
+		ArrayList<Move> possibleMoves = getPossibleMoves();
 		
 		boolean isPossible = false;
 		
-		for(CheckersMove possibleMove : possibleMoves)
+		for(Move possibleMove : possibleMoves)
 		{
 			ArrayList<Node> thisMoveNodes = possibleMove.getNodes();
 			

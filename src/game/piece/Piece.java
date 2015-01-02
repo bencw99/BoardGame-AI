@@ -3,6 +3,7 @@ package game.piece;
 import game.board.CheckersBoard;
 import game.board.node.Node;
 import game.move.CheckersMove;
+import game.move.Move;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -115,7 +116,7 @@ public abstract class Piece implements ImageObserver
 	 * 
 	 * @return	the array list of possible moves this piece execute
 	 */
-	public abstract ArrayList<CheckersMove> getPossibleMoves();
+	public abstract ArrayList<Move> getPossibleMoves();
 	
 	/**
 	 * Adds this instance to the given node
