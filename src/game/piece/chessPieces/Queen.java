@@ -1,5 +1,6 @@
 package game.piece.chessPieces;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import game.board.node.Location;
@@ -7,6 +8,7 @@ import game.board.node.Node;
 import game.move.ChessMove;
 import game.move.Move;
 import game.piece.Piece;
+import game.piece.Piece.Loyalty;
 
 /**
  * A class representing a chess queen
@@ -19,10 +21,18 @@ public class Queen extends Piece
 	 * Default constructor
 	 * 
 	 * @param loyalty	the value the loyalty of this piece
+	 * @throws IOException 
 	 */
-	public Queen(Loyalty loyalty)
+	public Queen(Loyalty loyalty) throws IOException
 	{
 		super(loyalty);
+		
+		if(!imagesInitialized)
+		{
+			imagesInit();
+		}
+		
+		image = (getLoyalty() == Loyalty.RED) ? WHITE_QUEEN: BLACK_QUEEN;
 	}
 	
 	/**
@@ -30,10 +40,18 @@ public class Queen extends Piece
 	 * 
 	 * @param node	the node of this instance on the board
 	 * @param loyalty	the value the loyalty is set to
+	 * @throws IOException 
 	 */
-	public Queen(Loyalty loyalty, Node node)
+	public Queen(Loyalty loyalty, Node node) throws IOException
 	{
 		super(loyalty, node);
+		
+		if(!imagesInitialized)
+		{
+			imagesInit();
+		}
+		
+		image = (getLoyalty() == Loyalty.RED) ? WHITE_QUEEN: BLACK_QUEEN;
 	}
 	
 	/**
@@ -41,10 +59,18 @@ public class Queen extends Piece
 	 * 
 	 * @param piece	the piece to be copied
 	 * @param node	the node to be added to
+	 * @throws IOException 
 	 */
-	public Queen(Piece piece, Node node)
+	public Queen(Piece piece, Node node) throws IOException
 	{
 		super(piece.getLoyalty(), node);
+		
+		if(!imagesInitialized)
+		{
+			imagesInit();
+		}
+		
+		image = (getLoyalty() == Loyalty.RED) ? WHITE_QUEEN: BLACK_QUEEN;
 	}
 
 	/**

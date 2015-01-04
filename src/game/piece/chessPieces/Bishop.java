@@ -1,5 +1,6 @@
 package game.piece.chessPieces;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import game.board.node.Location;
@@ -7,6 +8,7 @@ import game.board.node.Node;
 import game.move.ChessMove;
 import game.move.Move;
 import game.piece.Piece;
+import game.piece.Piece.Loyalty;
 
 /**
  * A class representing a chess bishop
@@ -19,10 +21,18 @@ public class Bishop extends Piece
 	 * Default constructor
 	 * 
 	 * @param loyalty	the value the loyalty of this piece
+	 * @throws IOException 
 	 */
-	public Bishop(Loyalty loyalty)
+	public Bishop(Loyalty loyalty) throws IOException
 	{
 		super(loyalty);
+		
+		if(!imagesInitialized)
+		{
+			imagesInit();
+		}
+		
+		image = (getLoyalty() == Loyalty.RED) ? WHITE_BISHOP: BLACK_BISHOP;
 	}
 	
 	/**
@@ -30,10 +40,18 @@ public class Bishop extends Piece
 	 * 
 	 * @param node	the node of this instance on the board
 	 * @param loyalty	the value the loyalty is set to
+	 * @throws IOException 
 	 */
-	public Bishop(Loyalty loyalty, Node node)
+	public Bishop(Loyalty loyalty, Node node) throws IOException
 	{
 		super(loyalty, node);
+		
+		if(!imagesInitialized)
+		{
+			imagesInit();
+		}
+		
+		image = (getLoyalty() == Loyalty.RED) ? WHITE_BISHOP: BLACK_BISHOP;
 	}
 	
 	/**
@@ -41,10 +59,18 @@ public class Bishop extends Piece
 	 * 
 	 * @param piece	the piece to be copied
 	 * @param node	the node to be added to
+	 * @throws IOException 
 	 */
-	public Bishop(Piece piece, Node node)
+	public Bishop(Piece piece, Node node) throws IOException
 	{
 		super(piece.getLoyalty(), node);
+		
+		if(!imagesInitialized)
+		{
+			imagesInit();
+		}
+		
+		image = (getLoyalty() == Loyalty.RED) ? WHITE_BISHOP: BLACK_BISHOP;
 	}
 
 	/**

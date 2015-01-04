@@ -63,10 +63,46 @@ public abstract class Piece implements ImageObserver
 	public static BufferedImage RED_CHECKER;
 	
 	/** The image for a black king checker **/
-	public static BufferedImage BLACK_KING;
+	public static BufferedImage BLACK_CHECKER_KING;
 	
 	/** The image for a red king checker **/
-	public static BufferedImage RED_KING;
+	public static BufferedImage RED_CHECKER_KING;
+	
+	/** The image for a white pawn **/
+	public static BufferedImage WHITE_PAWN;
+	
+	/** The image for a white rook **/
+	public static BufferedImage WHITE_ROOK;
+	
+	/** The image for a white knight **/
+	public static BufferedImage WHITE_KNIGHT;
+	
+	/** The image for a white bishop **/
+	public static BufferedImage WHITE_BISHOP;
+	
+	/** The image for a white king **/
+	public static BufferedImage WHITE_KING;
+	
+	/** The image for a white queen **/
+	public static BufferedImage WHITE_QUEEN;
+	
+	/** The image for a black pawn **/
+	public static BufferedImage BLACK_PAWN;
+	
+	/** The image for a black rook **/
+	public static BufferedImage BLACK_ROOK;
+	
+	/** The image for a black knight **/
+	public static BufferedImage BLACK_KNIGHT;
+	
+	/** The image for a black bishop **/
+	public static BufferedImage BLACK_BISHOP;
+	
+	/** The image for a black king **/
+	public static BufferedImage BLACK_KING;
+	
+	/** The image for a black queen **/
+	public static BufferedImage BLACK_QUEEN;
 	
 	/**
 	 * Default constructor
@@ -166,16 +202,29 @@ public abstract class Piece implements ImageObserver
 	}
 
 	/**
-	 * Initializes checkers images
+	 * Initializes images
 	 * 
 	 * @throws IOException
 	 */
-	public static void checkerImagesInit() throws IOException
+	public static void imagesInit() throws IOException
 	{
-		BLACK_CHECKER = ImageIO.read(new File("black-checker.png"));
-		RED_CHECKER = ImageIO.read(new File("red-checker.png"));
-		BLACK_KING = ImageIO.read(new File("black-king.png"));
-		RED_KING = ImageIO.read(new File("red-king.png"));
+		BLACK_CHECKER = ImageIO.read(new File("CheckersPieces/black-checker.png"));
+		RED_CHECKER = ImageIO.read(new File("CheckersPieces/red-checker.png"));
+		BLACK_CHECKER_KING = ImageIO.read(new File("CheckersPieces/black-king.png"));
+		RED_CHECKER_KING = ImageIO.read(new File("CheckersPieces/red-king.png"));
+		
+		WHITE_PAWN = ImageIO.read(new File("ChessPieces/WhitePawn.png"));
+		BLACK_PAWN = ImageIO.read(new File("ChessPieces/BlackPawn.png"));
+		WHITE_ROOK = ImageIO.read(new File("ChessPieces/WhiteRook.png"));
+		BLACK_ROOK = ImageIO.read(new File("ChessPieces/BlackRook.png"));
+		WHITE_KNIGHT = ImageIO.read(new File("ChessPieces/WhiteKnight.png"));
+		BLACK_KNIGHT = ImageIO.read(new File("ChessPieces/BlackKnight.png"));
+		WHITE_BISHOP = ImageIO.read(new File("ChessPieces/WhiteBishop.png"));
+		BLACK_BISHOP = ImageIO.read(new File("ChessPieces/BlackBishop.png"));
+		WHITE_KING = ImageIO.read(new File("ChessPieces/WhiteKing.png"));
+		BLACK_KING = ImageIO.read(new File("ChessPieces/BlackKing.png"));
+		WHITE_QUEEN = ImageIO.read(new File("ChessPieces/WhiteQueen.png"));
+		BLACK_QUEEN = ImageIO.read(new File("ChessPieces/BlackQueen.png"));
 		
 		imagesInitialized = true;
 	}

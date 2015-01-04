@@ -5,11 +5,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import game.board.*;
-import game.move.CheckersMove;
 import game.move.Move;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
 import game.piece.checkersPieces.Soldier;
+import game.piece.chessPieces.Bishop;
+import game.piece.chessPieces.King;
+import game.piece.chessPieces.Knight;
+import game.piece.chessPieces.Pawn;
+import game.piece.chessPieces.Queen;
+import game.piece.chessPieces.Rook;
 import game.player.*;
 import game.player.ai.AI;
 
@@ -20,6 +25,16 @@ import game.player.ai.AI;
  */
 public class Game
 {	
+	/**
+	 * An enum representing the game type
+	 * 
+	 * @author Benjamin Cohen-Wang
+	 */
+	public static enum GameType
+	{
+		CHECKERS,
+		CHESS
+	}
 	/**
 	 * An enum representing whose turn it is
 	 * 
@@ -91,6 +106,62 @@ public class Game
 		{
 			p1Pieces.add(new Soldier(Loyalty.RED));
 			p2Pieces.add(new Soldier(Loyalty.BLACK));
+		}
+		
+		players = new Player[2];
+		players[0] = new AI("AI", Loyalty.RED, p1Pieces);
+		players[1] = new Human("Human", Loyalty.BLACK, p2Pieces);
+		
+		board = new CheckersBoard(this);
+	}
+	
+	/**
+	 * Parameterized constructor, sets this game to the given game type
+	 * 
+	 * @throws IOException 
+	 */
+	public Game(GameType type) throws IOException
+	{	
+		turn = Turn.getRandom();
+		
+		ArrayList<Piece> p1Pieces = new ArrayList<Piece>();
+		ArrayList<Piece> p2Pieces = new ArrayList<Piece>();
+		
+		if(type == GameType.CHECKERS)
+		{
+			for(int i = 0; i < Player.DEFAULT_PIECE_NUM; i ++)
+			{
+				p1Pieces.add(new Soldier(Loyalty.RED));
+				p2Pieces.add(new Soldier(Loyalty.BLACK));
+			}
+		}
+		if(type == GameType.CHESS)
+		{
+			p1Pieces.add(new Rook(Loyalty.RED));
+			p1Pieces.add(new Knight(Loyalty.RED));
+			p1Pieces.add(new Bishop(Loyalty.RED));
+			p1Pieces.add(new Queen(Loyalty.RED));
+			p1Pieces.add(new King(Loyalty.RED));
+			p1Pieces.add(new Bishop(Loyalty.RED));
+			p1Pieces.add(new Knight(Loyalty.RED));
+			p1Pieces.add(new Rook(Loyalty.RED));
+			for(int i = 0; i < 8; i ++)
+			{
+				p1Pieces.add(new Pawn(Loyalty.RED));
+			}
+			
+			p2Pieces.add(new Rook(Loyalty.RED));
+			p2Pieces.add(new Knight(Loyalty.RED));
+			p2Pieces.add(new Bishop(Loyalty.RED));
+			p2Pieces.add(new Queen(Loyalty.RED));
+			p2Pieces.add(new King(Loyalty.RED));
+			p2Pieces.add(new Bishop(Loyalty.RED));
+			p2Pieces.add(new Knight(Loyalty.RED));
+			p2Pieces.add(new Rook(Loyalty.RED));
+			for(int i = 0; i < 8; i ++)
+			{
+				p2Pieces.add(new Pawn(Loyalty.RED));
+			}
 		}
 		
 		players = new Player[2];

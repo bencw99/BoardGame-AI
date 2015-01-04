@@ -37,7 +37,7 @@ public class Soldier extends Piece
 		
 		if(!imagesInitialized)
 		{
-			checkerImagesInit();
+			imagesInit();
 		}
 		
 		image = (getLoyalty() == Loyalty.RED) ? RED_CHECKER: BLACK_CHECKER;
@@ -57,7 +57,7 @@ public class Soldier extends Piece
 		
 		if(!imagesInitialized)
 		{
-			checkerImagesInit();
+			imagesInit();
 		}
 		
 		image = (getLoyalty() == Loyalty.RED) ? RED_CHECKER: BLACK_CHECKER;

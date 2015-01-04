@@ -1,4 +1,5 @@
 package game.piece.chessPieces;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import game.board.node.Location;
@@ -22,10 +23,18 @@ public class Pawn extends Piece
 	 * Default constructor
 	 * 
 	 * @param loyalty	the value the loyalty of this piece
+	 * @throws IOException 
 	 */
-	public Pawn(Loyalty loyalty)
+	public Pawn(Loyalty loyalty) throws IOException
 	{
 		super(loyalty);
+		
+		if(!imagesInitialized)
+		{
+			imagesInit();
+		}
+		
+		image = (getLoyalty() == Loyalty.RED) ? WHITE_PAWN: BLACK_PAWN;
 	}
 	
 	/**
@@ -33,10 +42,18 @@ public class Pawn extends Piece
 	 * 
 	 * @param node	the node of this instance on the board
 	 * @param loyalty	the value the loyalty is set to
+	 * @throws IOException 
 	 */
-	public Pawn(Loyalty loyalty, Node node)
+	public Pawn(Loyalty loyalty, Node node) throws IOException
 	{
 		super(loyalty, node);
+		
+		if(!imagesInitialized)
+		{
+			imagesInit();
+		}
+		
+		image = (getLoyalty() == Loyalty.RED) ? WHITE_PAWN: BLACK_PAWN;
 	}
 	
 	/**
@@ -44,10 +61,18 @@ public class Pawn extends Piece
 	 * 
 	 * @param piece	the piece to be copied
 	 * @param node	the node to be added to
+	 * @throws IOException 
 	 */
-	public Pawn(Piece piece, Node node)
+	public Pawn(Piece piece, Node node) throws IOException
 	{
 		super(piece.getLoyalty(), node);
+		
+		if(!imagesInitialized)
+		{
+			imagesInit();
+		}
+		
+		image = (getLoyalty() == Loyalty.RED) ? WHITE_PAWN: BLACK_PAWN;
 	}
 
 	/**

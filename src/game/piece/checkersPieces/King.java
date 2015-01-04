@@ -38,10 +38,10 @@ public class King extends Piece
 		
 		if(!imagesInitialized)
 		{
-			checkerImagesInit();
+			imagesInit();
 		}
 		
-		image = (getLoyalty() == Loyalty.RED) ? RED_KING: BLACK_KING;
+		image = (getLoyalty() == Loyalty.RED) ? RED_CHECKER_KING: BLACK_CHECKER_KING;
 	}
 	
 	/**
@@ -58,10 +58,10 @@ public class King extends Piece
 		
 		if(!imagesInitialized)
 		{
-			checkerImagesInit();
+			imagesInit();
 		}
 		
-		image = (getLoyalty() == Loyalty.RED) ? RED_KING: BLACK_KING;
+		image = (getLoyalty() == Loyalty.RED) ? RED_CHECKER_KING: BLACK_CHECKER_KING;
 	}
 
 	/**
