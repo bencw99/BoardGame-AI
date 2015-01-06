@@ -193,4 +193,20 @@ public class CheckersBoard extends RectangularBoard
 			}
 		}
 	}
+	
+	/**
+	 * @return the node width of this board
+	 */
+	public int getNodeWidth()
+	{
+		return NODE_WIDTH;
+	}
+
+	/**
+	 * @return the node height of this board
+	 */
+	public int getNodeHeight()
+	{
+		return NODE_HEIGHT;
+	}
 }

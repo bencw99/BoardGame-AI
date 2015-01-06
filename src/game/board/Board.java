@@ -84,4 +84,14 @@ public abstract class Board
 	{
 		return nodes;
 	}
+	
+	/**
+	 * @return the node width of this board
+	 */
+	public abstract int getNodeWidth();
+
+	/**
+	 * @return the node height of this board
+	 */
+	public abstract int getNodeHeight();
 }

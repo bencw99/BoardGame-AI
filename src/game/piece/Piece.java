@@ -144,7 +144,10 @@ public abstract class Piece implements ImageObserver
 	 */
 	public void draw(Graphics graphics) 
 	{
-		graphics.drawImage(image, getNode().getLoc().getCol()*CheckersBoard.NODE_HEIGHT + 9, getNode().getLoc().getRow()*CheckersBoard.NODE_WIDTH + 9, 64, 64, this);
+		int widthOffset = (getNode().getBoard().getNodeWidth() - image.getWidth())/2;
+		int heightOffset = (getNode().getBoard().getNodeHeight() - image.getHeight())/2;
+		
+		graphics.drawImage(image, getNode().getLoc().getCol()*getNode().getBoard().getNodeHeight() + widthOffset, getNode().getLoc().getRow()*getNode().getBoard().getNodeWidth() + heightOffset, this);
 	}
 	
 	/**

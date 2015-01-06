@@ -86,13 +86,13 @@ public class Node
 	public void draw(Graphics graphics)
 	{
 		graphics.setColor(color);
-		graphics.fillRect(getLoc().getCol()*CheckersBoard.NODE_HEIGHT, getLoc().getRow()*CheckersBoard.NODE_WIDTH, CheckersBoard.NODE_HEIGHT, CheckersBoard.NODE_WIDTH);
+		graphics.fillRect(getLoc().getCol()*getBoard().getNodeHeight(), getLoc().getRow()*getBoard().getNodeWidth(), getBoard().getNodeHeight(), getBoard().getNodeWidth());
 		
 		if(isHighlighted)
 		{
 			graphics.setColor(DEFAULT_HIGHLIGHT_COLOR);
-			graphics.drawRect(getLoc().getCol()*CheckersBoard.NODE_HEIGHT, getLoc().getRow()*CheckersBoard.NODE_WIDTH, CheckersBoard.NODE_HEIGHT - 1, CheckersBoard.NODE_WIDTH - 1);
-			graphics.drawRect(getLoc().getCol()*CheckersBoard.NODE_HEIGHT + 1, getLoc().getRow()*CheckersBoard.NODE_WIDTH + 1, CheckersBoard.NODE_HEIGHT - 3, CheckersBoard.NODE_WIDTH - 3);
+			graphics.drawRect(getLoc().getCol()*getBoard().getNodeHeight(), getLoc().getRow()*getBoard().getNodeWidth(), getBoard().getNodeHeight() - 1, getBoard().getNodeWidth() - 1);
+			graphics.drawRect(getLoc().getCol()*getBoard().getNodeHeight() + 1, getLoc().getRow()*getBoard().getNodeWidth() + 1, getBoard().getNodeHeight() - 3, getBoard().getNodeWidth() - 3);
 		}
 		
 		if(piece != null)

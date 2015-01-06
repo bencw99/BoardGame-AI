@@ -154,8 +154,8 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 			int x = event.getX();
 			int y = event.getY();
 			
-			int row = (y - y % CheckersBoard.NODE_HEIGHT)/CheckersBoard.NODE_HEIGHT;
-			int col = (x - x % CheckersBoard.NODE_WIDTH)/CheckersBoard.NODE_WIDTH;
+			int row = (y - y % getPieces().get(0).getNode().getBoard().getNodeHeight())/getPieces().get(0).getNode().getBoard().getNodeHeight();
+			int col = (x - x % getPieces().get(0).getNode().getBoard().getNodeWidth())/getPieces().get(0).getNode().getBoard().getNodeWidth();
 			
 			Location loc = new Location(row, col);
 			

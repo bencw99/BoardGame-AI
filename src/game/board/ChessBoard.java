@@ -19,10 +19,10 @@ public class ChessBoard	extends RectangularBoard
 	public static final int CHESS_GRID_LENGTH = 8;
 	
 	/** The default width of nodes of this board **/
-	public static final int NODE_WIDTH =  80;
+	public static final int NODE_WIDTH =  30;
 	
 	/** The default height of nodes of this board **/
-	public static final int NODE_HEIGHT =  80;
+	public static final int NODE_HEIGHT =  30;
 	
 	/**
 	 * Parameterized constructor, initializes grid to size 8 by 8, and game to given game
@@ -146,5 +146,21 @@ public class ChessBoard	extends RectangularBoard
 		}
 		
 		move(move.getNodes().get(0).getLoc(), move.getNodes().get(move.getNodes().size() - 1).getLoc());
+	}
+
+	/**
+	 * @return the node width of this board
+	 */
+	public int getNodeWidth()
+	{
+		return NODE_WIDTH;
+	}
+
+	/**
+	 * @return the node height of this board
+	 */
+	public int getNodeHeight()
+	{
+		return NODE_HEIGHT;
 	}
 }
