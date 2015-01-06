@@ -1,6 +1,7 @@
 package gui;
 
 import game.Game;
+import game.Game.GameType;
 import game.board.CheckersBoard;
 import game.board.node.Location;
 import game.player.Human;
@@ -18,7 +19,7 @@ import javax.swing.JPanel;
  * 
  * @author Benjamin Cohen-Wang
  */
-public class GamePanel extends JPanel implements KeyListener, MouseListener
+public class GamePanel extends JPanel
 {
 	/** The game of this game panel **/
 	private static Game game;
@@ -38,7 +39,7 @@ public class GamePanel extends JPanel implements KeyListener, MouseListener
     
 	public static void main(String[] args) throws IOException
 	{
-		game = new Game();
+		game = new Game(GameType.CHESS);
 		
         frame.setTitle("Checkers Game");
         frame.setLocationRelativeTo(null);
@@ -73,37 +74,6 @@ public class GamePanel extends JPanel implements KeyListener, MouseListener
             	
             frame.repaint();
         }
-        
-//        System.out.println("(" + game.getPlayers()[0].kingWorth + ") (" + game.getPlayers()[1].kingWorth + ")");
-//        
-//        for(int i = 0; i < 100; i ++)
-//        {
-//        	game = new Game();
-//        	
-//	        while((!game.getPlayers()[0].isDefeated()) && (!game.getPlayers()[1].isDefeated()))
-//	        {	
-//	            try 
-//	            {
-//	    			game.executeTurn();
-//	    		} 
-//	            catch (IOException e) 
-//	    		{
-//	    			e.printStackTrace();
-//	    		}
-//	        }
-//	        
-//	        if(game.getPlayers()[0].isDefeated())
-//	        {
-//	        	redWinCounter ++;
-//	        }
-//	        else
-//	        {
-//	        	blackWinCounter ++;
-//	        }
-//	        
-//	        System.out.println(redWinCounter + " " + blackWinCounter);
-//        }
-        
 	}
 	
 	/**
@@ -112,71 +82,5 @@ public class GamePanel extends JPanel implements KeyListener, MouseListener
 	public void paintComponent(Graphics graphics)
 	{
 		game.draw(graphics);
-	}
-
-	@Override
-	public void keyPressed(KeyEvent arg0)
-	{
-		
-	}
-
-	@Override
-	public void keyReleased(KeyEvent arg0)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyTyped(KeyEvent arg0)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent event) 
-	{
-		int x = event.getX();
-		int y = event.getY();
-		
-		int row = (x - x % CheckersBoard.NODE_WIDTH)/CheckersBoard.NODE_WIDTH;
-		int col = (y - y % CheckersBoard.NODE_HEIGHT)/CheckersBoard.NODE_HEIGHT;
-		
-		Location loc = new Location(row, col);
-        
-        Player player = game.getPlayers()[game.getTurn().getVal()];
-        
-        if(player instanceof Human)
-        {
-        	
-        }
-        	
-        frame.repaint();
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 }

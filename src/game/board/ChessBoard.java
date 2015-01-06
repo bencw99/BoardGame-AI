@@ -79,11 +79,11 @@ public class ChessBoard	extends RectangularBoard
 				
 				if((i + j) % 2 == 0)
 				{
-					color = Color.WHITE;
+					color = new Color(222, 185, 119);
 				}
 				else
 				{
-					color = Color.BLACK;
+					color = new Color(255, 214, 140);
 				}
 				
 				getGrid()[i][j] = new Node(new Location(i, j), this, color); 
@@ -92,13 +92,54 @@ public class ChessBoard	extends RectangularBoard
 	}
 
 	/**
+	 * Loads the board grid
+	 */
+	public void loadBoard()
+	{
+		int[] piecesLeft = new int[getGame().getPlayers().length];
+		
+		for(int i = 0; i < piecesLeft.length; i ++)
+		{
+			piecesLeft[i] = getGame().getPlayers()[i].getPieces().size();
+		}
+
+		for(int i = 0; i < getGrid().length; i ++)
+		{
+			for(int j = 0; j < getGrid()[0].length; j ++)
+			{	
+				if(piecesLeft[0] > 0)
+				{
+					put(getGame().getPlayers()[0].getPieces().get(piecesLeft[0] - 1), getGrid()[i][j].getLoc());
+					getGame().getPlayers()[0].getPieces().get(piecesLeft[0] - 1).add(getGrid()[i][j]);
+				}
+						
+				piecesLeft[0] --;
+			}
+		}
+		
+		for(int i = getGrid().length - 1; i >= 0; i --)
+		{
+			for(int j = 0; j < getGrid()[0].length; j ++)
+			{	
+				if(piecesLeft[1] > 0)
+				{
+					put(getGame().getPlayers()[1].getPieces().get(piecesLeft[1] - 1), getGrid()[i][j].getLoc());
+					getGame().getPlayers()[1].getPieces().get(piecesLeft[1] - 1).add(getGrid()[i][j]);
+				}
+						
+				piecesLeft[1] --;
+			}
+		}
+	}
+	
+	/**
 	 * Executes the given move
 	 * 
 	 * @param move	the move to be executed
 	 * @throws IOException 
 	 */
 	public void executeMove(Move move)
-	{
+	{	
 		for(Node jumped : move.getJumped())
 		{
 			remove(jumped.getLoc());

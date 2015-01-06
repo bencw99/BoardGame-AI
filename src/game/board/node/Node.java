@@ -1,6 +1,5 @@
 package game.board.node;
 
-import game.board.Board;
 import game.board.CheckersBoard;
 import game.board.RectangularBoard;
 import game.piece.Piece;
@@ -32,7 +31,7 @@ public class Node
 	/** The boolean determining whether or not this node is highlighted **/
 	private boolean isHighlighted;
 	
-	private static final Color DEFAULT_HIGHLIGHT_COLOR = new Color(255, 255, 255);
+	private static final Color DEFAULT_HIGHLIGHT_COLOR = new Color(100, 100, 255);
 	
 	/**
 	 * Parameterized constructor, initializes Node location
@@ -93,6 +92,7 @@ public class Node
 		{
 			graphics.setColor(DEFAULT_HIGHLIGHT_COLOR);
 			graphics.drawRect(getLoc().getCol()*CheckersBoard.NODE_HEIGHT, getLoc().getRow()*CheckersBoard.NODE_WIDTH, CheckersBoard.NODE_HEIGHT - 1, CheckersBoard.NODE_WIDTH - 1);
+			graphics.drawRect(getLoc().getCol()*CheckersBoard.NODE_HEIGHT + 1, getLoc().getRow()*CheckersBoard.NODE_WIDTH + 1, CheckersBoard.NODE_HEIGHT - 3, CheckersBoard.NODE_WIDTH - 3);
 		}
 		
 		if(piece != null)

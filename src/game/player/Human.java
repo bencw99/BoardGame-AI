@@ -3,7 +3,6 @@ package game.player;
 import game.board.CheckersBoard;
 import game.board.node.Location;
 import game.board.node.Node;
-import game.move.CheckersMove;
 import game.move.Move;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
@@ -17,7 +16,7 @@ import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
 /**
- * A class representing a Human player associated with a checkers game
+ * A class representing a Human player associated with a board game
  * 
  * @author Benjamin Cohen-Wang
  */
@@ -46,7 +45,7 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 	 * 
 	 * @return	the move to be executed this turn
 	 */
-	public CheckersMove getThisTurnMove()
+	public Move getThisTurnMove()
 	{
 		if(isDefeated())
 		{
@@ -76,7 +75,7 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 		
 		ArrayList<Move> possibleMoves = getPossibleMoves();
 		
-		boolean isPossible = false;
+		Move selectedMove = null;
 		
 		for(Move possibleMove : possibleMoves)
 		{
@@ -108,11 +107,12 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 			
 			if(isPossiblyPossible)
 			{
-				isPossible = true;
+				selectedMove = possibleMove;
+				break;
 			}
 		}
 		
-		if(!isPossible)
+		if(selectedMove == null)
 		{
 			for(Location moveLoc : moveLocs)
 			{
@@ -125,25 +125,11 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 			
 			return null;
 		}
-		
-		return registerMouseMove();
-	}
-	
-	/**
-	 * Registers the mouse input move
-	 * 
-	 * @return the registered move for this turn
-	 */
-	public CheckersMove registerMouseMove()
-	{
-		ArrayList<Node> nodes = new ArrayList<Node>();
-		
-		for(Location loc : moveLocs)
+		else
 		{
-			nodes.add(getPieces().get(0).getNode().getBoard().getNode(loc));
+			return selectedMove;
+	
 		}
-		
-		return new CheckersMove(nodes, getPieces().get(0).getNode().getBoard(), getLoyalty());
 	}
 
 	public void mouseDragged(MouseEvent event)

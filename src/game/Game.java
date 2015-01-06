@@ -122,53 +122,61 @@ public class Game
 	 */
 	public Game(GameType type) throws IOException
 	{	
-		turn = Turn.getRandom();
-		
 		ArrayList<Piece> p1Pieces = new ArrayList<Piece>();
 		ArrayList<Piece> p2Pieces = new ArrayList<Piece>();
 		
 		if(type == GameType.CHECKERS)
 		{
+			turn = Turn.getRandom();
+			
 			for(int i = 0; i < Player.DEFAULT_PIECE_NUM; i ++)
 			{
 				p1Pieces.add(new Soldier(Loyalty.RED));
 				p2Pieces.add(new Soldier(Loyalty.BLACK));
 			}
+			
+			players = new Player[2];
+			players[0] = new AI("AI", Loyalty.RED, p1Pieces);
+			players[1] = new Human("Human", Loyalty.BLACK, p2Pieces);
+			
+			board = new CheckersBoard(this);
 		}
 		if(type == GameType.CHESS)
 		{
-			p1Pieces.add(new Rook(Loyalty.RED));
-			p1Pieces.add(new Knight(Loyalty.RED));
-			p1Pieces.add(new Bishop(Loyalty.RED));
-			p1Pieces.add(new Queen(Loyalty.RED));
-			p1Pieces.add(new King(Loyalty.RED));
-			p1Pieces.add(new Bishop(Loyalty.RED));
-			p1Pieces.add(new Knight(Loyalty.RED));
-			p1Pieces.add(new Rook(Loyalty.RED));
+			turn = Turn.PLAYER1;
+			
 			for(int i = 0; i < 8; i ++)
 			{
 				p1Pieces.add(new Pawn(Loyalty.RED));
 			}
-			
-			p2Pieces.add(new Rook(Loyalty.RED));
-			p2Pieces.add(new Knight(Loyalty.RED));
-			p2Pieces.add(new Bishop(Loyalty.RED));
-			p2Pieces.add(new Queen(Loyalty.RED));
-			p2Pieces.add(new King(Loyalty.RED));
-			p2Pieces.add(new Bishop(Loyalty.RED));
-			p2Pieces.add(new Knight(Loyalty.RED));
-			p2Pieces.add(new Rook(Loyalty.RED));
+			p1Pieces.add(new Rook(Loyalty.RED));
+			p1Pieces.add(new Knight(Loyalty.RED));
+			p1Pieces.add(new Bishop(Loyalty.RED));
+			p1Pieces.add(new King(Loyalty.RED));
+			p1Pieces.add(new Queen(Loyalty.RED));
+			p1Pieces.add(new Bishop(Loyalty.RED));
+			p1Pieces.add(new Knight(Loyalty.RED));
+			p1Pieces.add(new Rook(Loyalty.RED));
+
 			for(int i = 0; i < 8; i ++)
 			{
-				p2Pieces.add(new Pawn(Loyalty.RED));
+				p2Pieces.add(new Pawn(Loyalty.BLACK));
 			}
+			p2Pieces.add(new Rook(Loyalty.BLACK));
+			p2Pieces.add(new Knight(Loyalty.BLACK));
+			p2Pieces.add(new Bishop(Loyalty.BLACK));
+			p2Pieces.add(new King(Loyalty.BLACK));
+			p2Pieces.add(new Queen(Loyalty.BLACK));
+			p2Pieces.add(new Bishop(Loyalty.BLACK));
+			p2Pieces.add(new Knight(Loyalty.BLACK));
+			p2Pieces.add(new Rook(Loyalty.BLACK));
+			
+			players = new Player[2];
+			players[0] = new Human("Player 1", Loyalty.RED, p1Pieces);
+			players[1] = new Human("Player 2", Loyalty.BLACK, p2Pieces);
+			
+			board = new ChessBoard(this);
 		}
-		
-		players = new Player[2];
-		players[0] = new AI("AI", Loyalty.RED, p1Pieces);
-		players[1] = new Human("Human", Loyalty.BLACK, p2Pieces);
-		
-		board = new CheckersBoard(this);
 	}
 	
 	/**
@@ -225,7 +233,9 @@ public class Game
 	{	
 		Player thisPlayer = players[turn.getVal()];
 		
-		Move move = thisPlayer instanceof AI ? ((AI)thisPlayer).getThisTurnMove(1000) : thisPlayer.getThisTurnMove();
+		Move move = thisPlayer.getThisTurnMove();
+		
+//		Move move = thisPlayer instanceof AI ? ((AI)thisPlayer).getThisTurnMove(1000) : thisPlayer.getThisTurnMove();
 		
 		if(thisPlayer.isDefeated())
 		{	

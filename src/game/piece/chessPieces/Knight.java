@@ -88,7 +88,7 @@ public class Knight extends Piece
 			{
 				Location moveLoc = new Location(getNode().getLoc().getRow() + i, getNode().getLoc().getCol() + j);
 				
-				if(getNode().getBoard().isValid(moveLoc) && getNode().getBoard().getNode(moveLoc).getPiece().getLoyalty() != this.getLoyalty())
+				if(getNode().getBoard().isValid(moveLoc) && (getNode().getBoard().getNode(moveLoc).getPiece() == null || getNode().getBoard().getNode(moveLoc).getPiece().getLoyalty() != this.getLoyalty()))
 				{
 					ArrayList<Node> move = new ArrayList<Node>();
 					
@@ -106,7 +106,7 @@ public class Knight extends Piece
 			{
 				Location moveLoc = new Location(getNode().getLoc().getRow() + i, getNode().getLoc().getCol() + j);
 				
-				if(getNode().getBoard().isValid(moveLoc) && getNode().getBoard().getNode(moveLoc).getPiece().getLoyalty() != this.getLoyalty())
+				if(getNode().getBoard().isValid(moveLoc) && (getNode().getBoard().getNode(moveLoc).getPiece() == null || getNode().getBoard().getNode(moveLoc).getPiece().getLoyalty() != this.getLoyalty()))
 				{
 					ArrayList<Node> move = new ArrayList<Node>();
 					

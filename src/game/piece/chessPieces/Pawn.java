@@ -106,7 +106,7 @@ public class Pawn extends Piece
 					hasNotMoved = false;
 				}
 				
-				if(getLoyalty() == Loyalty.RED && getNode().getLoc().getRow() != getNode().getBoard().getGrid().length - 2)
+				if(getLoyalty() == Loyalty.BLACK && getNode().getLoc().getRow() != getNode().getBoard().getGrid().length - 2)
 				{
 					hasNotMoved = false;
 				}
