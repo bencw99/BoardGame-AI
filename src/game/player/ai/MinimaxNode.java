@@ -15,14 +15,8 @@ import game.player.Player.State;
  * 
  * @author Benjamin Cohen-Wang
  */
-public class MinimaxNode 
-{
-	/** The minimax depth of this minimax node **/
-	private int minimaxDepth;
-	
-	/** The value of this minimax node **/
-	private double value;
-	
+public class MinimaxNode extends MinimaxSuperNode
+{	
 	/** The parent node of this minimax node **/
 	private MinimaxNode parent;
 	
@@ -31,9 +25,6 @@ public class MinimaxNode
 	
 	/** The string identifying this node **/
 	private String identification;
-	
-	/** The arraylist of children of this node **/
-	private ArrayList<MinimaxNode> children;
 	
 	/** The contents of this minimax node **/
 	private MinimaxNodeContents contents;
@@ -98,7 +89,7 @@ public class MinimaxNode
 	{
 		if(children == null)
 		{
-			this.children = new ArrayList<MinimaxNode>();
+			this.children = new ArrayList<MinimaxSuperNode>();
 			
 			int currentChildID = 0;
 			
@@ -121,14 +112,6 @@ public class MinimaxNode
 	public boolean equals(MinimaxNode other)
 	{
 		return (other.getGame().getTurn().equals(this.getGame().getTurn()) && other.getBoard().equals(this.getBoard()));
-	}
-	
-	/**
-	 * @param value the value this minimax node is set to have
-	 */
-	public void setValue(double value)
-	{
-		this.value = value;
 	}
 	
 	/**
@@ -156,36 +139,11 @@ public class MinimaxNode
 	}
 	
 	/**
-	 * @return	the parent of this node
-	 */
-	public ArrayList<MinimaxNode> getChildren()
-	{
-		loadChildren();
-		return children;
-	}
-	
-	/**
-	 * @return the minimaxDepth
-	 */
-	public int getMinimaxDepth() 
-	{
-		return minimaxDepth;
-	}
-	
-	/**
 	 * @return the identification
 	 */
 	public String getIdentification()
 	{
 		return identification;
-	}
-	
-	/**
-	 * @return the value of this minimax node
-	 */
-	public double getValue()
-	{
-		return value;
 	}
 	
 	/**

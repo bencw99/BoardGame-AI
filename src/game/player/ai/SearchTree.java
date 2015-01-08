@@ -1,6 +1,5 @@
 package game.player.ai;
 
-import game.move.CheckersMove;
 import game.piece.Piece;
 import game.player.Player;
 
@@ -14,7 +13,7 @@ import java.util.ArrayList;
 public class SearchTree
 {
 	/** The root node of this minimax search tree **/
-	private MinimaxNode root;
+	private MinimaxSuperNode root;
 	
 	/** The depth of this search tree **/
 	private int depth;
@@ -49,12 +48,16 @@ public class SearchTree
 	 * 
 	 * @param minimaxDepth the depth to be searched
 	 */
-	public void performMinimax(MinimaxNode node, double alphaBetaVal)
+	public void performMinimax(MinimaxSuperNode node, double alphaBetaVal)
 	{	
 		if(node.getMinimaxDepth() >= depth)
 		{
 		  	node.setValue(functionVal(node));
 		  	return;
+		}
+		else 
+		{
+			node = new MinimaxValue(node.getValue());
 		}
 	
 		ArrayList<MinimaxNode> children = node.getChildren();
@@ -205,9 +208,9 @@ public class SearchTree
 	 * 
 	 * @return	the node containing the given identification string
 	 */
-	public MinimaxNode getNode(String identification)
+	public MinimaxSuperNode getNode(String identification)
 	{
-		MinimaxNode currentNode = root;
+		MinimaxSuperNode currentNode = root;
 		
 		for(int i = 0; i < identification.length(); i ++)
 		{
