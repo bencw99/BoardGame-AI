@@ -68,7 +68,7 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 		
 		for(Location moveLoc : moveLocs)
 		{
-			getPieces().get(0).getNode().getBoard().getNode(moveLoc).setHighlighted(false);
+			getBoard().getNode(moveLoc).setHighlighted(false);
 		}
 		
 		moveRegistered = false;
@@ -116,7 +116,7 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 		{
 			for(Location moveLoc : moveLocs)
 			{
-				getPieces().get(0).getNode().getBoard().getNode(moveLoc).setHighlighted(false);
+				getBoard().getNode(moveLoc).setHighlighted(false);
 			}
 			
 			System.out.println("Impossible Move");
@@ -144,7 +144,7 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 
 	public void mouseClicked(MouseEvent event)
 	{
-		if(getPieces().get(0).getNode().getBoard().getGame().getTurn().getVal() == getLoyalty().getVal())
+		if(getGame().getTurn().getVal() == getLoyalty().getVal())
 		{
 			if(moveLocs == null)
 			{
@@ -154,8 +154,8 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 			int x = event.getX();
 			int y = event.getY();
 			
-			int row = (y - y % getPieces().get(0).getNode().getBoard().getNodeHeight())/getPieces().get(0).getNode().getBoard().getNodeHeight();
-			int col = (x - x % getPieces().get(0).getNode().getBoard().getNodeWidth())/getPieces().get(0).getNode().getBoard().getNodeWidth();
+			int row = (y - y % getBoard().getNodeHeight())/getBoard().getNodeHeight();
+			int col = (x - x % getBoard().getNodeWidth())/getBoard().getNodeWidth();
 			
 			Location loc = new Location(row, col);
 			
@@ -174,7 +174,7 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 				moveLocs.add(loc);
 			}
 			
-			Node node = getPieces().get(0).getNode().getBoard().getNode(loc);
+			Node node = getBoard().getNode(loc);
 			node.setHighlighted(true);
 
 			GamePanel.frame.repaint();
@@ -203,7 +203,7 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 
 	public void keyPressed(KeyEvent event)
 	{
-		if(getPieces().get(0).getNode().getBoard().getGame().getTurn().getVal() == getLoyalty().getVal())
+		if(getGame().getTurn().getVal() == getLoyalty().getVal())
 		{
 			if(event.getKeyCode() == KeyEvent.VK_R)
 			{
@@ -213,7 +213,7 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 			{
 				for(Location moveLoc : moveLocs)
 				{
-					getPieces().get(0).getNode().getBoard().getNode(moveLoc).setHighlighted(false);
+					getBoard().getNode(moveLoc).setHighlighted(false);
 				}
 				
 				moveLocs = new ArrayList<Location>();

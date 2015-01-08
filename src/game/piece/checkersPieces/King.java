@@ -89,27 +89,27 @@ public class King extends Piece
 		{
 			for(int j = -1; j <= 1; j += 2)
 			{
-				Location currentLoc = new Location(getNode().getLoc().getRow() + j, getNode().getLoc().getCol() + i);
+				Location currentLoc = new Location(getLoc().getRow() + j, getLoc().getCol() + i);
 				
-				if(getNode().getBoard().isValid(currentLoc))
+				if(getBoard().isValid(currentLoc))
 				{
-					if(getNode().getBoard().getPiece(currentLoc) == null)
+					if(getBoard().getPiece(currentLoc) == null)
 					{
 						ArrayList<Node> move = new ArrayList<Node>();
 						move.add(getNode());
-						move.add(getNode().getBoard().getNode(currentLoc));
+						move.add(getBoard().getNode(currentLoc));
 						
-						possibleMoves.add(new CheckersMove(move, getNode().getBoard(), getLoyalty()));
+						possibleMoves.add(new CheckersMove(move, getBoard(), getLoyalty()));
 					}
 				}
 			}
 		}
 		
-		for(ArrayList<Node> move : getNextJumps(getNode().getLoc(), new ArrayList<Location>()))
+		for(ArrayList<Node> move : getNextJumps(getLoc(), new ArrayList<Location>()))
 		{
 			if(move.size() > 1)
 			{
-				possibleMoves.add(new CheckersMove(move, getNode().getBoard(), getLoyalty()));
+				possibleMoves.add(new CheckersMove(move, getBoard(), getLoyalty()));
 			}
 		}
 		
@@ -152,7 +152,7 @@ public class King extends Piece
 				
 				Location interJumpLoc = new Location(loc.getRow() + j, loc.getCol() + i);
 				
-				if(getNode().getBoard().isValid(possibleJumpLoc) && getNode().getBoard().getPiece(possibleJumpLoc) == null && getNode().getBoard().getPiece(interJumpLoc) != null && getNode().getBoard().getPiece(interJumpLoc).getLoyalty() != this.getLoyalty())
+				if(getBoard().isValid(possibleJumpLoc) && getBoard().getPiece(possibleJumpLoc) == null && getBoard().getPiece(interJumpLoc) != null && getBoard().getPiece(interJumpLoc).getLoyalty() != this.getLoyalty())
 				{
 					boolean isValid = true;
 					
@@ -182,7 +182,7 @@ public class King extends Piece
 			
 			for(ArrayList<Node> thisMoveOfCurrent : movesOfCurrent)
 			{
-				thisMoveOfCurrent.add(0, getNode().getBoard().getNode(loc));
+				thisMoveOfCurrent.add(0, getBoard().getNode(loc));
 				retVal.add(thisMoveOfCurrent);
 			}
 		}
@@ -190,7 +190,7 @@ public class King extends Piece
 		if(retVal.isEmpty())
 		{
 			ArrayList<Node> thisLoc = new ArrayList<Node>();
-			thisLoc.add(getNode().getBoard().getNode(loc));
+			thisLoc.add(getBoard().getNode(loc));
 			
 			retVal.add(thisLoc);
 		}

@@ -1,6 +1,7 @@
 package game.player.ai;
 
 import game.Game;
+import game.board.Board;
 import game.move.Move;
 import game.player.Player;
 import game.player.Player.State;
@@ -80,14 +81,22 @@ public class MinimaxNodeContents
 	 */
 	public boolean equals(MinimaxNodeContents other)
 	{
-		return (other.getGame().getTurn().equals(this.getGame().getTurn()) && other.getGame().getBoard().equals(this.getGame().getBoard()));
+		return (other.getGame().getTurn().equals(this.getGame().getTurn()) && other.getBoard().equals(this.getBoard()));
 	}
 	
 	/**
-	 * @return	the game of this node
+	 * @return	the game of these contents
 	 */
 	public Game getGame()
 	{
 		return game;
+	}
+	
+	/**
+	 * @return	the board of these contents
+	 */
+	public Board getBoard()
+	{
+		return game.getBoard();
 	}
 }

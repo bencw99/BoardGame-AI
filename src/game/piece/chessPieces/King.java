@@ -86,18 +86,18 @@ public class King extends Piece
 		{
 			for (int j = -1; j <= 1; j ++)
 			{
-				Location moveLoc = new Location(getNode().getLoc().getRow() + i, getNode().getLoc().getCol() + j);
+				Location moveLoc = new Location(getLoc().getRow() + i, getLoc().getCol() + j);
 				
-				if(!moveLoc.equals(getNode().getLoc()))
+				if(!moveLoc.equals(getLoc()))
 				{
-					if(getNode().getBoard().isValid(moveLoc) && (getNode().getBoard().getNode(moveLoc).getPiece() == null || getNode().getBoard().getNode(moveLoc).getPiece().getLoyalty() != this.getLoyalty()))
+					if(getBoard().isValid(moveLoc) && (getBoard().getNode(moveLoc).getPiece() == null || getBoard().getNode(moveLoc).getPiece().getLoyalty() != this.getLoyalty()))
 					{
 						ArrayList<Node> move = new ArrayList<Node>();
 						
 						move.add(getNode());
-						move.add(getNode().getBoard().getNode(moveLoc));
+						move.add(getBoard().getNode(moveLoc));
 						
-						possibleMoves.add(new ChessMove(move, getNode().getBoard(), getLoyalty()));
+						possibleMoves.add(new ChessMove(move, getBoard(), getLoyalty()));
 					}
 				}
 			}

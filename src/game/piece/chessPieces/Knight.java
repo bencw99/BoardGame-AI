@@ -86,16 +86,16 @@ public class Knight extends Piece
 		{
 			for(int j = -1; j <= 1; j += 2)
 			{
-				Location moveLoc = new Location(getNode().getLoc().getRow() + i, getNode().getLoc().getCol() + j);
+				Location moveLoc = new Location(getLoc().getRow() + i, getLoc().getCol() + j);
 				
-				if(getNode().getBoard().isValid(moveLoc) && (getNode().getBoard().getNode(moveLoc).getPiece() == null || getNode().getBoard().getNode(moveLoc).getPiece().getLoyalty() != this.getLoyalty()))
+				if(getBoard().isValid(moveLoc) && (getBoard().getNode(moveLoc).getPiece() == null || getBoard().getNode(moveLoc).getPiece().getLoyalty() != this.getLoyalty()))
 				{
 					ArrayList<Node> move = new ArrayList<Node>();
 					
 					move.add(getNode());
-					move.add(getNode().getBoard().getNode(moveLoc));
+					move.add(getBoard().getNode(moveLoc));
 					
-					possibleMoves.add(new ChessMove(move, getNode().getBoard(), getLoyalty()));
+					possibleMoves.add(new ChessMove(move, getBoard(), getLoyalty()));
 				}
 			}
 		}
@@ -104,16 +104,16 @@ public class Knight extends Piece
 		{
 			for(int j = -2; j <= 2; j += 4)
 			{
-				Location moveLoc = new Location(getNode().getLoc().getRow() + i, getNode().getLoc().getCol() + j);
+				Location moveLoc = new Location(getLoc().getRow() + i, getLoc().getCol() + j);
 				
-				if(getNode().getBoard().isValid(moveLoc) && (getNode().getBoard().getNode(moveLoc).getPiece() == null || getNode().getBoard().getNode(moveLoc).getPiece().getLoyalty() != this.getLoyalty()))
+				if(getBoard().isValid(moveLoc) && (getBoard().getNode(moveLoc).getPiece() == null || getBoard().getNode(moveLoc).getPiece().getLoyalty() != this.getLoyalty()))
 				{
 					ArrayList<Node> move = new ArrayList<Node>();
 					
 					move.add(getNode());
-					move.add(getNode().getBoard().getNode(moveLoc));
+					move.add(getBoard().getNode(moveLoc));
 					
-					possibleMoves.add(new ChessMove(move, getNode().getBoard(), getLoyalty()));
+					possibleMoves.add(new ChessMove(move, getBoard(), getLoyalty()));
 				}
 			}
 		}

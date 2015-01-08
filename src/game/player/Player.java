@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import game.Game;
+import game.board.RectangularBoard;
 import game.move.CheckersMove;
 import game.move.Move;
 import game.piece.*;
@@ -78,6 +79,7 @@ public abstract class Player
 		if(possibleMoves.isEmpty())
 		{
 			state = State.DEFEATED;
+			return possibleMoves;
 		}
 		
 		if(jumpMoves.isEmpty())
@@ -148,6 +150,36 @@ public abstract class Player
 	public ArrayList<Piece> getPieces()
 	{
 		return pieces;
+	}
+	
+	/**
+	 * @return the game
+	 */
+	public Game getGame()
+	{
+		if(pieces.isEmpty())
+		{
+			return null;
+		}
+		else
+		{
+			return pieces.get(0).getGame();
+		}
+	}
+	
+	/**
+	 * @return the board
+	 */
+	public RectangularBoard getBoard()
+	{
+		if(pieces.isEmpty())
+		{
+			return null;
+		}
+		else
+		{
+			return pieces.get(0).getBoard();
+		}
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package game.board.node;
 
+import game.Game;
 import game.board.CheckersBoard;
 import game.board.RectangularBoard;
 import game.piece.Piece;
@@ -74,7 +75,7 @@ public class Node
 			{
 				this.piece = new King(node.getPiece(), this);
 			}
-			this.board.getGame().getPlayers()[this.piece.getLoyalty().getVal()].add(this.piece);
+			getGame().getPlayers()[this.piece.getLoyalty().getVal()].add(this.piece);
 		}
 	}
 	
@@ -146,6 +147,15 @@ public class Node
 		return board;
 	}
 	
+	/**
+	 * Returns the game of this node
+	 * 
+	 * @return the game of this node
+	 */ 
+	public Game getGame()
+	{
+		return board.getGame();
+	}
 	
 	/**
 	 * Returns the color of this node

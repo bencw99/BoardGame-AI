@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import game.Game;
 import game.Game.Turn;
+import game.board.Board;
 import game.move.Move;
 import game.piece.Piece;
 import game.player.Player;
@@ -119,7 +120,7 @@ public class MinimaxNode
 	
 	public boolean equals(MinimaxNode other)
 	{
-		return (other.getGame().getTurn().equals(this.getGame().getTurn()) && other.getGame().getBoard().equals(this.getGame().getBoard()));
+		return (other.getGame().getTurn().equals(this.getGame().getTurn()) && other.getBoard().equals(this.getBoard()));
 	}
 	
 	/**
@@ -136,6 +137,14 @@ public class MinimaxNode
 	public Game getGame()
 	{
 		return contents.getGame();
+	}
+	
+	/**
+	 * @return	the board of this node
+	 */
+	public Board getBoard()
+	{
+		return contents.getGame().getBoard();
 	}
 	
 	/**

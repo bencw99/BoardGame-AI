@@ -81,7 +81,7 @@ public class AI extends Player
 		
 		MinimaxNode[] possibleNextNodes = new MinimaxNode[possibleMoves.size()];
 		
-		MinimaxNode currentNode = new MinimaxNode(0, new Game(getPieces().get(0).getNode().getBoard().getGame()), null, null, 0);
+		MinimaxNode currentNode = new MinimaxNode(0, new Game(getGame()), null, null, 0);
 		
 		currentMinimaxDepth = getAppropriateDepth(currentNode);
 		
@@ -131,7 +131,7 @@ public class AI extends Player
 	{	
 		long initialTime = System.currentTimeMillis();
 		
-		MinimaxNode currentNode = new MinimaxNode(0, new Game(getPieces().get(0).getNode().getBoard().getGame()), null, null, 0);
+		MinimaxNode currentNode = new MinimaxNode(0, new Game(getGame()), null, null, 0);
 		
 		SearchTree tree = new SearchTree(currentNode, this);
 		
@@ -193,7 +193,7 @@ public class AI extends Player
 		
 		MinimaxNode[] possibleNextNodes = new MinimaxNode[possibleMoves.size()];
 		
-		MinimaxNode currentNode = new MinimaxNode(0, new Game(getPieces().get(0).getNode().getBoard().getGame()), null, null, 0);
+		MinimaxNode currentNode = new MinimaxNode(0, new Game(getGame()), null, null, 0);
 		
 		currentMinimaxDepth = getAppropriateDepth(currentNode);
 		

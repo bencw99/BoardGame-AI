@@ -86,45 +86,45 @@ public class Pawn extends Piece
 		
 		int orientation = getLoyalty() == Loyalty.RED ? 1 : -1;
 		
-		Location inFront = new Location(getNode().getLoc().getRow() + orientation, getNode().getLoc().getCol());
+		Location inFront = new Location(getLoc().getRow() + orientation, getLoc().getCol());
 		
-		if(getNode().getBoard().isValid(inFront))
+		if(getBoard().isValid(inFront))
 		{
-			if(getNode().getBoard().getNode(inFront).getPiece() == null)
+			if(getBoard().getNode(inFront).getPiece() == null)
 			{
 				ArrayList<Node> move = new ArrayList<Node>();
 				
 				move.add(getNode());
-				move.add(getNode().getBoard().getNode(inFront));
+				move.add(getBoard().getNode(inFront));
 				
-				possibleMoves.add(new ChessMove(move, getNode().getBoard(), getLoyalty()));
+				possibleMoves.add(new ChessMove(move, getBoard(), getLoyalty()));
 				
 				boolean hasNotMoved = true;
 				
-				if(getLoyalty() == Loyalty.RED && getNode().getLoc().getRow() != 1)
+				if(getLoyalty() == Loyalty.RED && getLoc().getRow() != 1)
 				{
 					hasNotMoved = false;
 				}
 				
-				if(getLoyalty() == Loyalty.BLACK && getNode().getLoc().getRow() != getNode().getBoard().getGrid().length - 2)
+				if(getLoyalty() == Loyalty.BLACK && getLoc().getRow() != getBoard().getGrid().length - 2)
 				{
 					hasNotMoved = false;
 				}
 				
 				if(hasNotMoved)
 				{
-					Location twoInFront = new Location(getNode().getLoc().getRow() + 2*orientation, getNode().getLoc().getCol());
+					Location twoInFront = new Location(getLoc().getRow() + 2*orientation, getLoc().getCol());
 					
-					if(getNode().getBoard().isValid(twoInFront))
+					if(getBoard().isValid(twoInFront))
 					{
-						if(getNode().getBoard().getNode(twoInFront).getPiece() == null)
+						if(getBoard().getNode(twoInFront).getPiece() == null)
 						{
 							ArrayList<Node> firstMove = new ArrayList<Node>();
 							
 							firstMove.add(getNode());
-							firstMove.add(getNode().getBoard().getNode(twoInFront));
+							firstMove.add(getBoard().getNode(twoInFront));
 							
-							possibleMoves.add(new ChessMove(firstMove, getNode().getBoard(), getLoyalty()));
+							possibleMoves.add(new ChessMove(firstMove, getBoard(), getLoyalty()));
 						}
 					}
 				}
@@ -133,18 +133,18 @@ public class Pawn extends Piece
 		
 		for(int i = -1; i <= 1; i += 2)
 		{
-			Location jumpLoc = new Location(getNode().getLoc().getRow() + orientation, getNode().getLoc().getCol() + i);
+			Location jumpLoc = new Location(getLoc().getRow() + orientation, getLoc().getCol() + i);
 			
-			if(getNode().getBoard().isValid(jumpLoc))
+			if(getBoard().isValid(jumpLoc))
 			{
-				if(getNode().getBoard().getNode(jumpLoc).getPiece() != null && getNode().getBoard().getNode(jumpLoc).getPiece().getLoyalty() != this.getLoyalty())
+				if(getBoard().getNode(jumpLoc).getPiece() != null && getBoard().getNode(jumpLoc).getPiece().getLoyalty() != this.getLoyalty())
 				{
 					ArrayList<Node> jumpMove = new ArrayList<Node>();
 					
 					jumpMove.add(getNode());
-					jumpMove.add(getNode().getBoard().getNode(jumpLoc));
+					jumpMove.add(getBoard().getNode(jumpLoc));
 					
-					possibleMoves.add(new ChessMove(jumpMove, getNode().getBoard(), getLoyalty()));
+					possibleMoves.add(new ChessMove(jumpMove, getBoard(), getLoyalty()));
 				}
 			}
 		}

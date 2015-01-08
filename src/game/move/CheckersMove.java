@@ -1,7 +1,5 @@
 package game.move;
 
-import game.board.Board;
-import game.board.CheckersBoard;
 import game.board.RectangularBoard;
 import game.board.node.Location;
 import game.board.node.Node;

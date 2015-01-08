@@ -87,20 +87,20 @@ public class Rook extends Piece
 		
 		while(openSpace)
 		{
-			Location currentLoc = new Location(getNode().getLoc().getRow() + count, getNode().getLoc().getCol());
+			Location currentLoc = new Location(getLoc().getRow() + count, getLoc().getCol());
 			
-			if(!getNode().getBoard().isValid(currentLoc) || getNode().getBoard().getNode(currentLoc).getPiece() != null)
+			if(!getBoard().isValid(currentLoc) || getBoard().getNode(currentLoc).getPiece() != null)
 			{
 				openSpace = false;
 				
-				if(getNode().getBoard().isValid(currentLoc) && getNode().getBoard().getNode(currentLoc).getPiece().getLoyalty() != this.getLoyalty())
+				if(getBoard().isValid(currentLoc) && getBoard().getNode(currentLoc).getPiece().getLoyalty() != this.getLoyalty())
 				{
 					ArrayList<Node> move = new ArrayList<Node>();
 					
 					move.add(getNode());
-					move.add(getNode().getBoard().getNode(currentLoc));
+					move.add(getBoard().getNode(currentLoc));
 					
-					possibleMoves.add(new ChessMove(move, getNode().getBoard(), getLoyalty()));
+					possibleMoves.add(new ChessMove(move, getBoard(), getLoyalty()));
 				}
 			}
 			else
@@ -108,9 +108,9 @@ public class Rook extends Piece
 				ArrayList<Node> move = new ArrayList<Node>();
 				
 				move.add(getNode());
-				move.add(getNode().getBoard().getNode(currentLoc));
+				move.add(getBoard().getNode(currentLoc));
 				
-				possibleMoves.add(new ChessMove(move, getNode().getBoard(), getLoyalty()));
+				possibleMoves.add(new ChessMove(move, getBoard(), getLoyalty()));
 			}
 			
 			count ++;
@@ -121,20 +121,20 @@ public class Rook extends Piece
 		
 		while(openSpace)
 		{
-			Location currentLoc = new Location(getNode().getLoc().getRow() - count, getNode().getLoc().getCol());
+			Location currentLoc = new Location(getLoc().getRow() - count, getLoc().getCol());
 			
-			if(!getNode().getBoard().isValid(currentLoc) || getNode().getBoard().getNode(currentLoc).getPiece() != null)
+			if(!getBoard().isValid(currentLoc) || getBoard().getNode(currentLoc).getPiece() != null)
 			{
 				openSpace = false;
 				
-				if(getNode().getBoard().isValid(currentLoc) && getNode().getBoard().getNode(currentLoc).getPiece().getLoyalty() != this.getLoyalty())
+				if(getBoard().isValid(currentLoc) && getBoard().getNode(currentLoc).getPiece().getLoyalty() != this.getLoyalty())
 				{
 					ArrayList<Node> move = new ArrayList<Node>();
 					
 					move.add(getNode());
-					move.add(getNode().getBoard().getNode(currentLoc));
+					move.add(getBoard().getNode(currentLoc));
 					
-					possibleMoves.add(new ChessMove(move, getNode().getBoard(), getLoyalty()));
+					possibleMoves.add(new ChessMove(move, getBoard(), getLoyalty()));
 				}
 			}
 			else
@@ -142,9 +142,9 @@ public class Rook extends Piece
 				ArrayList<Node> move = new ArrayList<Node>();
 				
 				move.add(getNode());
-				move.add(getNode().getBoard().getNode(currentLoc));
+				move.add(getBoard().getNode(currentLoc));
 				
-				possibleMoves.add(new ChessMove(move, getNode().getBoard(), getLoyalty()));
+				possibleMoves.add(new ChessMove(move, getBoard(), getLoyalty()));
 			}
 			
 			count ++;
@@ -155,20 +155,20 @@ public class Rook extends Piece
 		
 		while(openSpace)
 		{
-			Location currentLoc = new Location(getNode().getLoc().getRow(), getNode().getLoc().getCol() + count);
+			Location currentLoc = new Location(getLoc().getRow(), getLoc().getCol() + count);
 			
-			if(!getNode().getBoard().isValid(currentLoc) || getNode().getBoard().getNode(currentLoc).getPiece() != null)
+			if(!getBoard().isValid(currentLoc) || getBoard().getNode(currentLoc).getPiece() != null)
 			{
 				openSpace = false;
 				
-				if(getNode().getBoard().isValid(currentLoc) && getNode().getBoard().getNode(currentLoc).getPiece().getLoyalty() != this.getLoyalty())
+				if(getBoard().isValid(currentLoc) && getBoard().getNode(currentLoc).getPiece().getLoyalty() != this.getLoyalty())
 				{
 					ArrayList<Node> move = new ArrayList<Node>();
 					
 					move.add(getNode());
-					move.add(getNode().getBoard().getNode(currentLoc));
+					move.add(getBoard().getNode(currentLoc));
 					
-					possibleMoves.add(new ChessMove(move, getNode().getBoard(), getLoyalty()));
+					possibleMoves.add(new ChessMove(move, getBoard(), getLoyalty()));
 				}
 			}
 			else
@@ -176,9 +176,9 @@ public class Rook extends Piece
 				ArrayList<Node> move = new ArrayList<Node>();
 				
 				move.add(getNode());
-				move.add(getNode().getBoard().getNode(currentLoc));
+				move.add(getBoard().getNode(currentLoc));
 				
-				possibleMoves.add(new ChessMove(move, getNode().getBoard(), getLoyalty()));
+				possibleMoves.add(new ChessMove(move, getBoard(), getLoyalty()));
 			}
 			
 			count ++;
@@ -189,20 +189,20 @@ public class Rook extends Piece
 		
 		while(openSpace)
 		{
-			Location currentLoc = new Location(getNode().getLoc().getRow(), getNode().getLoc().getCol() - count);
+			Location currentLoc = new Location(getLoc().getRow(), getLoc().getCol() - count);
 			
-			if(!getNode().getBoard().isValid(currentLoc) || getNode().getBoard().getNode(currentLoc).getPiece() != null)
+			if(!getBoard().isValid(currentLoc) || getBoard().getNode(currentLoc).getPiece() != null)
 			{
 				openSpace = false;
 				
-				if(getNode().getBoard().isValid(currentLoc) && getNode().getBoard().getNode(currentLoc).getPiece().getLoyalty() != this.getLoyalty())
+				if(getBoard().isValid(currentLoc) && getBoard().getNode(currentLoc).getPiece().getLoyalty() != this.getLoyalty())
 				{
 					ArrayList<Node> move = new ArrayList<Node>();
 					
 					move.add(getNode());
-					move.add(getNode().getBoard().getNode(currentLoc));
+					move.add(getBoard().getNode(currentLoc));
 					
-					possibleMoves.add(new ChessMove(move, getNode().getBoard(), getLoyalty()));
+					possibleMoves.add(new ChessMove(move, getBoard(), getLoyalty()));
 				}
 			}
 			else
@@ -210,9 +210,9 @@ public class Rook extends Piece
 				ArrayList<Node> move = new ArrayList<Node>();
 				
 				move.add(getNode());
-				move.add(getNode().getBoard().getNode(currentLoc));
+				move.add(getBoard().getNode(currentLoc));
 				
-				possibleMoves.add(new ChessMove(move, getNode().getBoard(), getLoyalty()));
+				possibleMoves.add(new ChessMove(move, getBoard(), getLoyalty()));
 			}
 			
 			count ++;

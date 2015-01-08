@@ -1,8 +1,10 @@
 package game.piece;
 
-import game.board.CheckersBoard;
+import game.Game;
+import game.board.Board;
+import game.board.RectangularBoard;
+import game.board.node.Location;
 import game.board.node.Node;
-import game.move.CheckersMove;
 import game.move.Move;
 
 import java.awt.Graphics;
@@ -140,14 +142,14 @@ public abstract class Piece implements ImageObserver
 	/**
 	 * Draws this piece
 	 * 
-	 * @param graphics	the grapics object to be drawn on
+	 * @param graphics	the graphics object to be drawn on
 	 */
 	public void draw(Graphics graphics) 
 	{
-		int widthOffset = (getNode().getBoard().getNodeWidth() - image.getWidth())/2;
-		int heightOffset = (getNode().getBoard().getNodeHeight() - image.getHeight())/2;
+		int widthOffset = (getBoard().getNodeWidth() - image.getWidth())/2;
+		int heightOffset = (getBoard().getNodeHeight() - image.getHeight())/2;
 		
-		graphics.drawImage(image, getNode().getLoc().getCol()*getNode().getBoard().getNodeHeight() + widthOffset, getNode().getLoc().getRow()*getNode().getBoard().getNodeWidth() + heightOffset, this);
+		graphics.drawImage(image, getLoc().getCol()*getBoard().getNodeHeight() + widthOffset, getLoc().getRow()*getBoard().getNodeWidth() + heightOffset, this);
 	}
 	
 	/**
@@ -173,6 +175,30 @@ public abstract class Piece implements ImageObserver
 	public Node getNode()
 	{
 		return node;
+	}
+	
+	/**
+	 * @return the board of this piece
+	 */
+	public RectangularBoard getBoard()
+	{
+		return getNode().getBoard();
+	}
+	
+	/**
+	 * @return the board of this piece
+	 */
+	public Game getGame()
+	{
+		return getNode().getBoard().getGame();
+	}
+	
+	/**
+	 * @return the location of this piece
+	 */
+	public Location getLoc()
+	{
+		return getNode().getLoc();
 	}
 
 	/**
