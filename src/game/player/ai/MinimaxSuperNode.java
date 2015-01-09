@@ -15,6 +15,9 @@ public abstract class MinimaxSuperNode
 	/** The minimax depth of this minimax node **/
 	protected int minimaxDepth;	
 	
+	/** The string identifying this node **/
+	protected String identification;
+	
 	/** The child values of this minimax value **/
 	protected ArrayList<MinimaxSuperNode> children;
 	

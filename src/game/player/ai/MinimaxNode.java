@@ -17,14 +17,8 @@ import game.player.Player.State;
  */
 public class MinimaxNode extends MinimaxSuperNode
 {	
-	/** The parent node of this minimax node **/
-	private MinimaxNode parent;
-	
 	/** The move relating this node to the parent **/
 	private Move move;
-	
-	/** The string identifying this node **/
-	private String identification;
 	
 	/** The contents of this minimax node **/
 	private MinimaxNodeContents contents;
@@ -39,7 +33,6 @@ public class MinimaxNode extends MinimaxSuperNode
 	{
 		this.minimaxDepth = minimaxDepth;
 		this.contents = new MinimaxNodeContents(game);
-		this.parent = parent;
 		this.move = move;
 		this.identification = (parent == null ? "" : parent.getIdentification()) + identification;
 	}
@@ -54,7 +47,6 @@ public class MinimaxNode extends MinimaxSuperNode
 	{
 		this.minimaxDepth = minimaxDepth;
 		this.contents = contents;
-		this.parent = parent;
 		this.move = move;
 		this.identification = (parent == null ? "" : parent.getIdentification()) + identification;
 	}
@@ -128,14 +120,6 @@ public class MinimaxNode extends MinimaxSuperNode
 	public Board getBoard()
 	{
 		return contents.getGame().getBoard();
-	}
-	
-	/**
-	 * @return	the parent of this node
-	 */
-	public MinimaxNode getParent()
-	{
-		return parent;
 	}
 	
 	/**

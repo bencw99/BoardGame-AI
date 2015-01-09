@@ -146,7 +146,7 @@ public class AI extends Player
 			tree.increaseDepth();
 		}
 
-		ArrayList<MinimaxNode> nextNodes = currentNode.getChildren();
+		ArrayList<MinimaxSuperNode> nextNodes = currentNode.getChildren();
 		
 		ArrayList<Integer> maxMovesIndeces = new ArrayList<Integer>();
 		
