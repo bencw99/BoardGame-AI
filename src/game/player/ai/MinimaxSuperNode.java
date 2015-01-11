@@ -14,6 +14,9 @@ public abstract class MinimaxSuperNode
 	
 	/** The minimax depth of this minimax node **/
 	protected int minimaxDepth;	
+
+	/** The boolean representing turn **/
+	boolean thisPlayersTurn;
 	
 	/** The string identifying this node **/
 	protected String identification;
@@ -57,5 +60,21 @@ public abstract class MinimaxSuperNode
 	public int getMinimaxDepth() 
 	{
 		return minimaxDepth;
+	}
+	
+	/**
+	 * @return	the turn boolean
+	 */
+	public boolean getThisPlayersTurn()
+	{
+		return thisPlayersTurn;
+	}
+	
+	/**
+	 * @return the identification
+	 */
+	public String getIdentification()
+	{
+		return identification;
 	}
 }

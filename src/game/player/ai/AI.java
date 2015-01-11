@@ -25,9 +25,6 @@ public class AI extends Player
 	/** The depth of the minimax search **/
 	private static final int DEFAULT_MINIMAX_DEPTH = 11;
 	
-	/** The average number of moves at each point **/
-	private static final int AVERAGE_MOVE_NUM = 8;
-	
 	/** The minimax depth of this ai instance **/
 	private final int minimaxDepth;
 	
@@ -81,7 +78,7 @@ public class AI extends Player
 		
 		MinimaxNode[] possibleNextNodes = new MinimaxNode[possibleMoves.size()];
 		
-		MinimaxNode currentNode = new MinimaxNode(0, new Game(getGame()), null, null, 0);
+		MinimaxNode currentNode = new MinimaxNode(0, new Game(getGame()), null, null, 0, true);
 		
 		currentMinimaxDepth = getAppropriateDepth(currentNode);
 		
@@ -131,7 +128,7 @@ public class AI extends Player
 	{	
 		long initialTime = System.currentTimeMillis();
 		
-		MinimaxNode currentNode = new MinimaxNode(0, new Game(getGame()), null, null, 0);
+		MinimaxNode currentNode = new MinimaxNode(0, new Game(getGame()), null, null, 0, true);
 		
 		SearchTree tree = new SearchTree(currentNode, this);
 		
@@ -171,7 +168,7 @@ public class AI extends Player
 		
 		int random = (int)(maxMovesIndeces.size()*Math.random());
 		
-		return nextNodes.get(maxMovesIndeces.get(random)).getMove();
+		return ((MinimaxNode) nextNodes.get(maxMovesIndeces.get(random))).getMove();
 	}
 	
 	/**
@@ -193,7 +190,7 @@ public class AI extends Player
 		
 		MinimaxNode[] possibleNextNodes = new MinimaxNode[possibleMoves.size()];
 		
-		MinimaxNode currentNode = new MinimaxNode(0, new Game(getGame()), null, null, 0);
+		MinimaxNode currentNode = new MinimaxNode(0, new Game(getGame()), null, null, 0, true);
 		
 		currentMinimaxDepth = getAppropriateDepth(currentNode);
 		

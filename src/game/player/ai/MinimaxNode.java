@@ -29,12 +29,13 @@ public class MinimaxNode extends MinimaxSuperNode
 	 * @param minimaxDepth	the minimaxDepth to be set to
 	 * @param ame			the game to be set to
 	 */
-	public MinimaxNode(int minimaxDepth, Game game, MinimaxNode parent, Move move, int identification)
+	public MinimaxNode(int minimaxDepth, Game game, MinimaxSuperNode parent, Move move, int identification, boolean thisPlayersTurn)
 	{
 		this.minimaxDepth = minimaxDepth;
 		this.contents = new MinimaxNodeContents(game);
 		this.move = move;
 		this.identification = (parent == null ? "" : parent.getIdentification()) + identification;
+		this.thisPlayersTurn = thisPlayersTurn;
 	}
 	
 	/**
@@ -43,12 +44,13 @@ public class MinimaxNode extends MinimaxSuperNode
 	 * @param minimaxDepth	the minimaxDepth to be set to
 	 * @param ame			the game to be set to
 	 */
-	public MinimaxNode(int minimaxDepth, MinimaxNodeContents contents, MinimaxNode parent, Move move, int identification)
+	public MinimaxNode(int minimaxDepth, MinimaxNodeContents contents, MinimaxNode parent, Move move, int identification, boolean thisPlayersTurn)
 	{
 		this.minimaxDepth = minimaxDepth;
 		this.contents = contents;
 		this.move = move;
 		this.identification = (parent == null ? "" : parent.getIdentification()) + identification;
+		this.thisPlayersTurn = thisPlayersTurn;
 	}
 	
 	/**
@@ -61,7 +63,7 @@ public class MinimaxNode extends MinimaxSuperNode
 	{
 		MinimaxNodeContents newContents = contents.getNextContents(move);
 
-		return new MinimaxNode(minimaxDepth + 1, newContents, this, move, 0);
+		return new MinimaxNode(minimaxDepth + 1, newContents, this, move, 0, !getThisPlayersTurn());
 	}
 	
 	/**
@@ -89,7 +91,7 @@ public class MinimaxNode extends MinimaxSuperNode
 			{
 				try
 				{
-					children.add(new MinimaxNode(minimaxDepth + 1, contents.getNextContents(nextMove), this, nextMove, currentChildID));
+					children.add(new MinimaxNode(minimaxDepth + 1, contents.getNextContents(nextMove), this, nextMove, currentChildID, !getThisPlayersTurn()));
 				} 
 				catch (IOException e)
 				{
@@ -120,14 +122,6 @@ public class MinimaxNode extends MinimaxSuperNode
 	public Board getBoard()
 	{
 		return contents.getGame().getBoard();
-	}
-	
-	/**
-	 * @return the identification
-	 */
-	public String getIdentification()
-	{
-		return identification;
 	}
 	
 	/**

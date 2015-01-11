@@ -52,23 +52,17 @@ public class SearchTree
 	{	
 		if(node.getMinimaxDepth() >= depth)
 		{
-		  	node.setValue(functionVal(node));
+		  	node.setValue(functionVal((MinimaxNode) node));
 		  	return;
-		}
-		else 
-		{
-			node = new MinimaxValue(node.getValue());
 		}
 	
-		ArrayList<MinimaxNode> children = node.getChildren();
+		ArrayList<MinimaxSuperNode> children = node.getChildren();
 		
-		if(node.getGame().getPlayers()[node.getGame().getTurn().getVal()].isDefeated())
+		if(node instanceof MinimaxNode && ((MinimaxNode) node).getGame().getPlayers()[((MinimaxNode) node).getGame().getTurn().getVal()].isDefeated())
 		{
-		  	node.setValue(functionVal(node));
+		  	node.setValue(functionVal(((MinimaxNode) node)));
 		  	return;
 		}
-		
-		boolean thisPlayersTurn = player.getLoyalty().getVal() == node.getGame().getTurn().getVal();
 		
 		double extreme;
 		
@@ -77,11 +71,11 @@ public class SearchTree
 			children = heuristicSort(children);
 		}
 		
-		if(thisPlayersTurn)
+		if(node.getThisPlayersTurn())
 		{
 			extreme = Integer.MIN_VALUE;
 			
-			for(MinimaxNode nextNode : children)
+			for(MinimaxSuperNode nextNode : children)
 			{	
 				performMinimax(nextNode, extreme);
 				
@@ -100,7 +94,7 @@ public class SearchTree
 		{
 			extreme = Integer.MAX_VALUE;
 			
-			for(MinimaxNode nextNode : children)
+			for(MinimaxSuperNode nextNode : children)
 			{
 				performMinimax(nextNode, extreme);
 
@@ -117,6 +111,11 @@ public class SearchTree
 		}
 		
 		node.setValue(extreme);
+		
+		if(node.getMinimaxDepth() > 1 && !(node instanceof MinimaxValue))
+		{
+			node = new MinimaxValue(node);
+		}
 	}
 	
 	/**
@@ -174,14 +173,14 @@ public class SearchTree
 		return functionVal;
 	}
 	
-	private ArrayList<MinimaxNode> heuristicSort(ArrayList<MinimaxNode> children)
+	private ArrayList<MinimaxSuperNode> heuristicSort(ArrayList<MinimaxSuperNode> children)
 	{
 		if(children.isEmpty())
 		{
 			return children;
 		}
 		
-		ArrayList<MinimaxNode> sorted = new ArrayList<MinimaxNode>();
+		ArrayList<MinimaxSuperNode> sorted = new ArrayList<MinimaxSuperNode>();
 		
 		sorted.add(children.get(0));
 		

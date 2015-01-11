@@ -12,10 +12,26 @@ public class MinimaxValue extends MinimaxSuperNode
 	 * 
 	 * @param value	the value of this minimax value
 	 */
-	public MinimaxValue(double value, int minimaxDepth)
+	public MinimaxValue(double value, int minimaxDepth, MinimaxSuperNode parent, int identification, boolean thisPlayersTurn)
 	{
 		setValue(value);
 		this.minimaxDepth = minimaxDepth;
+		this.identification = (parent == null ? "" : parent.getIdentification()) + identification;
+		this.thisPlayersTurn = thisPlayersTurn;
+	}
+	
+	/** 
+	 * Parameterized constructor, initializes this value to the given value
+	 * 
+	 * @param value	the value of this minimax value
+	 */
+	public MinimaxValue(MinimaxSuperNode node)
+	{
+		setValue(node.getValue());
+		this.minimaxDepth = node.minimaxDepth;
+		this.identification = node.identification;
+		this.thisPlayersTurn = node.thisPlayersTurn;
+		this.children = node.children;
 	}
 
 	/**
