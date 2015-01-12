@@ -63,36 +63,38 @@ public abstract class Player
 	 */
 	public ArrayList<Move> getPossibleMoves()
 	{
-		ArrayList<Move> jumpMoves = new ArrayList<Move>();
-		ArrayList<Move> possibleMoves = new ArrayList<Move>();
+		return game.getBoard().getPossibleMoves(loyalty);
 		
-		for(Piece piece : pieces)
-		{
-			for(Move possibleMove : piece.getPossibleMoves())
-			{
-				if(!possibleMove.getJumped().isEmpty())
-				{
-					jumpMoves.add(possibleMove);
-				}
-				
-				possibleMoves.add(possibleMove);
-			}
-		}
-		
-		if(possibleMoves.isEmpty())
-		{
-			state = State.DEFEATED;
-			return possibleMoves;
-		}
-		
-		if(jumpMoves.isEmpty())
-		{
-			return possibleMoves;
-		}
-		else
-		{
-			return jumpMoves;
-		}	
+//		ArrayList<Move> jumpMoves = new ArrayList<Move>();
+//		ArrayList<Move> possibleMoves = new ArrayList<Move>();
+//		
+//		for(Piece piece : pieces)
+//		{
+//			for(Move possibleMove : piece.getPossibleMoves())
+//			{
+//				if(!possibleMove.getJumped().isEmpty())
+//				{
+//					jumpMoves.add(possibleMove);
+//				}
+//				
+//				possibleMoves.add(possibleMove);
+//			}
+//		}
+//		
+//		if(possibleMoves.isEmpty())
+//		{
+//			state = State.DEFEATED;
+//			return possibleMoves;
+//		}
+//		
+//		if(jumpMoves.isEmpty())
+//		{
+//			return possibleMoves;
+//		}
+//		else
+//		{
+//			return jumpMoves;
+//		}	
 	}
 	
 	/**
