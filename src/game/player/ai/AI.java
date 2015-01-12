@@ -38,10 +38,9 @@ public class AI extends Player
 	 * @param loyalty	the loyalty of this player
 	 * @param pieces	the pieces of this player
 	 */
-	public AI(String name, Loyalty loyalty, ArrayList<Piece> pieces)
+	public AI(String name, Loyalty loyalty, ArrayList<Piece> pieces, Game game)
 	{
-		this(name, loyalty, pieces, DEFAULT_MINIMAX_DEPTH);
-		new HashMap<MinimaxNode, Double>();
+		this(name, loyalty, pieces, game, DEFAULT_MINIMAX_DEPTH);
 	}
 	
 	/**
@@ -52,11 +51,10 @@ public class AI extends Player
 	 * @param pieces	the pieces of this player
 	 * @param minimaxDepth	the minimaxDepth of this ai
 	 */
-	public AI(String name, Loyalty loyalty, ArrayList<Piece> pieces, int minimaxDepth)
+	public AI(String name, Loyalty loyalty, ArrayList<Piece> pieces, Game game, int minimaxDepth)
 	{
-		super(name, loyalty, pieces);
+		super(name, loyalty, pieces, game);
 		this.minimaxDepth = minimaxDepth;
-		new HashMap<MinimaxNode, Double>();
 	}
 
 	/**

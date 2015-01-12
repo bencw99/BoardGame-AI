@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import game.Game;
 import game.board.RectangularBoard;
-import game.move.CheckersMove;
 import game.move.Move;
 import game.piece.*;
 import game.piece.Piece.Loyalty;
@@ -32,6 +31,9 @@ public abstract class Player
 	/** The pieces of this player **/
 	private ArrayList<Piece> pieces;
 	
+	/** The game this player belongs to **/
+	private Game game;
+	
 	/**The state of this player **/
 	private State state;
 	
@@ -45,12 +47,13 @@ public abstract class Player
 	 * @param loyalty	the loyalty of this player
 	 * @param pieces	the pieces of this player
 	 */
-	public Player(String name, Loyalty loyalty, ArrayList<Piece> pieces)
+	public Player(String name, Loyalty loyalty, ArrayList<Piece> pieces, Game game)
 	{
 		this.name = name;
 		this.loyalty = loyalty;
 		this.pieces = pieces;
 		this.state = State.PLAYING;
+		this.game = game;
 	}
 	
 	/**

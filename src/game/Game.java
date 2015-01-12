@@ -109,8 +109,8 @@ public class Game
 		}
 		
 		players = new Player[2];
-		players[0] = new AI("AI", Loyalty.RED, p1Pieces);
-		players[1] = new Human("Human", Loyalty.BLACK, p2Pieces);
+		players[0] = new AI("AI", Loyalty.RED, p1Pieces, this);
+		players[1] = new Human("Human", Loyalty.BLACK, p2Pieces, this);
 		
 		board = new CheckersBoard(this);
 	}
@@ -136,8 +136,8 @@ public class Game
 			}
 			
 			players = new Player[2];
-			players[0] = new AI("AI", Loyalty.RED, p1Pieces);
-			players[1] = new Human("Human", Loyalty.BLACK, p2Pieces);
+			players[0] = new AI("AI", Loyalty.RED, p1Pieces, this);
+			players[1] = new Human("Human", Loyalty.BLACK, p2Pieces, this);
 			
 			board = new CheckersBoard(this);
 		}
@@ -172,8 +172,8 @@ public class Game
 			p2Pieces.add(new Rook(Loyalty.BLACK));
 			
 			players = new Player[2];
-			players[0] = new Human("Player 1", Loyalty.RED, p1Pieces);
-			players[1] = new Human("Player 2", Loyalty.BLACK, p2Pieces);
+			players[0] = new Human("Player 1", Loyalty.RED, p1Pieces, this);
+			players[1] = new Human("Player 2", Loyalty.BLACK, p2Pieces, this);
 			
 			board = new ChessBoard(this);
 		}
@@ -190,7 +190,7 @@ public class Game
 		
 		for(int i = 0; i < players.length; i ++)
 		{
-			players[i] = new AI(null, game.getPlayers()[i].getLoyalty(), new ArrayList<Piece>());
+			players[i] = new AI(null, game.getPlayers()[i].getLoyalty(), new ArrayList<Piece>(), this);
 		}
 		
 		if(game.getBoard() instanceof CheckersBoard)

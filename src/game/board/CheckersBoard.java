@@ -195,6 +195,16 @@ public class CheckersBoard extends RectangularBoard
 	}
 	
 	/**
+	 * Gets the possible moves of the given loyalty
+	 * 
+	 * @param loyalty	the loyalty to be tested
+	 */
+	public ArrayList<Move> getPossibleMoves(Loyalty loyalty)
+	{
+		return null;
+	}
+	
+	/**
 	 * @return the node width of this board
 	 */
 	public int getNodeWidth()

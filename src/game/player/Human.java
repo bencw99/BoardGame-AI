@@ -1,6 +1,6 @@
 package game.player;
 
-import game.board.CheckersBoard;
+import game.Game;
 import game.board.node.Location;
 import game.board.node.Node;
 import game.move.Move;
@@ -35,9 +35,9 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 	 * @param loyalty	the loyalty of this player
 	 * @param pieces	the pieces of this player
 	 */
-	public Human(String name, Loyalty loyalty, ArrayList<Piece> pieces)
+	public Human(String name, Loyalty loyalty, ArrayList<Piece> pieces, Game game)
 	{
-		super(name, loyalty, pieces);
+		super(name, loyalty, pieces, game);
 	}
 
 	/**

@@ -2,11 +2,13 @@ package game.board;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import game.Game;
 import game.board.node.Location;
 import game.board.node.Node;
 import game.move.Move;
+import game.piece.Piece.Loyalty;
 
 /**
  * A class representing a chess board
@@ -148,6 +150,16 @@ public class ChessBoard	extends RectangularBoard
 		move(move.getNodes().get(0).getLoc(), move.getNodes().get(move.getNodes().size() - 1).getLoc());
 	}
 
+	/**
+	 * Gets the possible moves of the given loyalty
+	 * 
+	 * @param loyalty	the loyalty to be tested
+	 */
+	public ArrayList<Move> getPossibleMoves(Loyalty loyalty)
+	{
+		return null;
+	}
+	
 	/**
 	 * @return the node width of this board
 	 */

@@ -32,7 +32,7 @@ public class Node
 	/** The boolean determining whether or not this node is highlighted **/
 	private boolean isHighlighted;
 	
-	private static final Color DEFAULT_HIGHLIGHT_COLOR = new Color(100, 100, 255);
+	private static final Color DEFAULT_HIGHLIGHT_COLOR = new Color(255, 255, 255);
 	
 	/**
 	 * Parameterized constructor, initializes Node location

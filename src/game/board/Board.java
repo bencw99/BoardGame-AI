@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import game.Game;
 import game.board.node.Node;
 import game.move.Move;
+import game.piece.Piece.Loyalty;
 
 /**
  * A superclass representing a general game board
@@ -58,6 +59,13 @@ public abstract class Board
 	 * Loads the initial position of this board
 	 */
 	public abstract void loadBoard();
+	
+	/**
+	 * Gets the possible moves of the given loyalty
+	 * 
+	 * @param loyalty	the loyalty to be tested
+	 */
+	public abstract ArrayList<Move> getPossibleMoves(Loyalty loyalty);
 	
 	/**
 	 * @return the game of this board
