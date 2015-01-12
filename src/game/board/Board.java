@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import game.Game;
 import game.board.node.Node;
 import game.move.Move;
+import game.piece.Piece;
 import game.piece.Piece.Loyalty;
+import game.player.Player.State;
 
 /**
  * A superclass representing a general game board
@@ -65,7 +67,30 @@ public abstract class Board
 	 * 
 	 * @param loyalty	the loyalty to be tested
 	 */
-	public abstract ArrayList<Move> getPossibleMoves(Loyalty loyalty);
+	public ArrayList<Move> getPossibleMoves(Loyalty loyalty)
+	{
+		ArrayList<Piece> pieces = new ArrayList<Piece>();
+		
+		for(Node node : nodes)
+		{
+			if(node.getPiece() != null && node.getPiece().getLoyalty() == loyalty)
+			{
+				pieces.add(node.getPiece());
+			}
+		}
+		
+		ArrayList<Move> possibleMoves = new ArrayList<Move>();
+		
+		for(Piece piece : pieces)
+		{
+			for(Move possibleMove : piece.getPossibleMoves())
+			{
+				possibleMoves.add(possibleMove);
+			}
+		}
+
+		return possibleMoves;
+	}
 	
 	/**
 	 * @return the game of this board

@@ -8,7 +8,9 @@ import game.Game;
 import game.board.node.Location;
 import game.board.node.Node;
 import game.move.Move;
+import game.piece.Piece;
 import game.piece.Piece.Loyalty;
+import game.piece.chessPieces.King;
 
 /**
  * A class representing a chess board
@@ -157,7 +159,52 @@ public class ChessBoard	extends RectangularBoard
 	 */
 	public ArrayList<Move> getPossibleMoves(Loyalty loyalty)
 	{
-		return null;
+		ArrayList<Move> possibleMoves = super.getPossibleMoves(loyalty);
+		ArrayList<Move> realPossibleMoves = new ArrayList<Move>();
+		
+		for(Move possibleMove : possibleMoves)
+		{
+			boolean possible = true;
+			
+			Board nextBoard = new ChessBoard(this, null);
+			
+			nextBoard.executeMove(possibleMove);
+			
+			for(Node node : nextBoard.getNodes())
+			{
+				Piece checkCandidate = null;
+				
+				if(node.getPiece() != null && node.getPiece().getLoyalty() != loyalty)
+				{
+					checkCandidate = node.getPiece();
+				}
+				
+				if(checkCandidate == null)
+				{
+					continue;
+				}
+				else
+				{
+					for(Move move : checkCandidate.getPossibleMoves())
+					{
+						for(Node jumped : move.getJumped())
+						{
+							if(jumped.getPiece() instanceof King)
+							{
+								possible = false;
+							}
+						}
+					}
+				}
+			}
+			
+			if(possible)
+			{
+				realPossibleMoves.add(possibleMove);
+			}
+		}
+		
+		return realPossibleMoves;
 	}
 	
 	/**

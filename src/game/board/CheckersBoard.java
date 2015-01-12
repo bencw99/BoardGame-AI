@@ -201,7 +201,25 @@ public class CheckersBoard extends RectangularBoard
 	 */
 	public ArrayList<Move> getPossibleMoves(Loyalty loyalty)
 	{
-		return null;
+		ArrayList<Move> possibleMoves = super.getPossibleMoves(loyalty);
+		ArrayList<Move> jumpMoves = new ArrayList<Move>();
+		
+		for(Move possibleMove : possibleMoves)
+		{
+			if(!possibleMove.getJumped().isEmpty())
+			{
+				jumpMoves.add(possibleMove);
+			}
+		}
+		
+		if(jumpMoves.isEmpty())
+		{
+			return possibleMoves;
+		}
+		else
+		{
+			return jumpMoves;
+		}	
 	}
 	
 	/**
