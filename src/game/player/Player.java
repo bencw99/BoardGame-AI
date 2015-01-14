@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import game.Game;
+import game.board.Board;
 import game.board.RectangularBoard;
 import game.move.Move;
 import game.piece.*;
@@ -162,14 +163,7 @@ public abstract class Player
 	 */
 	public Game getGame()
 	{
-		if(pieces.isEmpty())
-		{
-			return null;
-		}
-		else
-		{
-			return pieces.get(0).getGame();
-		}
+		return game;
 	}
 	
 	/**
@@ -183,7 +177,7 @@ public abstract class Player
 		}
 		else
 		{
-			return pieces.get(0).getBoard();
+			return (RectangularBoard) game.getBoard();
 		}
 	}
 

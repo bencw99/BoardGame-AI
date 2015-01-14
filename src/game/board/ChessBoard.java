@@ -166,7 +166,9 @@ public class ChessBoard	extends RectangularBoard
 		{
 			boolean possible = true;
 			
-			Board nextBoard = new ChessBoard(this, null);
+			Game nextGame = new Game(getGame());
+			
+			Board nextBoard = nextGame.getBoard();
 			
 			nextBoard.executeMove(possibleMove);
 			

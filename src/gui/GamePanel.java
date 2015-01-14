@@ -39,7 +39,7 @@ public class GamePanel extends JPanel
     
 	public static void main(String[] args) throws IOException
 	{
-		game = new Game(GameType.CHECKERS);
+		game = new Game(GameType.CHESS);
 		
         frame.setTitle("Chess Game");
         frame.setLocationRelativeTo(null);
