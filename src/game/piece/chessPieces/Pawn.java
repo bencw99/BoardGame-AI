@@ -28,12 +28,7 @@ public class Pawn extends Piece
 	public Pawn(Loyalty loyalty) throws IOException
 	{
 		super(loyalty);
-		
-		if(!imagesInitialized)
-		{
-			imagesInit();
-		}
-		
+		setWorth(PAWN_WORTH);
 		image = (getLoyalty() == Loyalty.RED) ? WHITE_PAWN: BLACK_PAWN;
 	}
 	
@@ -47,12 +42,7 @@ public class Pawn extends Piece
 	public Pawn(Loyalty loyalty, Node node) throws IOException
 	{
 		super(loyalty, node);
-		
-		if(!imagesInitialized)
-		{
-			imagesInit();
-		}
-		
+		setWorth(PAWN_WORTH);
 		image = (getLoyalty() == Loyalty.RED) ? WHITE_PAWN: BLACK_PAWN;
 	}
 	
@@ -66,12 +56,7 @@ public class Pawn extends Piece
 	public Pawn(Piece piece, Node node) throws IOException
 	{
 		super(piece.getLoyalty(), node);
-		
-		if(!imagesInitialized)
-		{
-			imagesInit();
-		}
-		
+		setWorth(PAWN_WORTH);
 		image = (getLoyalty() == Loyalty.RED) ? WHITE_PAWN: BLACK_PAWN;
 	}
 

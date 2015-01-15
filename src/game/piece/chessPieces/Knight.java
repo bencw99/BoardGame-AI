@@ -17,6 +17,9 @@ import game.piece.Piece.Loyalty;
  */
 public class Knight extends Piece
 {
+	/** The worth of a knight **/
+	public static final int KNIGHT_WORTH = 3;
+	
 	/**
 	 * Default constructor
 	 * 
@@ -26,12 +29,7 @@ public class Knight extends Piece
 	public Knight(Loyalty loyalty) throws IOException
 	{
 		super(loyalty);
-		
-		if(!imagesInitialized)
-		{
-			imagesInit();
-		}
-		
+		setWorth(KNIGHT_WORTH);
 		image = (getLoyalty() == Loyalty.RED) ? WHITE_KNIGHT: BLACK_KNIGHT;
 	}
 	
@@ -45,12 +43,7 @@ public class Knight extends Piece
 	public Knight(Loyalty loyalty, Node node) throws IOException
 	{
 		super(loyalty, node);
-		
-		if(!imagesInitialized)
-		{
-			imagesInit();
-		}
-		
+		setWorth(KNIGHT_WORTH);
 		image = (getLoyalty() == Loyalty.RED) ? WHITE_KNIGHT: BLACK_KNIGHT;
 	}
 	
@@ -64,12 +57,7 @@ public class Knight extends Piece
 	public Knight(Piece piece, Node node) throws IOException
 	{
 		super(piece.getLoyalty(), node);
-		
-		if(!imagesInitialized)
-		{
-			imagesInit();
-		}
-		
+		setWorth(KNIGHT_WORTH);
 		image = (getLoyalty() == Loyalty.RED) ? WHITE_KNIGHT: BLACK_KNIGHT;
 	}
 

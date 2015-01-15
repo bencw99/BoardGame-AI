@@ -29,12 +29,6 @@ public class Soldier extends Piece
 	{
 		super(loyalty);
 		setWorth(SOLDIER_WORTH);
-		
-		if(!imagesInitialized)
-		{
-			imagesInit();
-		}
-		
 		image = (getLoyalty() == Loyalty.RED) ? RED_CHECKER: BLACK_CHECKER;
 	}
 	
@@ -49,12 +43,6 @@ public class Soldier extends Piece
 	{
 		super(loyalty, node);
 		setWorth(SOLDIER_WORTH);
-		
-		if(!imagesInitialized)
-		{
-			imagesInit();
-		}
-		
 		image = (getLoyalty() == Loyalty.RED) ? RED_CHECKER: BLACK_CHECKER;
 	}
 	
@@ -63,8 +51,9 @@ public class Soldier extends Piece
 	 * 
 	 * @param piece	the piece to be copied
 	 * @param node	the node to be added to
+	 * @throws IOException 
 	 */
-	public Soldier(Piece piece, Node node)
+	public Soldier(Piece piece, Node node) throws IOException
 	{
 		super(piece.getLoyalty(), node);
 		setWorth(SOLDIER_WORTH);

@@ -110,10 +110,16 @@ public abstract class Piece implements ImageObserver
 	 * Default constructor
 	 * 
 	 * @param loyalty	the value the loyalty of this piece
+	 * @throws IOException 
 	 */
-	public Piece(Loyalty loyalty)
+	public Piece(Loyalty loyalty) throws IOException
 	{
 		this.loyalty = loyalty;
+		
+		if(!imagesInitialized)
+		{
+			imagesInit();
+		}
 	}
 	
 	/**
@@ -121,11 +127,17 @@ public abstract class Piece implements ImageObserver
 	 * 
 	 * @param node	the node of this instance on the board
 	 * @param loyalty	the value the loyalty is set to
+	 * @throws IOException 
 	 */
-	public Piece(Loyalty loyalty, Node node)
+	public Piece(Loyalty loyalty, Node node) throws IOException
 	{
 		this(loyalty);
 		this.node = node;
+		
+		if(!imagesInitialized)
+		{
+			imagesInit();
+		}
 	}
 	
 	/**
@@ -133,10 +145,16 @@ public abstract class Piece implements ImageObserver
 	 * 
 	 * @param piece	the piece to be copied
 	 * @param node	the node to be added to
+	 * @throws IOException 
 	 */
-	public Piece(Piece piece, Node node)
+	public Piece(Piece piece, Node node) throws IOException
 	{
 		this(piece.loyalty, node);
+		
+		if(!imagesInitialized)
+		{
+			imagesInit();
+		}
 	}
 	
 	/**

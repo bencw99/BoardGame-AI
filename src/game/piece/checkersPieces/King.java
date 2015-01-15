@@ -35,12 +35,6 @@ public class King extends Piece
 	{
 		super(loyalty);
 		setWorth(KING_WORTH);
-		
-		if(!imagesInitialized)
-		{
-			imagesInit();
-		}
-		
 		image = (getLoyalty() == Loyalty.RED) ? RED_CHECKER_KING: BLACK_CHECKER_KING;
 	}
 	
@@ -55,12 +49,6 @@ public class King extends Piece
 	{
 		super(loyalty, node);
 		setWorth(KING_WORTH);
-		
-		if(!imagesInitialized)
-		{
-			imagesInit();
-		}
-		
 		image = (getLoyalty() == Loyalty.RED) ? RED_CHECKER_KING: BLACK_CHECKER_KING;
 	}
 
@@ -69,8 +57,9 @@ public class King extends Piece
 	 * 
 	 * @param piece	the piece to be copied
 	 * @param node	the node to be added to
+	 * @throws IOException 
 	 */
-	public King(Piece piece, Node node)
+	public King(Piece piece, Node node) throws IOException
 	{
 		super(piece.getLoyalty(), node);
 		setWorth(KING_WORTH);

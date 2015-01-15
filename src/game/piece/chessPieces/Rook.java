@@ -17,6 +17,9 @@ import game.piece.Piece.Loyalty;
  */
 public class Rook extends Piece
 {
+	/** The worth of a rook **/
+	public static final int ROOK_WORTH = 5;
+	
 	/**
 	 * Default constructor
 	 * 
@@ -26,12 +29,7 @@ public class Rook extends Piece
 	public Rook(Loyalty loyalty) throws IOException
 	{
 		super(loyalty);
-		
-		if(!imagesInitialized)
-		{
-			imagesInit();
-		}
-		
+		setWorth(ROOK_WORTH);
 		image = (getLoyalty() == Loyalty.RED) ? WHITE_ROOK: BLACK_ROOK;
 	}
 	
@@ -45,12 +43,7 @@ public class Rook extends Piece
 	public Rook(Loyalty loyalty, Node node) throws IOException
 	{
 		super(loyalty, node);
-		
-		if(!imagesInitialized)
-		{
-			imagesInit();
-		}
-		
+		setWorth(ROOK_WORTH);
 		image = (getLoyalty() == Loyalty.RED) ? WHITE_ROOK: BLACK_ROOK;
 	}
 	
@@ -64,12 +57,7 @@ public class Rook extends Piece
 	public Rook(Piece piece, Node node) throws IOException
 	{
 		super(piece.getLoyalty(), node);
-		
-		if(!imagesInitialized)
-		{
-			imagesInit();
-		}
-		
+		setWorth(ROOK_WORTH);
 		image = (getLoyalty() == Loyalty.RED) ? WHITE_ROOK: BLACK_ROOK;
 	}
 

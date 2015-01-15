@@ -23,10 +23,10 @@ public class ChessBoard	extends RectangularBoard
 	public static final int CHESS_GRID_LENGTH = 8;
 	
 	/** The default width of nodes of this board **/
-	public static final int NODE_WIDTH =  30;
+	public static final int NODE_WIDTH =  80;
 	
 	/** The default height of nodes of this board **/
-	public static final int NODE_HEIGHT =  30;
+	public static final int NODE_HEIGHT =  80;
 	
 	/**
 	 * Parameterized constructor, initializes grid to size 8 by 8, and game to given game

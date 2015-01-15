@@ -174,7 +174,7 @@ public class Game
 			p2Pieces.add(new Rook(Loyalty.BLACK));
 			
 			players = new Player[2];
-			players[0] = new Human("Player 1", Loyalty.RED, p1Pieces, this);
+			players[0] = new AI("Player 1", Loyalty.RED, p1Pieces, this, 5);
 			players[1] = new Human("Player 2", Loyalty.BLACK, p2Pieces, this);
 			
 			board = new ChessBoard(this);

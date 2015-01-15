@@ -17,6 +17,9 @@ import game.piece.Piece.Loyalty;
  */
 public class Queen extends Piece
 {
+	/** The worth of a queen **/
+	public static final int QUEEN_WORTH = 9;
+	
 	/**
 	 * Default constructor
 	 * 
@@ -26,12 +29,7 @@ public class Queen extends Piece
 	public Queen(Loyalty loyalty) throws IOException
 	{
 		super(loyalty);
-		
-		if(!imagesInitialized)
-		{
-			imagesInit();
-		}
-		
+		setWorth(QUEEN_WORTH);
 		image = (getLoyalty() == Loyalty.RED) ? WHITE_QUEEN: BLACK_QUEEN;
 	}
 	
@@ -45,12 +43,7 @@ public class Queen extends Piece
 	public Queen(Loyalty loyalty, Node node) throws IOException
 	{
 		super(loyalty, node);
-		
-		if(!imagesInitialized)
-		{
-			imagesInit();
-		}
-		
+		setWorth(QUEEN_WORTH);
 		image = (getLoyalty() == Loyalty.RED) ? WHITE_QUEEN: BLACK_QUEEN;
 	}
 	
@@ -64,12 +57,7 @@ public class Queen extends Piece
 	public Queen(Piece piece, Node node) throws IOException
 	{
 		super(piece.getLoyalty(), node);
-		
-		if(!imagesInitialized)
-		{
-			imagesInit();
-		}
-		
+		setWorth(QUEEN_WORTH);
 		image = (getLoyalty() == Loyalty.RED) ? WHITE_QUEEN: BLACK_QUEEN;
 	}
 

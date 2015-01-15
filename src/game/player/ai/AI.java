@@ -8,8 +8,10 @@ import game.player.Player;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Stack;
+import java.util.TreeMap;
 
 /**
  * A class representing a Human player associated with a game
@@ -298,6 +300,8 @@ public class AI extends Player
 		
 		double extreme;
 		
+		heuristicSort(nextMoves, node);
+		
 		if(thisPlayersTurn)
 		{
 			extreme = Integer.MIN_VALUE;
@@ -388,6 +392,74 @@ public class AI extends Player
 		}
 		
 		return extreme;
+	}
+	
+	/**
+	 * Performs a heuristic sort on the array list of moves
+	 *
+	 * @param moves	the moves to be heuristically sorted
+	 * @throws IOException 
+	 */
+	private void heuristicSort(ArrayList<Move> moves, MinimaxNode node) throws IOException
+	{
+		ArrayList<MinimaxNode> nextNodes = new ArrayList<MinimaxNode>();
+		
+		for(Move move : moves)
+		{
+			MinimaxNode nextNode = node.getNextNode(move);
+			nextNode.setValue(functionVal(node));
+			nextNodes.add(nextNode);
+		}
+		
+		nextNodes = quickSort(nextNodes, 0, nextNodes.size() - 1);
+		
+		for(int i = 0; i < moves.size(); i ++)
+		{
+			moves.set(i, nextNodes.get(i).getMove());
+		}
+	}
+	
+	
+	/**
+	 * Sorts the given array list of minimax nodes
+	 * 
+	 * @param nodes	the array list to be sorted
+	 * @param start	the starting index
+	 * @param end	the end index
+	 * @return	the sorted array list
+	 */
+	private ArrayList<MinimaxNode> quickSort(ArrayList<MinimaxNode> nodes, int start, int end)
+	{
+		if(start <= end)
+		{
+			return nodes;
+		}
+		
+		MinimaxNode pivotNode = nodes.get(end);
+		double pivotVal = pivotNode.getValue();
+		
+		int delimeterIndex = start;
+		
+		for(int i = start; i < end; i ++)
+		{
+			MinimaxNode currentNode = nodes.get(i);
+			
+			if(currentNode.getValue() < pivotVal)
+			{
+				nodes.set(i, nodes.get(delimeterIndex));
+				nodes.set(delimeterIndex, currentNode);
+				
+				delimeterIndex ++;
+			}
+		}
+		
+		nodes.set(end, nodes.get(delimeterIndex));
+		nodes.set(delimeterIndex, pivotNode);
+		
+		quickSort(nodes, start, delimeterIndex - 1);
+		quickSort(nodes, delimeterIndex + 1, end);
+		
+		return nodes;
 	}
 	
 	/**

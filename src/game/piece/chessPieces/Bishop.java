@@ -17,6 +17,9 @@ import game.piece.Piece.Loyalty;
  */
 public class Bishop extends Piece
 {
+	/** The worth of a bishop **/
+	public static final int BISHOP_WORTH = 3;
+	
 	/**
 	 * Default constructor
 	 * 
@@ -26,12 +29,7 @@ public class Bishop extends Piece
 	public Bishop(Loyalty loyalty) throws IOException
 	{
 		super(loyalty);
-		
-		if(!imagesInitialized)
-		{
-			imagesInit();
-		}
-		
+		setWorth(BISHOP_WORTH);
 		image = (getLoyalty() == Loyalty.RED) ? WHITE_BISHOP: BLACK_BISHOP;
 	}
 	
@@ -45,12 +43,7 @@ public class Bishop extends Piece
 	public Bishop(Loyalty loyalty, Node node) throws IOException
 	{
 		super(loyalty, node);
-		
-		if(!imagesInitialized)
-		{
-			imagesInit();
-		}
-		
+		setWorth(BISHOP_WORTH);
 		image = (getLoyalty() == Loyalty.RED) ? WHITE_BISHOP: BLACK_BISHOP;
 	}
 	
@@ -64,12 +57,7 @@ public class Bishop extends Piece
 	public Bishop(Piece piece, Node node) throws IOException
 	{
 		super(piece.getLoyalty(), node);
-		
-		if(!imagesInitialized)
-		{
-			imagesInit();
-		}
-		
+		setWorth(BISHOP_WORTH);
 		image = (getLoyalty() == Loyalty.RED) ? WHITE_BISHOP: BLACK_BISHOP;
 	}
 

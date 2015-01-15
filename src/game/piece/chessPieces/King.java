@@ -17,6 +17,9 @@ import game.piece.Piece.Loyalty;
  */
 public class King extends Piece
 {
+	/** The worth of a king **/
+	public static final int KING_WORTH = Integer.MAX_VALUE/2;
+	
 	/**
 	 * Default constructor
 	 * 
@@ -26,12 +29,7 @@ public class King extends Piece
 	public King(Loyalty loyalty) throws IOException
 	{
 		super(loyalty);
-		
-		if(!imagesInitialized)
-		{
-			imagesInit();
-		}
-		
+		setWorth(KING_WORTH);
 		image = (getLoyalty() == Loyalty.RED) ? WHITE_KING: BLACK_KING;
 	}
 	
@@ -45,12 +43,7 @@ public class King extends Piece
 	public King(Loyalty loyalty, Node node) throws IOException
 	{
 		super(loyalty, node);
-		
-		if(!imagesInitialized)
-		{
-			imagesInit();
-		}
-		
+		setWorth(KING_WORTH);
 		image = (getLoyalty() == Loyalty.RED) ? WHITE_KING: BLACK_KING;
 	}
 	
@@ -64,12 +57,7 @@ public class King extends Piece
 	public King(Piece piece, Node node) throws IOException
 	{
 		super(piece.getLoyalty(), node);
-		
-		if(!imagesInitialized)
-		{
-			imagesInit();
-		}
-		
+		setWorth(KING_WORTH);
 		image = (getLoyalty() == Loyalty.RED) ? WHITE_KING: BLACK_KING;
 	}
 
