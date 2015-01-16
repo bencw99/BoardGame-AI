@@ -1,7 +1,5 @@
 package game.board;
 
-import java.awt.Color;
-
 import game.Game;
 import game.board.node.Location;
 import game.board.node.Node;
@@ -72,23 +70,6 @@ public abstract class RectangularBoard extends Board
 	public abstract void loadBoard();
 	
 	/**
-	 * Adds the given piece to the grid at the given node
-	 * 
-	 * @param piece	the piece to be added
-	 * @param loc	the location to be added to
-	 */
-	public void add(Piece piece, Location loc)
-	{
-		if(piece != null)
-		{
-			piece.add(getNode(loc));
-			getGame().getPlayers()[piece.getLoyalty().getVal()].add(piece);
-		}
-		
-		grid[loc.getRow()][loc.getCol()].add(piece);
-	}
-	
-	/**
 	 * Returns the node at the given location
 	 * 
 	 * @return the node at the given location
@@ -105,7 +86,7 @@ public abstract class RectangularBoard extends Board
 	 */ 
 	public Piece getPiece(Location loc)
 	{
-		return grid[loc.getRow()][loc.getCol()].getPiece();
+		return getNode(loc).getPiece();
 	}
 	
 	/**
@@ -151,7 +132,7 @@ public abstract class RectangularBoard extends Board
 		
 		if(piece != null)
 		{
-			getGame().getPlayers()[piece.getLoyalty().getVal()].remove(piece);
+//			getGame().getPlayers()[piece.getLoyalty().getVal()].remove(piece);
 			
 			put(null, loc);
 		}

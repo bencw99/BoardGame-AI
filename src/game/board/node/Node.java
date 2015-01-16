@@ -105,7 +105,7 @@ public class Node
 				e.printStackTrace();
 			}
 			
-			getGame().getPlayers()[this.piece.getLoyalty().getVal()].add(this.piece);
+//			getGame().getPlayers()[this.piece.getLoyalty().getVal()].add(this.piece);
 		}
 	}
 	

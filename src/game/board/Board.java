@@ -1,6 +1,7 @@
 package game.board;
 
 import java.awt.Graphics;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import game.Game;
@@ -59,8 +60,9 @@ public abstract class Board
 	
 	/**
 	 * Loads the initial position of this board
+	 * @throws IOException 
 	 */
-	public abstract void loadBoard();
+	public abstract void loadBoard() throws IOException;
 	
 	/**
 	 * Gets the possible moves of the given loyalty

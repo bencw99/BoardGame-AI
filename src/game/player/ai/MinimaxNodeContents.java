@@ -16,6 +16,10 @@ import java.util.ArrayList;
  */
 public class MinimaxNodeContents
 {
+	/*
+	 * Can be simplified to a board and a turn
+	 */
+	
 	/** The game of this minimax node **/
 	private Game game;
 	

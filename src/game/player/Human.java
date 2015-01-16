@@ -33,11 +33,10 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 	 * 
 	 * @param name	the name of this player
 	 * @param loyalty	the loyalty of this player
-	 * @param pieces	the pieces of this player
 	 */
-	public Human(String name, Loyalty loyalty, ArrayList<Piece> pieces, Game game)
+	public Human(String name, Loyalty loyalty, Game game)
 	{
-		super(name, loyalty, pieces, game);
+		super(name, loyalty, game);
 	}
 
 	/**

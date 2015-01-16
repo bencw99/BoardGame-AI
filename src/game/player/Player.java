@@ -29,9 +29,6 @@ public abstract class Player
 	/** The loyalty of this player **/
 	private Loyalty loyalty;
 	
-	/** The pieces of this player **/
-	private ArrayList<Piece> pieces;
-	
 	/** The game this player belongs to **/
 	private Game game;
 	
@@ -48,11 +45,10 @@ public abstract class Player
 	 * @param loyalty	the loyalty of this player
 	 * @param pieces	the pieces of this player
 	 */
-	public Player(String name, Loyalty loyalty, ArrayList<Piece> pieces, Game game)
+	public Player(String name, Loyalty loyalty, Game game)
 	{
 		this.name = name;
 		this.loyalty = loyalty;
-		this.pieces = pieces;
 		this.state = State.PLAYING;
 		this.game = game;
 	}
@@ -82,25 +78,25 @@ public abstract class Player
 	 */
 	public abstract Move getThisTurnMove() throws IOException;
 	
-	/**
-	 * Removes the given piece from pieces ArrayList
-	 * 
-	 * @param piece	the piece to be removed
-	 */
-	public void remove(Piece piece)
-	{
-		pieces.remove(piece);
-	}
-	
-	/**
-	 * Adds the given piece to pieces ArrayList
-	 * 
-	 * @param piece	the piece to be added
-	 */
-	public void add(Piece piece)
-	{
-		pieces.add(piece);
-	}
+//	/**
+//	 * Removes the given piece from pieces ArrayList
+//	 * 
+//	 * @param piece	the piece to be removed
+//	 */
+//	public void remove(Piece piece)
+//	{
+//		pieces.remove(piece);
+//	}
+//	
+//	/**
+//	 * Adds the given piece to pieces ArrayList
+//	 * 
+//	 * @param piece	the piece to be added
+//	 */
+//	public void add(Piece piece)
+//	{
+//		pieces.add(piece);
+//	}
 	
 	/**
 	 * @return the name
@@ -126,13 +122,13 @@ public abstract class Player
 		return loyalty;
 	}
 
-	/**
-	 * @return the pieces
-	 */
-	public ArrayList<Piece> getPieces()
-	{
-		return pieces;
-	}
+//	/**
+//	 * @return the pieces
+//	 */
+//	public ArrayList<Piece> getPieces()
+//	{
+//		return pieces;
+//	}
 	
 	/**
 	 * @return the game
@@ -147,14 +143,7 @@ public abstract class Player
 	 */
 	public RectangularBoard getBoard()
 	{
-		if(pieces.isEmpty())
-		{
-			return null;
-		}
-		else
-		{
-			return (RectangularBoard) game.getBoard();
-		}
+		return (RectangularBoard) game.getBoard();
 	}
 
 	/**
@@ -179,14 +168,6 @@ public abstract class Player
 	public void setLoyalty(Loyalty loyalty)
 	{
 		this.loyalty = loyalty;
-	}
-
-	/**
-	 * @param pieces the pieces to set
-	 */
-	public void setPieces(ArrayList<Piece> pieces)
-	{
-		this.pieces = pieces;
 	}
 	
 	/**

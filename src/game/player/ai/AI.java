@@ -1,17 +1,16 @@
 package game.player.ai;
 
 import game.Game;
+import game.board.node.Node;
 import game.move.Move;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
+import game.piece.chessPieces.Queen;
 import game.player.Player;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.Stack;
-import java.util.TreeMap;
 
 /**
  * A class representing a Human player associated with a game
@@ -38,11 +37,10 @@ public class AI extends Player
 	 * 
 	 * @param name	the name of this player
 	 * @param loyalty	the loyalty of this player
-	 * @param pieces	the pieces of this player
 	 */
-	public AI(String name, Loyalty loyalty, ArrayList<Piece> pieces, Game game)
+	public AI(String name, Loyalty loyalty, Game game)
 	{
-		this(name, loyalty, pieces, game, DEFAULT_MINIMAX_DEPTH);
+		this(name, loyalty, game, DEFAULT_MINIMAX_DEPTH);
 	}
 	
 	/**
@@ -50,12 +48,11 @@ public class AI extends Player
 	 * 
 	 * @param name	the name of this player
 	 * @param loyalty	the loyalty of this player
-	 * @param pieces	the pieces of this player
 	 * @param minimaxDepth	the minimaxDepth of this ai
 	 */
-	public AI(String name, Loyalty loyalty, ArrayList<Piece> pieces, Game game, int minimaxDepth)
+	public AI(String name, Loyalty loyalty, Game game, int minimaxDepth)
 	{
-		super(name, loyalty, pieces, game);
+		super(name, loyalty, game);
 		this.minimaxDepth = minimaxDepth;
 	}
 
@@ -475,7 +472,7 @@ public class AI extends Player
 		
 		boolean hasWon = true;
 		
-		for(Player enemy : players)
+		for(Player enemy : players) 
 		{
 			if(enemy.getLoyalty() != this.getLoyalty())
 			{
@@ -496,18 +493,17 @@ public class AI extends Player
 			return Double.MIN_VALUE;
 		}
 		
-		for(Player player : players)
+		for(Node gridNode : node.getGame().getBoard().getNodes())
 		{
-			if(player.getLoyalty() == getLoyalty())
+			Piece piece = gridNode.getPiece();
+			
+			if(piece != null)
 			{
-				for(Piece piece : player.getPieces())
+				if(piece.getLoyalty() == getLoyalty())
 				{
 					functionVal += piece.getWorth();
 				}
-			}
-			else
-			{
-				for(Piece piece : player.getPieces())
+				else
 				{
 					functionVal -= piece.getWorth();
 				}

@@ -7,6 +7,13 @@ import game.move.Move;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
 import game.piece.checkersPieces.King;
+import game.piece.checkersPieces.Soldier;
+import game.piece.chessPieces.Bishop;
+import game.piece.chessPieces.Knight;
+import game.piece.chessPieces.Pawn;
+import game.piece.chessPieces.Queen;
+import game.piece.chessPieces.Rook;
+import game.player.Player;
 
 import java.awt.Color;
 import java.io.IOException;
@@ -99,7 +106,7 @@ public class CheckersBoard extends RectangularBoard
 				e.printStackTrace();
 			}
 			
-			add(newKing, nodes.get(0).getLoc());
+			put(newKing, nodes.get(0).getLoc());
 		}
 		
 		if(nodes.get(nodes.size() - 1).getLoc().getRow() == 0 && getPiece(nodes.get(0).getLoc()).getLoyalty() == Loyalty.BLACK)
@@ -116,7 +123,7 @@ public class CheckersBoard extends RectangularBoard
 				e.printStackTrace();
 			}
 			
-			add(newKing, nodes.get(0).getLoc());
+			put(newKing, nodes.get(0).getLoc());
 		}
 		
 		move(nodes.get(0).getLoc(), nodes.get(nodes.size() - 1).getLoc());
@@ -127,46 +134,97 @@ public class CheckersBoard extends RectangularBoard
 	 */
 	public void loadBoard()
 	{
-		int[] piecesLeft = new int[getGame().getPlayers().length];
+		ArrayList<Piece> p1Pieces = new ArrayList<Piece>();
+		ArrayList<Piece> p2Pieces = new ArrayList<Piece>();
 		
-		for(int i = 0; i < piecesLeft.length; i ++)
+		try
 		{
-			piecesLeft[i] = getGame().getPlayers()[i].getPieces().size();
+			for(int i = 0; i < Player.DEFAULT_PIECE_NUM; i ++)
+			{
+				p1Pieces.add(new Soldier(Loyalty.RED));
+				p2Pieces.add(new Soldier(Loyalty.BLACK));
+			}
 		}
-
+		catch(IOException e)
+		{
+			
+		}
+		
+		int p1PiecesLeft = p1Pieces.size();
+		int p2PiecesLeft = p2Pieces.size();
+		
 		for(int i = 0; i < getGrid().length; i ++)
 		{
 			for(int j = 0; j < getGrid()[0].length; j ++)
 			{	
 				if(getGrid()[i][j].getColor() == Color.BLACK)
 				{
-					if(piecesLeft[0] > 0)
+					if(p1PiecesLeft > 0)
 					{
-						put(getGame().getPlayers()[0].getPieces().get(piecesLeft[0] - 1), getGrid()[i][j].getLoc());
-						getGame().getPlayers()[0].getPieces().get(piecesLeft[0] - 1).add(getGrid()[i][j]);
+						put(p1Pieces.get(p1PiecesLeft - 1), getGrid()[i][j].getLoc());
 					}
-						
-					piecesLeft[0] --;
+							
+					p1PiecesLeft --;
 				}
 			}
 		}
 		
 		for(int i = getGrid().length - 1; i >= 0; i --)
 		{
-			for(int j = getGrid()[0].length - 1; j >= 0; j --)
+			for(int j = 0; j < getGrid()[0].length; j ++)
 			{	
 				if(getGrid()[i][j].getColor() == Color.BLACK)
 				{
-					if(piecesLeft[1] > 0)
+					if(p2PiecesLeft > 0)
 					{
-						put(getGame().getPlayers()[1].getPieces().get(piecesLeft[1] - 1), getGrid()[i][j].getLoc());
-						getGame().getPlayers()[1].getPieces().get(piecesLeft[1] - 1).add(getGrid()[i][j]);
+						put(p2Pieces.get(p2PiecesLeft - 1), getGrid()[i][j].getLoc());
 					}
-						
-					piecesLeft[1] --;
+							
+					p2PiecesLeft --;
 				}
 			}
 		}
+		
+//		int[] piecesLeft = new int[getGame().getPlayers().length];
+//		
+//		for(int i = 0; i < piecesLeft.length; i ++)
+//		{
+//			piecesLeft[i] = getGame().getPlayers()[i].getPieces().size();
+//		}
+//
+//		for(int i = 0; i < getGrid().length; i ++)
+//		{
+//			for(int j = 0; j < getGrid()[0].length; j ++)
+//			{	
+//				if(getGrid()[i][j].getColor() == Color.BLACK)
+//				{
+//					if(piecesLeft[0] > 0)
+//					{
+//						put(getGame().getPlayers()[0].getPieces().get(piecesLeft[0] - 1), getGrid()[i][j].getLoc());
+//						getGame().getPlayers()[0].getPieces().get(piecesLeft[0] - 1).add(getGrid()[i][j]);
+//					}
+//						
+//					piecesLeft[0] --;
+//				}
+//			}
+//		}
+//		
+//		for(int i = getGrid().length - 1; i >= 0; i --)
+//		{
+//			for(int j = getGrid()[0].length - 1; j >= 0; j --)
+//			{	
+//				if(getGrid()[i][j].getColor() == Color.BLACK)
+//				{
+//					if(piecesLeft[1] > 0)
+//					{
+//						put(getGame().getPlayers()[1].getPieces().get(piecesLeft[1] - 1), getGrid()[i][j].getLoc());
+//						getGame().getPlayers()[1].getPieces().get(piecesLeft[1] - 1).add(getGrid()[i][j]);
+//					}
+//						
+//					piecesLeft[1] --;
+//				}
+//			}
+//		}
 	}
 	
 	/**

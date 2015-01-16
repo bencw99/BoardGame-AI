@@ -1,5 +1,6 @@
 package game.player.ai;
 
+import game.board.node.Node;
 import game.piece.Piece;
 import game.player.Player;
 
@@ -152,18 +153,17 @@ public class SearchTree
 			return Double.MIN_VALUE;
 		}
 		
-		for(Player player : players)
+		for(Node gridNode : player.getBoard().getNodes())
 		{
-			if(player.getLoyalty() == player.getLoyalty())
+			Piece piece = gridNode.getPiece();
+			
+			if(piece != null)
 			{
-				for(Piece piece : player.getPieces())
+				if(piece.getLoyalty() == player.getLoyalty())
 				{
 					functionVal += piece.getWorth();
 				}
-			}
-			else
-			{
-				for(Piece piece : player.getPieces())
+				else
 				{
 					functionVal -= piece.getWorth();
 				}

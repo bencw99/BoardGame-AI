@@ -10,7 +10,12 @@ import game.board.node.Node;
 import game.move.Move;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
+import game.piece.chessPieces.Bishop;
 import game.piece.chessPieces.King;
+import game.piece.chessPieces.Knight;
+import game.piece.chessPieces.Pawn;
+import game.piece.chessPieces.Queen;
+import game.piece.chessPieces.Rook;
 
 /**
  * A class representing a chess board
@@ -100,24 +105,55 @@ public class ChessBoard	extends RectangularBoard
 	 */
 	public void loadBoard()
 	{
-		int[] piecesLeft = new int[getGame().getPlayers().length];
+		ArrayList<Piece> p1Pieces = new ArrayList<Piece>();
+		ArrayList<Piece> p2Pieces = new ArrayList<Piece>();
 		
-		for(int i = 0; i < piecesLeft.length; i ++)
+		try
 		{
-			piecesLeft[i] = getGame().getPlayers()[i].getPieces().size();
+			for(int i = 0; i < 8; i ++)
+			{
+				p1Pieces.add(new Pawn(Loyalty.RED));
+			}
+			p1Pieces.add(new Rook(Loyalty.RED));
+			p1Pieces.add(new Knight(Loyalty.RED));
+			p1Pieces.add(new Bishop(Loyalty.RED));
+			p1Pieces.add(new King(Loyalty.RED));
+			p1Pieces.add(new Queen(Loyalty.RED));
+			p1Pieces.add(new Bishop(Loyalty.RED));
+			p1Pieces.add(new Knight(Loyalty.RED));
+			p1Pieces.add(new Rook(Loyalty.RED));
+	
+			for(int i = 0; i < 8; i ++)
+			{
+				p2Pieces.add(new Pawn(Loyalty.BLACK));
+			}
+			p2Pieces.add(new Rook(Loyalty.BLACK));
+			p2Pieces.add(new Knight(Loyalty.BLACK));
+			p2Pieces.add(new Bishop(Loyalty.BLACK));
+			p2Pieces.add(new King(Loyalty.BLACK));
+			p2Pieces.add(new Queen(Loyalty.BLACK));
+			p2Pieces.add(new Bishop(Loyalty.BLACK));
+			p2Pieces.add(new Knight(Loyalty.BLACK));
+			p2Pieces.add(new Rook(Loyalty.BLACK));
 		}
-
+		catch(IOException e)
+		{
+			
+		}
+		
+		int p1PiecesLeft = p1Pieces.size();
+		int p2PiecesLeft = p2Pieces.size();
+		
 		for(int i = 0; i < getGrid().length; i ++)
 		{
 			for(int j = 0; j < getGrid()[0].length; j ++)
 			{	
-				if(piecesLeft[0] > 0)
+				if(p1PiecesLeft > 0)
 				{
-					put(getGame().getPlayers()[0].getPieces().get(piecesLeft[0] - 1), getGrid()[i][j].getLoc());
-					getGame().getPlayers()[0].getPieces().get(piecesLeft[0] - 1).add(getGrid()[i][j]);
+					put(p1Pieces.get(p1PiecesLeft - 1), getGrid()[i][j].getLoc());
 				}
 						
-				piecesLeft[0] --;
+				p1PiecesLeft --;
 			}
 		}
 		
@@ -125,15 +161,49 @@ public class ChessBoard	extends RectangularBoard
 		{
 			for(int j = 0; j < getGrid()[0].length; j ++)
 			{	
-				if(piecesLeft[1] > 0)
+				if(p2PiecesLeft > 0)
 				{
-					put(getGame().getPlayers()[1].getPieces().get(piecesLeft[1] - 1), getGrid()[i][j].getLoc());
-					getGame().getPlayers()[1].getPieces().get(piecesLeft[1] - 1).add(getGrid()[i][j]);
+					put(p2Pieces.get(p2PiecesLeft - 1), getGrid()[i][j].getLoc());
 				}
 						
-				piecesLeft[1] --;
+				p2PiecesLeft --;
 			}
 		}
+		
+//		int[] piecesLeft = new int[getGame().getPlayers().length];
+//		
+//		for(int i = 0; i < piecesLeft.length; i ++)
+//		{
+//			piecesLeft[i] = getGame().getPlayers()[i].getPieces().size();
+//		}
+//
+//		for(int i = 0; i < getGrid().length; i ++)
+//		{
+//			for(int j = 0; j < getGrid()[0].length; j ++)
+//			{	
+//				if(piecesLeft[0] > 0)
+//				{
+//					put(getGame().getPlayers()[0].getPieces().get(piecesLeft[0] - 1), getGrid()[i][j].getLoc());
+//					getGame().getPlayers()[0].getPieces().get(piecesLeft[0] - 1).add(getGrid()[i][j]);
+//				}
+//						
+//				piecesLeft[0] --;
+//			}
+//		}
+//		
+//		for(int i = getGrid().length - 1; i >= 0; i --)
+//		{
+//			for(int j = 0; j < getGrid()[0].length; j ++)
+//			{	
+//				if(piecesLeft[1] > 0)
+//				{
+//					put(getGame().getPlayers()[1].getPieces().get(piecesLeft[1] - 1), getGrid()[i][j].getLoc());
+//					getGame().getPlayers()[1].getPieces().get(piecesLeft[1] - 1).add(getGrid()[i][j]);
+//				}
+//						
+//				piecesLeft[1] --;
+//			}
+//		}
 	}
 	
 	/**
