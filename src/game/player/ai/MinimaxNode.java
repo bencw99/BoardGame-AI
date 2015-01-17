@@ -103,9 +103,15 @@ public class MinimaxNode extends MinimaxSuperNode
 		}
 	}
 	
+	/**
+	 * Compares this node with another
+	 * 
+	 * @param other the node to be compared to
+	 * @return a boolean representing the comparison
+	 */
 	public boolean equals(MinimaxNode other)
 	{
-		return (other.getGame().getTurn().equals(this.getGame().getTurn()) && other.getBoard().equals(this.getBoard()));
+		return this.contents.equals(other.contents);
 	}
 	
 	/**

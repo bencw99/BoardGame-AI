@@ -35,9 +35,6 @@ public abstract class Player
 	/**The state of this player **/
 	private State state;
 	
-	/** The default number of pieces on the checkers grid **/
-	public final static int DEFAULT_PIECE_NUM = 12;
-	
 	/**
 	 * Parameterized constructor, initializes name, pieces, and loyalty
 	 * 

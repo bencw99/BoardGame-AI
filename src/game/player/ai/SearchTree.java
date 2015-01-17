@@ -153,7 +153,7 @@ public class SearchTree
 			return Double.MIN_VALUE;
 		}
 		
-		for(Node gridNode : player.getBoard().getNodes())
+		for(Node gridNode : node.getBoard().getNodes())
 		{
 			Piece piece = gridNode.getPiece();
 			

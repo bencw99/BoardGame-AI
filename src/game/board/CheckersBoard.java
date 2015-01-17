@@ -35,6 +35,9 @@ public class CheckersBoard extends RectangularBoard
 	/** The default height of nodes of this board **/
 	public static final int NODE_HEIGHT =  80;
 	
+	/** **/
+	public static final int CHECKERS_PIECE_NUM = 12;
+	
 	/**
 	 * Parameterized constructor, initializes grid to size 8 by 8, and game to given game
 	 * 
@@ -139,7 +142,7 @@ public class CheckersBoard extends RectangularBoard
 		
 		try
 		{
-			for(int i = 0; i < Player.DEFAULT_PIECE_NUM; i ++)
+			for(int i = 0; i < CHECKERS_PIECE_NUM; i ++)
 			{
 				p1Pieces.add(new Soldier(Loyalty.RED));
 				p2Pieces.add(new Soldier(Loyalty.BLACK));

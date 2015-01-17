@@ -94,39 +94,12 @@ public class Game
 	private Turn turn;
 	
 	/**
-	 * Default constructor, creates this as a default game
-	 * @throws IOException 
-	 */
-	public Game() throws IOException
-	{	
-		turn = Turn.getRandom();
-		
-		ArrayList<Piece> p1Pieces = new ArrayList<Piece>();
-		ArrayList<Piece> p2Pieces = new ArrayList<Piece>();
-		
-		for(int i = 0; i < Player.DEFAULT_PIECE_NUM; i ++)
-		{
-			p1Pieces.add(new Soldier(Loyalty.RED));
-			p2Pieces.add(new Soldier(Loyalty.BLACK));
-		}
-		
-		players = new Player[2];
-		players[0] = new AI("AI", Loyalty.RED, this);
-		players[1] = new Human("Human", Loyalty.BLACK, this);
-		
-		board = new CheckersBoard(this);
-	}
-	
-	/**
 	 * Parameterized constructor, sets this game to the given game type
 	 * 
 	 * @throws IOException 
 	 */
 	public Game(GameType type) throws IOException
 	{	
-		ArrayList<Piece> p1Pieces = new ArrayList<Piece>();
-		ArrayList<Piece> p2Pieces = new ArrayList<Piece>();
-		
 		if(type == GameType.CHECKERS)
 		{
 			turn = Turn.getRandom();

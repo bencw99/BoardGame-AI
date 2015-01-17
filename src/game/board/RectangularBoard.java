@@ -132,8 +132,6 @@ public abstract class RectangularBoard extends Board
 		
 		if(piece != null)
 		{
-//			getGame().getPlayers()[piece.getLoyalty().getVal()].remove(piece);
-			
 			put(null, loc);
 		}
 		

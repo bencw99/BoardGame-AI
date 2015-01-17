@@ -4,7 +4,6 @@ import game.Game;
 import game.board.Board;
 import game.move.Move;
 import game.player.Player;
-import game.player.Player.State;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,10 +15,6 @@ import java.util.ArrayList;
  */
 public class MinimaxNodeContents
 {
-	/*
-	 * Can be simplified to a board and a turn
-	 */
-	
 	/** The game of this minimax node **/
 	private Game game;
 	
