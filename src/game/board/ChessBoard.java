@@ -169,41 +169,6 @@ public class ChessBoard	extends RectangularBoard
 				p2PiecesLeft --;
 			}
 		}
-		
-//		int[] piecesLeft = new int[getGame().getPlayers().length];
-//		
-//		for(int i = 0; i < piecesLeft.length; i ++)
-//		{
-//			piecesLeft[i] = getGame().getPlayers()[i].getPieces().size();
-//		}
-//
-//		for(int i = 0; i < getGrid().length; i ++)
-//		{
-//			for(int j = 0; j < getGrid()[0].length; j ++)
-//			{	
-//				if(piecesLeft[0] > 0)
-//				{
-//					put(getGame().getPlayers()[0].getPieces().get(piecesLeft[0] - 1), getGrid()[i][j].getLoc());
-//					getGame().getPlayers()[0].getPieces().get(piecesLeft[0] - 1).add(getGrid()[i][j]);
-//				}
-//						
-//				piecesLeft[0] --;
-//			}
-//		}
-//		
-//		for(int i = getGrid().length - 1; i >= 0; i --)
-//		{
-//			for(int j = 0; j < getGrid()[0].length; j ++)
-//			{	
-//				if(piecesLeft[1] > 0)
-//				{
-//					put(getGame().getPlayers()[1].getPieces().get(piecesLeft[1] - 1), getGrid()[i][j].getLoc());
-//					getGame().getPlayers()[1].getPieces().get(piecesLeft[1] - 1).add(getGrid()[i][j]);
-//				}
-//						
-//				piecesLeft[1] --;
-//			}
-//		}
 	}
 	
 	/**
@@ -217,6 +182,28 @@ public class ChessBoard	extends RectangularBoard
 		for(Node jumped : move.getJumped())
 		{
 			remove(jumped.getLoc());
+		}
+		
+		Node initialNode = move.getNodes().get(0);
+		Node terminalNode = move.getNodes().get(move.getNodes().size() - 1);
+		Piece movedPiece = initialNode.getPiece();
+		
+		if(movedPiece instanceof Rook && !movedPiece.hasMoved())
+		{
+			for(int j = -1; j <= 1; j += 2)
+			{
+				Location locBeside = new Location(terminalNode.getLoc().getRow(), terminalNode.getLoc().getCol() + j);
+				Location otherLocBeside = new Location(terminalNode.getLoc().getRow(), terminalNode.getLoc().getCol() - j);
+				if(isValid(locBeside) && isValid(otherLocBeside))
+				{
+					Piece pieceBeside = getNode(locBeside).getPiece();
+					
+					if(pieceBeside instanceof King && !pieceBeside.hasMoved())
+					{
+						move(locBeside, otherLocBeside);
+					}
+				}
+			}
 		}
 		
 		move(move.getNodes().get(0).getLoc(), move.getNodes().get(move.getNodes().size() - 1).getLoc());

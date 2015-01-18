@@ -111,12 +111,14 @@ public abstract class RectangularBoard extends Board
 	 * @return the piece moved
 	 */ 
 	public Piece move(Location start, Location end)
-	{
+	{	
 		Piece piece = getPiece(start);
 		
 		put(null, start);
 		
 		put(piece, end);
+	
+		piece.setHasMoved(true);
 		
 		return piece;
 	}

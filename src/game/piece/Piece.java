@@ -49,6 +49,9 @@ public abstract class Piece implements ImageObserver
 	/** The worth of this piece **/
 	private int worth;
 	
+	/** The boolean representing whether or not this piece has moved **/
+	private boolean hasMoved;
+	
 	/** The loyalty of this piece **/
 	private Loyalty loyalty;
 	
@@ -115,6 +118,7 @@ public abstract class Piece implements ImageObserver
 	public Piece(Loyalty loyalty) throws IOException
 	{
 		this.loyalty = loyalty;
+		this.hasMoved = false;
 		
 		if(!imagesInitialized)
 		{
@@ -133,6 +137,7 @@ public abstract class Piece implements ImageObserver
 	{
 		this(loyalty);
 		this.node = node;
+		this.hasMoved = false;
 		
 		if(!imagesInitialized)
 		{
@@ -150,6 +155,7 @@ public abstract class Piece implements ImageObserver
 	public Piece(Piece piece, Node node) throws IOException
 	{
 		this(piece.loyalty, node);
+		this.hasMoved = false;
 		
 		if(!imagesInitialized)
 		{
@@ -228,6 +234,14 @@ public abstract class Piece implements ImageObserver
 	}
 
 	/**
+	 * @return	has moved
+	 */
+	public boolean hasMoved()
+	{
+		return hasMoved;
+	}
+	
+	/**
 	 * @return the loyalty of this piece
 	 */
 	public Loyalty getLoyalty()
@@ -241,6 +255,14 @@ public abstract class Piece implements ImageObserver
 	public void setWorth(int worth) 
 	{
 		this.worth = worth;
+	}
+	
+	/**
+	 * @param hasMoved	the moved boolean to be set
+	 */
+	public void setHasMoved(boolean hasMoved)
+	{
+		this.hasMoved = hasMoved;
 	}
 
 	public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height)

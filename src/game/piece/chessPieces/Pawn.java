@@ -84,19 +84,7 @@ public class Pawn extends Piece
 				
 				possibleMoves.add(new ChessMove(move, getBoard(), getLoyalty()));
 				
-				boolean hasNotMoved = true;
-				
-				if(getLoyalty() == Loyalty.RED && getLoc().getRow() != 1)
-				{
-					hasNotMoved = false;
-				}
-				
-				if(getLoyalty() == Loyalty.BLACK && getLoc().getRow() != getBoard().getGrid().length - 2)
-				{
-					hasNotMoved = false;
-				}
-				
-				if(hasNotMoved)
+				if(!hasMoved())
 				{
 					Location twoInFront = new Location(getLoc().getRow() + 2*orientation, getLoc().getCol());
 					
