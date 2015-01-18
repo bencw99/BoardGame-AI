@@ -2,11 +2,14 @@ package game.board;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import game.Game;
 import game.board.node.Location;
 import game.board.node.Node;
+import game.move.ChessMove;
 import game.move.Move;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
@@ -179,13 +182,15 @@ public class ChessBoard	extends RectangularBoard
 	 */
 	public void executeMove(Move move)
 	{	
+		ArrayList<Node> nodes = move.getNodes();
+		
 		for(Node jumped : move.getJumped())
 		{
 			remove(jumped.getLoc());
 		}
 		
-		Node initialNode = move.getNodes().get(0);
-		Node terminalNode = move.getNodes().get(move.getNodes().size() - 1);
+		Node initialNode = nodes.get(0);
+		Node terminalNode = nodes.get(move.getNodes().size() - 1);
 		Piece movedPiece = initialNode.getPiece();
 		
 		if(movedPiece instanceof Rook && !movedPiece.hasMoved())
@@ -203,6 +208,89 @@ public class ChessBoard	extends RectangularBoard
 						move(locBeside, otherLocBeside);
 					}
 				}
+			}
+		}
+		
+		if(movedPiece instanceof Pawn)
+		{
+			if(nodes.get(nodes.size() - 1).getLoc().getRow() == getGrid().length - 1 && getPiece(nodes.get(0).getLoc()).getLoyalty() == Loyalty.RED)
+			{
+				remove(nodes.get(0).getLoc());
+				
+				Piece promoted = null;
+				
+				try
+				{
+					Constructor constructor = ((ChessMove) move).getPromotionType().getConstructor(Loyalty.class, Node.class);
+					
+					promoted = (Piece) constructor.newInstance(Loyalty.RED, nodes.get(0));
+				} 
+				catch (SecurityException e)
+				{
+					e.printStackTrace();
+				} 
+				catch (NoSuchMethodException e)
+				{
+					e.printStackTrace();
+				} 
+				catch (IllegalArgumentException e)
+				{
+					e.printStackTrace();
+				} 
+				catch (InstantiationException e)
+				{
+					e.printStackTrace();
+				}
+				catch (IllegalAccessException e)
+				{
+					e.printStackTrace();
+				}
+				catch (InvocationTargetException e)
+				{
+					e.printStackTrace();
+				}
+				
+				put(promoted, nodes.get(0).getLoc());
+			}
+			
+			if(nodes.get(nodes.size() - 1).getLoc().getRow() == 0 && getPiece(nodes.get(0).getLoc()).getLoyalty() == Loyalty.BLACK)
+			{
+				remove(nodes.get(0).getLoc());
+				
+				Piece promoted = null;
+				
+				try
+				{
+					Constructor constructor = ((ChessMove) move).getPromotionType().getConstructor(Loyalty.class, Node.class);
+					
+					promoted = (Piece) constructor.newInstance(Loyalty.BLACK, nodes.get(0));
+				} 
+				catch (SecurityException e)
+				{
+					e.printStackTrace();
+				} 
+				catch (NoSuchMethodException e)
+				{
+					e.printStackTrace();
+				} 
+				catch (IllegalArgumentException e)
+				{
+					e.printStackTrace();
+				} 
+				catch (InstantiationException e)
+				{
+					e.printStackTrace();
+				}
+				catch (IllegalAccessException e)
+				{
+					e.printStackTrace();
+				}
+				catch (InvocationTargetException e)
+				{
+					e.printStackTrace();
+				}
+				
+				put(promoted, nodes.get(0).getLoc());
 			}
 		}
 		

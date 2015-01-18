@@ -187,47 +187,6 @@ public class CheckersBoard extends RectangularBoard
 				}
 			}
 		}
-		
-//		int[] piecesLeft = new int[getGame().getPlayers().length];
-//		
-//		for(int i = 0; i < piecesLeft.length; i ++)
-//		{
-//			piecesLeft[i] = getGame().getPlayers()[i].getPieces().size();
-//		}
-//
-//		for(int i = 0; i < getGrid().length; i ++)
-//		{
-//			for(int j = 0; j < getGrid()[0].length; j ++)
-//			{	
-//				if(getGrid()[i][j].getColor() == Color.BLACK)
-//				{
-//					if(piecesLeft[0] > 0)
-//					{
-//						put(getGame().getPlayers()[0].getPieces().get(piecesLeft[0] - 1), getGrid()[i][j].getLoc());
-//						getGame().getPlayers()[0].getPieces().get(piecesLeft[0] - 1).add(getGrid()[i][j]);
-//					}
-//						
-//					piecesLeft[0] --;
-//				}
-//			}
-//		}
-//		
-//		for(int i = getGrid().length - 1; i >= 0; i --)
-//		{
-//			for(int j = getGrid()[0].length - 1; j >= 0; j --)
-//			{	
-//				if(getGrid()[i][j].getColor() == Color.BLACK)
-//				{
-//					if(piecesLeft[1] > 0)
-//					{
-//						put(getGame().getPlayers()[1].getPieces().get(piecesLeft[1] - 1), getGrid()[i][j].getLoc());
-//						getGame().getPlayers()[1].getPieces().get(piecesLeft[1] - 1).add(getGrid()[i][j]);
-//					}
-//						
-//					piecesLeft[1] --;
-//				}
-//			}
-//		}
 	}
 	
 	/**

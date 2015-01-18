@@ -82,7 +82,17 @@ public class Pawn extends Piece
 				move.add(getNode());
 				move.add(getBoard().getNode(inFront));
 				
-				possibleMoves.add(new ChessMove(move, getBoard(), getLoyalty()));
+				if(inFront.getRow() == getBoard().getGrid().length - 1)
+				{
+					possibleMoves.add(new ChessMove(move, getBoard(), getLoyalty(), Knight.class));
+					possibleMoves.add(new ChessMove(move, getBoard(), getLoyalty(), Rook.class));
+					possibleMoves.add(new ChessMove(move, getBoard(), getLoyalty(), Bishop.class));
+					possibleMoves.add(new ChessMove(move, getBoard(), getLoyalty(), Queen.class));
+				}
+				else
+				{
+					possibleMoves.add(new ChessMove(move, getBoard(), getLoyalty()));
+				}
 				
 				if(!hasMoved())
 				{
@@ -117,7 +127,17 @@ public class Pawn extends Piece
 					jumpMove.add(getNode());
 					jumpMove.add(getBoard().getNode(jumpLoc));
 					
-					possibleMoves.add(new ChessMove(jumpMove, getBoard(), getLoyalty()));
+					if(inFront.getRow() == getBoard().getGrid().length - 1)
+					{
+						possibleMoves.add(new ChessMove(jumpMove, getBoard(), getLoyalty(), Knight.class));
+						possibleMoves.add(new ChessMove(jumpMove, getBoard(), getLoyalty(), Rook.class));
+						possibleMoves.add(new ChessMove(jumpMove, getBoard(), getLoyalty(), Bishop.class));
+						possibleMoves.add(new ChessMove(jumpMove, getBoard(), getLoyalty(), Queen.class));
+					}
+					else
+					{
+						possibleMoves.add(new ChessMove(jumpMove, getBoard(), getLoyalty()));
+					}
 				}
 			}
 		}
