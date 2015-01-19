@@ -3,9 +3,10 @@ package game.player;
 import game.Game;
 import game.board.node.Location;
 import game.board.node.Node;
+import game.move.ChessMove;
 import game.move.Move;
-import game.piece.Piece;
 import game.piece.Piece.Loyalty;
+import game.piece.chessPieces.*;
 import gui.GamePanel;
 
 import java.awt.event.KeyEvent;
@@ -24,6 +25,9 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 {
 	/** The array list of locations representing the current move **/
 	private ArrayList<Location> moveLocs;
+	
+	/** The type to be promoted to **/
+	private Class promotionType;
 	
 	/** The boolean determining whether or not the move is registered **/
 	private boolean moveRegistered = false;
@@ -52,6 +56,8 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 		}
 		
 		moveLocs = new ArrayList<Location>();
+		
+		promotionType = null;
 		
 		while(!moveRegistered)
 		{
@@ -96,6 +102,29 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 					if(moveLocs.get(i).getRow() != thisMoveLocs.get(i).getRow() || moveLocs.get(i).getCol() != thisMoveLocs.get(i).getCol())
 					{
 						isPossiblyPossible = false;
+					}
+					
+					if(possibleMove instanceof ChessMove)
+					{
+						if(promotionType == null)
+						{
+							if(((ChessMove) possibleMove).getPromotionType() != null)
+							{
+								isPossiblyPossible = false;	
+							}
+						}
+						else
+						{
+							if(((ChessMove) possibleMove).getPromotionType() == null)
+							{
+								isPossiblyPossible = false;	
+							}
+							else if(((ChessMove) possibleMove).getPromotionType() != promotionType)
+							{
+								isPossiblyPossible = false;	
+							}
+						}
+						
 					}
 				}
 			}
@@ -204,7 +233,7 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 	{
 		if(getGame().getTurn().getVal() == getLoyalty().getVal())
 		{
-			if(event.getKeyCode() == KeyEvent.VK_R)
+			if(event.getKeyCode() == KeyEvent.VK_ENTER)
 			{
 				moveRegistered = true;
 			}
@@ -216,6 +245,22 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 				}
 				
 				moveLocs = new ArrayList<Location>();
+			}
+			if(event.getKeyCode() == KeyEvent.VK_R)
+			{
+				promotionType = Rook.class;
+			}
+			if(event.getKeyCode() == KeyEvent.VK_B)
+			{
+				promotionType = Bishop.class;
+			}
+			if(event.getKeyCode() == KeyEvent.VK_K)
+			{
+				promotionType = Knight.class;
+			}
+			if(event.getKeyCode() == KeyEvent.VK_Q)
+			{
+				promotionType = Queen.class;
 			}
 			
 			GamePanel.frame.repaint();
