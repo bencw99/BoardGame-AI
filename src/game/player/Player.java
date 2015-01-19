@@ -75,26 +75,6 @@ public abstract class Player
 	 */
 	public abstract Move getThisTurnMove() throws IOException;
 	
-//	/**
-//	 * Removes the given piece from pieces ArrayList
-//	 * 
-//	 * @param piece	the piece to be removed
-//	 */
-//	public void remove(Piece piece)
-//	{
-//		pieces.remove(piece);
-//	}
-//	
-//	/**
-//	 * Adds the given piece to pieces ArrayList
-//	 * 
-//	 * @param piece	the piece to be added
-//	 */
-//	public void add(Piece piece)
-//	{
-//		pieces.add(piece);
-//	}
-	
 	/**
 	 * @return the name
 	 */

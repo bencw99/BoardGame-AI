@@ -264,7 +264,7 @@ public class ChessBoard	extends RectangularBoard
 					Constructor constructor = ((ChessMove) move).getPromotionType().getConstructor(Loyalty.class, Node.class);
 					
 					promoted = (Piece) constructor.newInstance(Loyalty.BLACK, nodes.get(0));
-				} 
+				}
 				catch (SecurityException e)
 				{
 					e.printStackTrace();

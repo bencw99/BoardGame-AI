@@ -10,6 +10,7 @@ import game.player.Player;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Stack;
 
 /**
@@ -493,6 +494,9 @@ public class AI extends Player
 			return Double.MIN_VALUE;
 		}
 		
+		HashSet<Node> attackedNodes = new HashSet<Node>();
+		HashSet<Node> enemyAttackedNodes = new HashSet<Node>();
+		
 		for(Node gridNode : node.getGame().getBoard().getNodes())
 		{
 			Piece piece = gridNode.getPiece();
@@ -502,11 +506,35 @@ public class AI extends Player
 				if(piece.getLoyalty() == getLoyalty())
 				{
 					functionVal += piece.getWorth();
+					
+					ArrayList<Move> possibleMoves = piece.getPossibleMoves();
+					
+					for(Move possibleMove : possibleMoves)
+					{
+						attackedNodes.add(possibleMove.getNodes().get(possibleMove.getNodes().size() - 1));
+					}
 				}
 				else
 				{
 					functionVal -= piece.getWorth();
+					
+					ArrayList<Move> possibleMoves = piece.getPossibleMoves();
+					
+					for(Move possibleMove : possibleMoves)
+					{
+						enemyAttackedNodes.add(possibleMove.getNodes().get(possibleMove.getNodes().size() - 1));
+					}
 				}
+			}
+			
+			for(Node attackedNode : attackedNodes)
+			{
+				functionVal += 0.1;
+			}
+			
+			for(Node enemyAttackedNode : enemyAttackedNodes)
+			{
+				functionVal -= 0.1;
 			}
 		}
 		

@@ -82,7 +82,7 @@ public class Pawn extends Piece
 				move.add(getNode());
 				move.add(getBoard().getNode(inFront));
 				
-				if(inFront.getRow() == getBoard().getGrid().length - 1)
+				if(inFront.getRow() == (orientation + 1)*(getBoard().getGrid().length - 1)/2)
 				{
 					possibleMoves.add(new ChessMove(move, getBoard(), getLoyalty(), Knight.class));
 					possibleMoves.add(new ChessMove(move, getBoard(), getLoyalty(), Rook.class));
@@ -127,7 +127,7 @@ public class Pawn extends Piece
 					jumpMove.add(getNode());
 					jumpMove.add(getBoard().getNode(jumpLoc));
 					
-					if(inFront.getRow() == getBoard().getGrid().length - 1)
+					if(inFront.getRow() == (orientation + 1)*(getBoard().getGrid().length - 1)/2)
 					{
 						possibleMoves.add(new ChessMove(jumpMove, getBoard(), getLoyalty(), Knight.class));
 						possibleMoves.add(new ChessMove(jumpMove, getBoard(), getLoyalty(), Rook.class));

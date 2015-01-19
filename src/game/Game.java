@@ -115,7 +115,7 @@ public class Game
 			turn = Turn.PLAYER1;
 			
 			players = new Player[2];
-			players[0] = new AI("Player 1", Loyalty.RED, this, 5);
+			players[0] = new AI("Player 1", Loyalty.RED, this, 4);
 			players[1] = new Human("Player 2", Loyalty.BLACK, this);
 			
 			board = new ChessBoard(this);
