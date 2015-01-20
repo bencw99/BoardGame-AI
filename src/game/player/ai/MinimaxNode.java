@@ -137,4 +137,12 @@ public class MinimaxNode extends MinimaxSuperNode
 	{
 		return move;
 	}
+
+	/**
+	 * @param minimaxDepth	the minimaxDepth to be set
+	 */
+	public void setMinimaxDepth(int minimaxDepth)
+	{
+		this.minimaxDepth = minimaxDepth;
+	}
 }

@@ -20,10 +20,6 @@ import java.util.Stack;
  */
 public class AI extends Player
 {
-	public long moveTime = 0;
-	
-	public long totalTime = 0;
-	
 	/** The depth of the minimax search **/
 	private static final int DEFAULT_MINIMAX_DEPTH = 11;
 	
@@ -109,9 +105,6 @@ public class AI extends Player
 		}
 		
 		int random = (int)(maxMovesIndeces.size()*Math.random());
-		
-		System.out.println("Moves: " + moveTime);
-		System.out.println("Total: " + totalTime);
 		
 		return possibleMovesArray[maxMovesIndeces.get(random)];
 	}
@@ -275,19 +268,12 @@ public class AI extends Player
 	 */
 	private double getMinimaxVal(MinimaxNode node, double alphaBetaVal) throws IOException
 	{	
-		long movetime;
-		long totaltime = -System.nanoTime();
-		
 		if(node.getMinimaxDepth() >= currentMinimaxDepth)
 		{
 		  	return functionVal(node);
 		}
 		
-		movetime = -System.nanoTime();
-		
 		ArrayList<Move> nextMoves = node.getNextMoves();
-		
-		movetime += System.nanoTime();
 		
 		if(node.getGame().getPlayers()[node.getGame().getTurn().getVal()].isDefeated())
 		{
@@ -298,7 +284,7 @@ public class AI extends Player
 		
 		double extreme;
 		
-		heuristicSort(nextMoves, node);
+		heuristicSort(nextMoves, node, thisPlayersTurn);
 		
 		if(thisPlayersTurn)
 		{
@@ -338,11 +324,6 @@ public class AI extends Player
 				}
 			}
 		}
-		
-		totaltime += System.nanoTime();
-		
-		this.moveTime += movetime;
-		this.totalTime += totaltime;
 		
 		return extreme;
 	}
@@ -398,23 +379,35 @@ public class AI extends Player
 	 * @param moves	the moves to be heuristically sorted
 	 * @throws IOException 
 	 */
-	private void heuristicSort(ArrayList<Move> moves, MinimaxNode node) throws IOException
+	private ArrayList<Move> heuristicSort(ArrayList<Move> moves, MinimaxNode node, boolean thisPlayersTurn) throws IOException
 	{
 		ArrayList<MinimaxNode> nextNodes = new ArrayList<MinimaxNode>();
 		
 		for(Move move : moves)
 		{
 			MinimaxNode nextNode = node.getNextNode(move);
-			nextNode.setValue(functionVal(node));
+			nextNode.setMinimaxDepth(nextNode.getMinimaxDepth() + 1);
+			
+			nextNode.setValue(getMinimaxVal(nextNode, thisPlayersTurn ? Double.MIN_VALUE : Double.MAX_VALUE));
+//			nextNode.setValue(functionVal(nextNode));
 			nextNodes.add(nextNode);
 		}
 		
-		nextNodes = quickSort(nextNodes, 0, nextNodes.size() - 1);
+		if(!thisPlayersTurn)
+		{
+			nextNodes = quickSort(nextNodes, 0, nextNodes.size() - 1);
+		}
+		else
+		{
+			nextNodes = reverseQuickSort(nextNodes, 0, nextNodes.size() - 1);
+		}
 		
 		for(int i = 0; i < moves.size(); i ++)
 		{
 			moves.set(i, nextNodes.get(i).getMove());
 		}
+		
+		return moves;
 	}
 	
 	
@@ -443,6 +436,48 @@ public class AI extends Player
 			MinimaxNode currentNode = nodes.get(i);
 			
 			if(currentNode.getValue() < pivotVal)
+			{
+				nodes.set(i, nodes.get(delimeterIndex));
+				nodes.set(delimeterIndex, currentNode);
+				
+				delimeterIndex ++;
+			}
+		}
+		
+		nodes.set(end, nodes.get(delimeterIndex));
+		nodes.set(delimeterIndex, pivotNode);
+		
+		quickSort(nodes, start, delimeterIndex - 1);
+		quickSort(nodes, delimeterIndex + 1, end);
+		
+		return nodes;
+	}
+	
+	/**
+	 * Reverse sorts the given array list of minimax nodes
+	 * 
+	 * @param nodes	the array list to be sorted
+	 * @param start	the starting index
+	 * @param end	the end index
+	 * @return	the sorted array list
+	 */
+	private ArrayList<MinimaxNode> reverseQuickSort(ArrayList<MinimaxNode> nodes, int start, int end)
+	{
+		if(start <= end)
+		{
+			return nodes;
+		}
+		
+		MinimaxNode pivotNode = nodes.get(end);
+		double pivotVal = pivotNode.getValue();
+		
+		int delimeterIndex = start;
+		
+		for(int i = start; i < end; i ++)
+		{
+			MinimaxNode currentNode = nodes.get(i);
+			
+			if(currentNode.getValue() > pivotVal)
 			{
 				nodes.set(i, nodes.get(delimeterIndex));
 				nodes.set(delimeterIndex, currentNode);
@@ -494,8 +529,8 @@ public class AI extends Player
 			return Double.MIN_VALUE;
 		}
 		
-		HashSet<Node> attackedNodes = new HashSet<Node>();
-		HashSet<Node> enemyAttackedNodes = new HashSet<Node>();
+//		HashSet<Node> attackedNodes = new HashSet<Node>();
+//		HashSet<Node> enemyAttackedNodes = new HashSet<Node>();
 		
 		for(Node gridNode : node.getGame().getBoard().getNodes())
 		{
@@ -507,35 +542,35 @@ public class AI extends Player
 				{
 					functionVal += piece.getWorth();
 					
-					ArrayList<Move> possibleMoves = piece.getPossibleMoves();
-					
-					for(Move possibleMove : possibleMoves)
-					{
-						attackedNodes.add(possibleMove.getNodes().get(possibleMove.getNodes().size() - 1));
-					}
+//					ArrayList<Move> possibleMoves = piece.getPossibleMoves();
+//					
+//					for(Move possibleMove : possibleMoves)
+//					{
+//						attackedNodes.add(possibleMove.getNodes().get(possibleMove.getNodes().size() - 1));
+//					}
 				}
 				else
 				{
 					functionVal -= piece.getWorth();
 					
-					ArrayList<Move> possibleMoves = piece.getPossibleMoves();
-					
-					for(Move possibleMove : possibleMoves)
-					{
-						enemyAttackedNodes.add(possibleMove.getNodes().get(possibleMove.getNodes().size() - 1));
-					}
+//					ArrayList<Move> possibleMoves = piece.getPossibleMoves();
+//					
+//					for(Move possibleMove : possibleMoves)
+//					{
+//						enemyAttackedNodes.add(possibleMove.getNodes().get(possibleMove.getNodes().size() - 1));
+//					}
 				}
 			}
 			
-			for(Node attackedNode : attackedNodes)
-			{
-				functionVal += 0.1;
-			}
-			
-			for(Node enemyAttackedNode : enemyAttackedNodes)
-			{
-				functionVal -= 0.1;
-			}
+//			for(Node attackedNode : attackedNodes)
+//			{
+//				functionVal += 0.2/Math.abs(attackedNode.getLoc().getCol() - getBoard().getGrid()[0].length/2);
+//			}
+//			
+//			for(Node enemyAttackedNode : enemyAttackedNodes)
+//			{
+//				functionVal -= 0.2/Math.abs(enemyAttackedNode.getLoc().getCol() - getBoard().getGrid()[0].length/2);
+//			}
 		}
 		
 		return functionVal;
