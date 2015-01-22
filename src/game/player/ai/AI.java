@@ -383,13 +383,26 @@ public class AI extends Player
 	{
 		ArrayList<MinimaxNode> nextNodes = new ArrayList<MinimaxNode>();
 		
+		double extremeMoveValue = thisPlayersTurn ? Double.MIN_VALUE : Double.MAX_VALUE;
+		
 		for(Move move : moves)
 		{
 			MinimaxNode nextNode = node.getNextNode(move);
 			nextNode.setMinimaxDepth(nextNode.getMinimaxDepth() + 1);
+			double candidateValue = getMinimaxVal(nextNode, extremeMoveValue);
 			
-			nextNode.setValue(getMinimaxVal(nextNode, thisPlayersTurn ? Double.MIN_VALUE : Double.MAX_VALUE));
+			if(thisPlayersTurn)
+			{
+				extremeMoveValue = Math.max(extremeMoveValue, candidateValue);
+			}
+			else
+			{
+				extremeMoveValue = Math.min(extremeMoveValue, candidateValue);
+			}
+			
+			nextNode.setValue(candidateValue);
 //			nextNode.setValue(functionVal(nextNode));
+			
 			nextNodes.add(nextNode);
 		}
 		
