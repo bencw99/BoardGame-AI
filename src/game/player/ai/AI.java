@@ -21,7 +21,7 @@ import java.util.Stack;
 public class AI extends Player
 {
 	/** The depth of the minimax search **/
-	private static final int DEFAULT_MINIMAX_DEPTH = 11;
+	private static final int DEFAULT_MINIMAX_DEPTH = 13;
 	
 	/** The minimax depth of this ai instance **/
 	private final int minimaxDepth;
@@ -90,6 +90,12 @@ public class AI extends Player
 		for(int i = 1; i < possibleNextNodes.length; i ++)
 		{
 			double currentVal = getMinimaxVal(possibleNextNodes[i], maxMinimaxVal, Integer.MAX_VALUE);
+		
+			/*
+			 * There exists a bug in the following block of code
+			 * 
+			 * Randomness seems to cause unfavorable move to be selected
+			 */
 			
 			if(currentVal > maxMinimaxVal)
 			{
@@ -105,6 +111,8 @@ public class AI extends Player
 		}
 		
 		int random = (int)(maxMovesIndeces.size()*Math.random());
+		
+		random = 0;
 		
 		return possibleMovesArray[maxMovesIndeces.get(random)];
 	}
