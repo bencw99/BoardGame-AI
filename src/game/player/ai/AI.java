@@ -21,7 +21,7 @@ import java.util.Stack;
 public class AI extends Player
 {
 	/** The depth of the minimax search **/
-	private static final int DEFAULT_MINIMAX_DEPTH = 12;
+	private static final int DEFAULT_MINIMAX_DEPTH = 11;
 	
 	/** The minimax depth of this ai instance **/
 	private final int minimaxDepth;
@@ -82,19 +82,14 @@ public class AI extends Player
 			possibleNextNodes[i] = currentNode.getNextNode(possibleMoves.get(i));
 		}
 		
-		double alphaVal = Double.MIN_VALUE;
-		double betaVal = Double.MAX_VALUE;
-		
-		double maxMinimaxVal = getMinimaxVal(possibleNextNodes[0], alphaVal, betaVal);
+		double maxMinimaxVal = getMinimaxVal(possibleNextNodes[0], Integer.MIN_VALUE);
 		
 		ArrayList<Integer> maxMovesIndeces = new ArrayList<Integer>();
 		maxMovesIndeces.add(0);
 		
 		for(int i = 1; i < possibleNextNodes.length; i ++)
 		{
-			alphaVal = Math.max(alphaVal, maxMinimaxVal);
-			
-			double currentVal = getMinimaxVal(possibleNextNodes[i], alphaVal, betaVal);
+			double currentVal = getMinimaxVal(possibleNextNodes[i], maxMinimaxVal);
 			
 			if(currentVal > maxMinimaxVal)
 			{
@@ -196,14 +191,14 @@ public class AI extends Player
 			possibleNextNodes[i] = currentNode.getNextNode(possibleMoves.get(i));
 		}
 		
-		double maxMinimaxVal = getMinimaxVal(possibleNextNodes[0], Double.MIN_VALUE, Double.MAX_VALUE);
+		double maxMinimaxVal = getMinimaxVal(possibleNextNodes[0], Integer.MIN_VALUE);
 		
 		ArrayList<Integer> maxMovesIndeces = new ArrayList<Integer>();
 		maxMovesIndeces.add(0);
 		
 		MinimaxValueFinder[] minimaxThreads = new MinimaxValueFinder[possibleNextNodes.length];
 		
-		for(int i = 1; i < minimaxThreads.length; i ++)
+		for(int i = 0; i < minimaxThreads.length; i ++)
 		{
 			minimaxThreads[i] = new MinimaxValueFinder(possibleNextNodes[i]);
 			minimaxThreads[i].start();
@@ -271,7 +266,7 @@ public class AI extends Player
 	 * @return	the minimax val of the given move
 	 * @throws IOException 
 	 */
-	private double getMinimaxVal(MinimaxNode node, double alphaVal, double betaVal) throws IOException
+	private double getMinimaxVal(MinimaxNode node, double alphaBetaVal) throws IOException
 	{	
 		if(node.getMinimaxDepth() >= currentMinimaxDepth)
 		{
@@ -289,21 +284,22 @@ public class AI extends Player
 		
 		double extreme;
 		
-//		heuristicSort(nextMoves, node, thisPlayersTurn);
+		heuristicSort(nextMoves, node, thisPlayersTurn);
 		
 		if(thisPlayersTurn)
 		{
-			extreme = Double.MIN_VALUE;
+			extreme = Integer.MIN_VALUE;
 			
 			for(Move nextMove : nextMoves)
 			{	
-				double maxCand = getMinimaxVal(node.getNextNode(nextMove), alphaVal, betaVal);
+				double maxCand = getMinimaxVal(node.getNextNode(nextMove), extreme);
 				
-				extreme = Math.max(maxCand, extreme);
+				if(maxCand > extreme)
+		  		{
+		  			extreme = maxCand;
+		  		}
 				
-				alphaVal = Math.max(alphaVal, extreme);
-				
-				if(alphaVal >= betaVal)
+				if(alphaBetaVal <= maxCand)
 				{
 					break;
 				}
@@ -311,17 +307,18 @@ public class AI extends Player
 		} 
 		else
 		{
-			extreme = Double.MAX_VALUE;
+			extreme = Integer.MAX_VALUE;
 			
 			for(Move nextMove : nextMoves)
 			{
-				double minCand = getMinimaxVal(node.getNextNode(nextMove), alphaVal, betaVal);
+				double minCand = getMinimaxVal(node.getNextNode(nextMove), extreme);
 
-				extreme = Math.min(minCand, extreme);
+				if(minCand < extreme)
+				{
+					extreme = minCand;
+				}
 				
-				betaVal = Math.min(betaVal, extreme);
-				
-				if(alphaVal >= betaVal)
+				if(alphaBetaVal >= minCand)
 				{
 					break;
 				}
@@ -347,7 +344,7 @@ public class AI extends Player
 		
 		ArrayList<Move> nextMoves = currentNode.getNextMoves();
 		
-		double extreme = getMinimaxVal(currentNode.getNextNode(nextMoves.get(0)), Double.MIN_VALUE, Double.MAX_VALUE);
+		double extreme = getMinimaxVal(currentNode.getNextNode(nextMoves.get(0)), 0);
 		
 		while(!stack.isEmpty())
 		{
@@ -386,29 +383,24 @@ public class AI extends Player
 	{
 		ArrayList<MinimaxNode> nextNodes = new ArrayList<MinimaxNode>();
 		
-		double alphaVal = Double.MIN_VALUE;
-		double betaVal = Double.MAX_VALUE;
-		
-		double extremeMoveVal = thisPlayersTurn ? Double.MIN_VALUE : Double.MAX_VALUE;
+		double extremeMoveValue = thisPlayersTurn ? Double.MIN_VALUE : Double.MAX_VALUE;
 		
 		for(Move move : moves)
-		{	
+		{
 			MinimaxNode nextNode = node.getNextNode(move);
 			nextNode.setMinimaxDepth(nextNode.getMinimaxDepth() + 1);
-			double candidateVal = getMinimaxVal(nextNode, alphaVal, betaVal);
+			double candidateValue = getMinimaxVal(nextNode, extremeMoveValue);
 			
 			if(thisPlayersTurn)
 			{
-				extremeMoveVal = Math.max(extremeMoveVal, candidateVal);
-				alphaVal = Math.max(alphaVal, extremeMoveVal);
+				extremeMoveValue = Math.max(extremeMoveValue, candidateValue);
 			}
 			else
 			{
-				extremeMoveVal = Math.min(extremeMoveVal, candidateVal);
-				betaVal = Math.min(betaVal, extremeMoveVal);
+				extremeMoveValue = Math.min(extremeMoveValue, candidateValue);
 			}
 			
-			nextNode.setValue(candidateVal);
+			nextNode.setValue(candidateValue);
 //			nextNode.setValue(functionVal(nextNode));
 			
 			nextNodes.add(nextNode);
@@ -627,7 +619,7 @@ public class AI extends Player
 		{
 			try
 			{
-				minimaxValue = getMinimaxVal(node, Double.MIN_VALUE, Double.MAX_VALUE);
+				minimaxValue = getMinimaxVal(node, Integer.MIN_VALUE);
 			} 
 			catch (IOException exception)
 			{
