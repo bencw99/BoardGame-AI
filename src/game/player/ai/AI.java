@@ -21,7 +21,7 @@ import java.util.Stack;
 public class AI extends Player
 {
 	/** The depth of the minimax search **/
-	private static final int DEFAULT_MINIMAX_DEPTH = 13;
+	private static final int DEFAULT_MINIMAX_DEPTH = 12;
 	
 	/** The minimax depth of this ai instance **/
 	private final int minimaxDepth;
