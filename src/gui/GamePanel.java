@@ -41,7 +41,7 @@ public class GamePanel extends JPanel
 	{
 		game = new Game(GameType.CHECKERS);
 		
-        frame.setTitle("Chess Game");
+        frame.setTitle("Checkers Game");
         frame.setLocationRelativeTo(null);
         frame.setBackground(Color.WHITE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
