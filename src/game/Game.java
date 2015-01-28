@@ -4,10 +4,19 @@ import java.awt.Graphics;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 
 import game.board.*;
 import game.move.Move;
+import game.piece.Piece;
 import game.piece.Piece.Loyalty;
+import game.piece.checkersPieces.Soldier;
+import game.piece.chessPieces.Bishop;
+import game.piece.chessPieces.King;
+import game.piece.chessPieces.Knight;
+import game.piece.chessPieces.Pawn;
+import game.piece.chessPieces.Queen;
+import game.piece.chessPieces.Rook;
 import game.player.*;
 import game.player.ai.AI;
 
