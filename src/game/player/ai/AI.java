@@ -82,23 +82,10 @@ public class AI extends Player
 			possibleNextNodes[i] = currentNode.getNextNode(possibleMoves.get(i));
 		}
 		
-		double maxMinimaxVal = Integer.MIN_VALUE;
+		double maxMinimaxVal = getMinimaxVal(possibleNextNodes[0], Integer.MIN_VALUE, Integer.MAX_VALUE);
 		
 		ArrayList<Integer> maxMovesIndeces = new ArrayList<Integer>();
 		maxMovesIndeces.add(0);
-		
-		for(int i = 0; i < possibleNextNodes.length; i ++)
-		{
-			double currentVal = getMinimaxVal(possibleNextNodes[i], maxMinimaxVal, Integer.MAX_VALUE);
-			possibleNextNodes[i].setValue(currentVal);
-			
-			if(currentVal > maxMinimaxVal)
-			{
-				maxMinimaxVal = currentVal;
-			}
-		
-			System.out.println(currentVal);
-		}
 		
 		for(int i = 1; i < possibleNextNodes.length; i ++)
 		{
@@ -407,20 +394,20 @@ public class AI extends Player
 		for(Move move : moves)
 		{
 			MinimaxNode nextNode = node.getNextNode(move);
-//			nextNode.setMinimaxDepth(nextNode.getMinimaxDepth() + 1);
-//			double candidateValue = getMinimaxVal(nextNode, extremeMoveValue, Integer.MAX_VALUE);
-//			
-//			if(thisPlayersTurn)
-//			{
-//				extremeMoveValue = Math.max(extremeMoveValue, candidateValue);
-//			}
-//			else
-//			{
-//				extremeMoveValue = Math.min(extremeMoveValue, candidateValue);
-//			}
-//			
-//			nextNode.setValue(candidateValue);
-			nextNode.setValue(functionVal(nextNode));
+			nextNode.setMinimaxDepth(nextNode.getMinimaxDepth() + 1);
+			double candidateValue = getMinimaxVal(nextNode, extremeMoveValue, Integer.MAX_VALUE);
+			
+			if(thisPlayersTurn)
+			{
+				extremeMoveValue = Math.max(extremeMoveValue, candidateValue);
+			}
+			else
+			{
+				extremeMoveValue = Math.min(extremeMoveValue, candidateValue);
+			}
+			
+			nextNode.setValue(candidateValue);
+//			nextNode.setValue(functionVal(nextNode));
 			
 			nextNodes.add(nextNode);
 		}

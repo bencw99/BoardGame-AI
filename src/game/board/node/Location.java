@@ -68,8 +68,5 @@ public class Location
 		this.col = col;
 	}
 	
-	public String toString()
-	{
-		return ("(" + getRow() + ", " + getCol() + ")");
-	}
+	
 }
