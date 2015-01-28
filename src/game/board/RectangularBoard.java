@@ -1,5 +1,7 @@
 package game.board;
 
+import java.io.IOException;
+
 import game.Game;
 import game.board.node.Location;
 import game.board.node.Node;
