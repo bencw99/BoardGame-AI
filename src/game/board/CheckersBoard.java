@@ -8,12 +8,6 @@ import game.piece.Piece;
 import game.piece.Piece.Loyalty;
 import game.piece.checkersPieces.King;
 import game.piece.checkersPieces.Soldier;
-import game.piece.chessPieces.Bishop;
-import game.piece.chessPieces.Knight;
-import game.piece.chessPieces.Pawn;
-import game.piece.chessPieces.Queen;
-import game.piece.chessPieces.Rook;
-import game.player.Player;
 
 import java.awt.Color;
 import java.io.IOException;
