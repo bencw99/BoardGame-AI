@@ -116,7 +116,11 @@ public abstract class RectangularBoard extends Board
 		
 		put(piece, end);
 	
-		piece.setHasMoved(true);
+		/** Requires further study **/
+		if(piece != null)
+		{
+			piece.setHasMoved(true);
+		}
 		
 		return piece;
 	}

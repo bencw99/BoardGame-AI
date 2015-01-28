@@ -136,42 +136,7 @@ public class Game
 			players[i] = new AI(null, game.getPlayers()[i].getLoyalty(), this);
 		}
 		
-		Constructor constructor = null;
-		
-		try
-		{
-			 constructor = game.getBoard().getClass().getConstructor(game.getBoard().getClass(), this.getClass());
-		} 
-		catch (SecurityException e)
-		{
-			e.printStackTrace();
-		} 
-		catch (NoSuchMethodException e)
-		{
-			e.printStackTrace();
-		}
-		
-		try
-		{
-			this.board = (Board) constructor.newInstance(game.getBoard(), this);
-		} 
-		catch (IllegalArgumentException e)
-		{
-			e.printStackTrace();
-		} 
-		catch (InstantiationException e)
-		{
-			e.printStackTrace();
-		} 
-		catch (IllegalAccessException e)
-		{
-			e.printStackTrace();
-		} 
-		catch (InvocationTargetException e)
-		{
-			e.printStackTrace();
-		}
-		
+		this.board = game.getBoard().clone(this);
 		this.turn = game.turn;
 	}
 	
