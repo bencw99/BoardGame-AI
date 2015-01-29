@@ -60,6 +60,10 @@ public class AI extends Player
 	 */
 	public Move getThisTurnMove() throws IOException
 	{	
+		/*
+		 * Idea: Use the minimax algorithm evaluation function to teach board game playing and comments on moves made
+		 */
+		
 		String comments[] = 
 		{
 			"Hmmm....",
