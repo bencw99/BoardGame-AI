@@ -184,6 +184,14 @@ public abstract class Piece implements ImageObserver
 	public abstract ArrayList<Move> getPossibleMoves();
 	
 	/**
+	 * Returns a clone of this piece at the given node
+	 * 
+	 * @param node	the node to be cloned to
+	 * @return	the cloned piece
+	 */
+	public abstract Piece clone(Node node) throws IOException;
+	
+	/**
 	 * Adds this instance to the given node
 	 * 
 	 * @param node	the node this instance is added to

@@ -95,6 +95,15 @@ public abstract class Board
 	}
 	
 	/**
+	 * Returns a clone of this board with the given game
+	 * 
+	 * @param game	the game to be cloned with
+	 * @return	the cloned board
+	 * @throws IOException 
+	 */
+	public abstract Board clone(Game game);
+	
+	/**
 	 * @return the game of this board
 	 */
 	public Game getGame()

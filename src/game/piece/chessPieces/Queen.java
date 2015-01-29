@@ -8,7 +8,6 @@ import game.board.node.Node;
 import game.move.ChessMove;
 import game.move.Move;
 import game.piece.Piece;
-import game.piece.Piece.Loyalty;
 
 /**
  * A class representing a chess queen
@@ -111,5 +110,17 @@ public class Queen extends Piece
 		}
 		
 		return possibleMoves;
+	}
+	
+	/**
+	 * Returns a clone of this piece at the given node
+	 * 
+	 * @param node	the node to be cloned to
+	 * @return	the cloned piece
+	 * @throws IOException 
+	 */
+	public Piece clone(Node node) throws IOException
+	{
+		return new Queen(this, node);
 	}
 }

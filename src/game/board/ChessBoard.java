@@ -369,4 +369,16 @@ public class ChessBoard	extends RectangularBoard
 	{
 		return NODE_HEIGHT;
 	}
+	
+	/**
+	 * Returns a clone of this board with the given game
+	 * 
+	 * @param game	the game to be cloned with
+	 * @return	the cloned board
+	 * @throws IOException 
+	 */
+	public RectangularBoard clone(Game game)
+	{
+		return new ChessBoard(game);
+	}
 }

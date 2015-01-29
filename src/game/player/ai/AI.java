@@ -5,7 +5,6 @@ import game.board.node.Node;
 import game.move.Move;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
-import game.piece.chessPieces.Queen;
 import game.player.Player;
 
 import java.io.IOException;
@@ -61,6 +60,14 @@ public class AI extends Player
 	 */
 	public Move getThisTurnMove() throws IOException
 	{	
+		String comments[] = 
+		{
+			"Hmmm....",
+			"Interesting move."
+		};
+		
+		System.out.println(comments[(int)(Math.random()*comments.length)]);
+		
 		ArrayList<Move> possibleMoves = getPossibleMoves();
 		
 		if(isDefeated())
@@ -108,11 +115,23 @@ public class AI extends Player
 			{
 				maxMovesIndeces.add(i);
 			}
+			
+//			System.out.println(currentVal);
 		}
 		
 		int random = (int)(maxMovesIndeces.size()*Math.random());
 		
 		random = 0;
+		
+		String insults[] = 
+		{
+			"You'll never beat me!", 
+			"HA!", 
+			"Prepare to be defeated!", 
+			"I think what you think " + minimaxDepth + " thinks before you!"
+		};
+		
+		System.out.println(insults[(int)(Math.random()*insults.length)]);
 		
 		return possibleMovesArray[maxMovesIndeces.get(random)];
 	}
