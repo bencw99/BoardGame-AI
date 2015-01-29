@@ -9,7 +9,6 @@ import game.board.node.Node;
 import game.move.Move;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
-import game.piece.checkersPieces.King;
 import game.player.Player.State;
 
 /**
@@ -94,15 +93,6 @@ public abstract class Board
 
 		return possibleMoves;
 	}
-	
-	/**
-	 * Returns a clone of this board with the given game
-	 * 
-	 * @param game	the game to be cloned with
-	 * @return	the cloned board
-	 * @throws IOException 
-	 */
-	public abstract Board clone(Game game);
 	
 	/**
 	 * @return the game of this board

@@ -158,16 +158,4 @@ public class Soldier extends Piece
 		
 		return retVal;
 	}
-	
-	/**
-	 * Returns a clone of this piece at the given node
-	 * 
-	 * @param node	the node to be cloned to
-	 * @return	the cloned piece
-	 * @throws IOException 
-	 */
-	public Piece clone(Node node) throws IOException
-	{
-		return new Soldier(this, node);
-	}
 }

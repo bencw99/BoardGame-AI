@@ -1,6 +1,7 @@
 package game.piece;
 
 import game.Game;
+import game.board.Board;
 import game.board.RectangularBoard;
 import game.board.node.Location;
 import game.board.node.Node;
@@ -155,6 +156,11 @@ public abstract class Piece implements ImageObserver
 	{
 		this(piece.loyalty, node);
 		this.hasMoved = false;
+		
+		if(!imagesInitialized)
+		{
+			imagesInit();
+		}
 	}
 	
 	/**
@@ -176,14 +182,6 @@ public abstract class Piece implements ImageObserver
 	 * @return	the array list of possible moves this piece execute
 	 */
 	public abstract ArrayList<Move> getPossibleMoves();
-	
-	/**
-	 * Returns a clone of this piece at the given node
-	 * 
-	 * @param node	the node to be cloned to
-	 * @return	the cloned piece
-	 */
-	public abstract Piece clone(Node node) throws IOException;
 	
 	/**
 	 * Adds this instance to the given node

@@ -237,18 +237,6 @@ public class CheckersBoard extends RectangularBoard
 	}
 	
 	/**
-	 * Returns a clone of this board with the given game
-	 * 
-	 * @param game	the game to be cloned with
-	 * @return	the cloned board
-	 * @throws IOException 
-	 */
-	public RectangularBoard clone(Game game)
-	{
-		return new CheckersBoard(game);
-	}
-	
-	/**
 	 * @return the node width of this board
 	 */
 	public int getNodeWidth()

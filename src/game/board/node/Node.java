@@ -1,12 +1,16 @@
 package game.board.node;
 
 import game.Game;
+import game.board.CheckersBoard;
 import game.board.RectangularBoard;
 import game.piece.Piece;
+import game.piece.checkersPieces.King;
+import game.piece.checkersPieces.Soldier;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * A class representing a checkers board node
@@ -65,14 +69,43 @@ public class Node
 		}
 		else
 		{
+			Constructor pieceConstructor = null;
 			try
 			{
-				this.piece = node.getPiece().clone(this);
+				pieceConstructor = node.getPiece().getClass().getConstructor(Piece.class, this.getClass());
 			} 
-			catch (IOException e)
+			catch (SecurityException e1)
+			{
+				e1.printStackTrace();
+			} 
+			catch (NoSuchMethodException e1)
+			{
+				e1.printStackTrace();
+			}
+
+			try
+			{
+				pieceConstructor.setAccessible(true);
+				this.piece = (Piece) pieceConstructor.newInstance(node.getPiece(), this);
+			} 
+			catch (IllegalArgumentException e)
+			{
+				e.printStackTrace();
+			} 
+			catch (InstantiationException e)
+			{
+				e.printStackTrace();
+			} 
+			catch (IllegalAccessException e)
+			{
+				e.printStackTrace();
+			} 
+			catch (InvocationTargetException e)
 			{
 				e.printStackTrace();
 			}
+			
+//			getGame().getPlayers()[this.piece.getLoyalty().getVal()].add(this.piece);
 		}
 	}
 	
