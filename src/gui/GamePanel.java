@@ -41,13 +41,14 @@ public class GamePanel extends JPanel
 	{
 		game = new Game(GameType.CHECKERS);
 		
-        frame.setTitle("Chess Game");
+        frame.setTitle("Board Game");
         frame.setLocationRelativeTo(null);
         frame.setBackground(Color.WHITE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         GamePanel panel = new GamePanel();
         panel.setPreferredSize(new Dimension(game.getBoard().getNodeWidth()*8, game.getBoard().getNodeHeight()*8));
         frame.add(panel);
+        
         for(Player player : game.getPlayers())
         {
         	if(player instanceof Human)
@@ -57,6 +58,7 @@ public class GamePanel extends JPanel
 		        frame.addKeyListener((KeyListener) player);
         	}
         }
+        
         frame.setVisible(true);
         frame.setLocation(new Point(500, 100));
         frame.pack();

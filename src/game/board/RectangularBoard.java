@@ -1,7 +1,5 @@
 package game.board;
 
-import java.io.IOException;
-
 import game.Game;
 import game.board.node.Location;
 import game.board.node.Node;
@@ -114,9 +112,7 @@ public abstract class RectangularBoard extends Board
 	 */ 
 	public Piece move(Location start, Location end)
 	{	
-		Piece piece = getPiece(start);
-		
-		put(null, start);
+		Piece piece = remove(start);
 		
 		put(piece, end);
 	
@@ -134,10 +130,7 @@ public abstract class RectangularBoard extends Board
 	{
 		Piece piece = getPiece(loc);
 		
-		if(piece != null)
-		{
-			put(null, loc);
-		}
+		put(null, loc);
 		
 		return piece;
 	}

@@ -1,7 +1,6 @@
 package game.piece;
 
 import game.Game;
-import game.board.Board;
 import game.board.RectangularBoard;
 import game.board.node.Location;
 import game.board.node.Node;
@@ -190,6 +189,14 @@ public abstract class Piece implements ImageObserver
 	 * @return	the cloned piece
 	 */
 	public abstract Piece clone(Node node) throws IOException;
+	
+	/**
+	 * @return a string representation of this piece
+	 */
+	public String toString()
+	{
+		return loyalty.toString() + this.getClass().toString();
+	}
 	
 	/**
 	 * Adds this instance to the given node

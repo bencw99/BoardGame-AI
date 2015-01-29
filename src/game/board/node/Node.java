@@ -1,17 +1,12 @@
 package game.board.node;
 
 import game.Game;
-import game.board.CheckersBoard;
 import game.board.RectangularBoard;
 import game.piece.Piece;
-import game.piece.checkersPieces.King;
-import game.piece.checkersPieces.Soldier;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * A class representing a checkers board node
@@ -78,41 +73,6 @@ public class Node
 			{
 				e.printStackTrace();
 			}
-			
-//			Constructor pieceConstructor = null;
-//			try
-//			{
-//				pieceConstructor = node.getPiece().getClass().getConstructor(Piece.class, this.getClass());
-//			} 
-//			catch (SecurityException e)
-//			{
-//				e.printStackTrace();
-//			} 
-//			catch (NoSuchMethodException e)
-//			{
-//				e.printStackTrace();
-//			}
-//
-//			try
-//			{
-//				this.piece = (Piece) pieceConstructor.newInstance(node.getPiece(), this);
-//			} 
-//			catch (IllegalArgumentException e)
-//			{
-//				e.printStackTrace();
-//			} 
-//			catch (InstantiationException e)
-//			{
-//				e.printStackTrace();
-//			} 
-//			catch (IllegalAccessException e)
-//			{
-//				e.printStackTrace();
-//			} 
-//			catch (InvocationTargetException e)
-//			{
-//				e.printStackTrace();
-//			}
 		}
 	}
 	
@@ -139,9 +99,12 @@ public class Node
 		}
 	}
 	
+	/**
+	 * @return a string representation of this node
+	 */
 	public String toString()
 	{
-		return ("(" + loc.getRow() + ", " + loc.getCol() + ")");
+		return loc.toString() + " containing " + (piece == null ? null : piece.toString());
 	}
 	
 	/**

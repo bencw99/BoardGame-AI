@@ -213,7 +213,7 @@ public class ChessBoard	extends RectangularBoard
 		
 		if(movedPiece instanceof Pawn)
 		{
-			if(nodes.get(nodes.size() - 1).getLoc().getRow() == getGrid().length - 1 && getPiece(nodes.get(0).getLoc()).getLoyalty() == Loyalty.RED)
+			if(nodes.get(nodes.size() - 1).getLoc().getRow() == (1 - getPiece(nodes.get(0).getLoc()).getLoyalty().getVal()*(getGrid()).length - 1))
 			{
 				remove(nodes.get(0).getLoc());
 				
@@ -223,48 +223,8 @@ public class ChessBoard	extends RectangularBoard
 				{
 					Constructor constructor = ((ChessMove) move).getPromotionType().getConstructor(Loyalty.class, Node.class);
 					
-					promoted = (Piece) constructor.newInstance(Loyalty.RED, nodes.get(0));
+					promoted = (Piece) constructor.newInstance(getPiece(nodes.get(0).getLoc()).getLoyalty(), nodes.get(0));
 				} 
-				catch (SecurityException e)
-				{
-					e.printStackTrace();
-				} 
-				catch (NoSuchMethodException e)
-				{
-					e.printStackTrace();
-				} 
-				catch (IllegalArgumentException e)
-				{
-					e.printStackTrace();
-				} 
-				catch (InstantiationException e)
-				{
-					e.printStackTrace();
-				}
-				catch (IllegalAccessException e)
-				{
-					e.printStackTrace();
-				}
-				catch (InvocationTargetException e)
-				{
-					e.printStackTrace();
-				}
-				
-				put(promoted, nodes.get(0).getLoc());
-			}
-			
-			if(nodes.get(nodes.size() - 1).getLoc().getRow() == 0 && getPiece(nodes.get(0).getLoc()).getLoyalty() == Loyalty.BLACK)
-			{
-				remove(nodes.get(0).getLoc());
-				
-				Piece promoted = null;
-				
-				try
-				{
-					Constructor constructor = ((ChessMove) move).getPromotionType().getConstructor(Loyalty.class, Node.class);
-					
-					promoted = (Piece) constructor.newInstance(Loyalty.BLACK, nodes.get(0));
-				}
 				catch (SecurityException e)
 				{
 					e.printStackTrace();

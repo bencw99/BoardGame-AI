@@ -64,13 +64,13 @@ public class AI extends Player
 		 * Idea: Use the minimax algorithm evaluation function to teach board game playing and comments on moves made
 		 */
 		
-		String comments[] = 
-		{
-			"Hmmm....",
-			"Interesting move."
-		};
-		
-		System.out.println(comments[(int)(Math.random()*comments.length)]);
+//		String comments[] = 
+//		{
+//			"Hmmm....",
+//			"Interesting move."
+//		};
+//		
+//		System.out.println(comments[(int)(Math.random()*comments.length)]);
 		
 		ArrayList<Move> possibleMoves = getPossibleMoves();
 		
@@ -120,22 +120,22 @@ public class AI extends Player
 				maxMovesIndeces.add(i);
 			}
 			
-//			System.out.println(currentVal);
+			System.out.println(currentVal);
 		}
 		
 		int random = (int)(maxMovesIndeces.size()*Math.random());
 		
 		random = 0;
 		
-		String insults[] = 
-		{
-			"You'll never beat me!", 
-			"HA!", 
-			"Prepare to be defeated!", 
-			"I think what you think " + minimaxDepth + " thinks before you!"
-		};
-		
-		System.out.println(insults[(int)(Math.random()*insults.length)]);
+//		String insults[] = 
+//		{
+//			"You'll never beat me!", 
+//			"HA!", 
+//			"Prepare to be defeated!", 
+//			"I think what you think " + minimaxDepth + " thinks before you!"
+//		};
+//		
+//		System.out.println(insults[(int)(Math.random()*insults.length)]);
 		
 		return possibleMovesArray[maxMovesIndeces.get(random)];
 	}

@@ -1,18 +1,13 @@
 package game.piece.checkersPieces;
 
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.image.ImageObserver;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import game.board.CheckersBoard;
 import game.board.node.Location;
 import game.board.node.Node;
 import game.move.CheckersMove;
 import game.move.Move;
 import game.piece.Piece;
-import game.piece.Piece.Loyalty;
 
 /**
  * A class describing a checkers king piece

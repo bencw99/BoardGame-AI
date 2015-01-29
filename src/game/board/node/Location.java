@@ -68,5 +68,11 @@ public class Location
 		this.col = col;
 	}
 	
-	
+	/**
+	 * @return a string representation of this location
+	 */
+	public String toString()
+	{
+		return ("(" + getRow() + ", " + getCol() + ")");
+	}
 }

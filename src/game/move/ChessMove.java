@@ -2,7 +2,6 @@ package game.move;
 
 import game.board.RectangularBoard;
 import game.board.node.Node;
-import game.piece.Piece;
 import game.piece.Piece.Loyalty;
 
 import java.util.ArrayList;
@@ -14,6 +13,7 @@ import java.util.ArrayList;
  */
 public class ChessMove extends Move
 {
+	/** The promotion type of this move **/
 	Class promotionType;
 	
 	/**
