@@ -5,10 +5,13 @@ import game.board.node.Node;
 import game.move.Move;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
+import game.piece.chessPieces.Queen;
 import game.player.Player;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Stack;
 
 /**
  * A class representing a Human player associated with a game
@@ -88,6 +91,12 @@ public class AI extends Player
 		{
 			double currentVal = getMinimaxVal(possibleNextNodes[i], maxMinimaxVal, Integer.MAX_VALUE);
 		
+			/*
+			 * There exists a bug in the following block of code
+			 * 
+			 * Randomness seems to cause unfavorable move to be selected
+			 */
+			
 			if(currentVal > maxMinimaxVal)
 			{
 				maxMovesIndeces.clear();
@@ -99,8 +108,6 @@ public class AI extends Player
 			{
 				maxMovesIndeces.add(i);
 			}
-			
-			System.out.println(currentVal);
 		}
 		
 		int random = (int)(maxMovesIndeces.size()*Math.random());
@@ -139,7 +146,7 @@ public class AI extends Player
 		
 		ArrayList<Integer> maxMovesIndeces = new ArrayList<Integer>();
 		
-		double maxMinimaxVal = Integer.MIN_VALUE;
+		double maxMinimaxVal = Double.MIN_VALUE;
 		
 		for(int i = 0; i < nextNodes.size(); i ++)
 		{
@@ -312,7 +319,7 @@ public class AI extends Player
 			for(Move nextMove : nextMoves)
 			{
 				double minCand = getMinimaxVal(node.getNextNode(nextMove), alphaVal, betaVal);
-				
+
 				extreme = Math.min(extreme, minCand);
 				
 				betaVal = Math.min(betaVal, minCand);
@@ -320,6 +327,51 @@ public class AI extends Player
 				if(alphaVal >= betaVal)
 				{
 					break;
+				}
+			}
+		}
+		
+		return extreme;
+	}
+	
+	/**
+	 * Returns the minimax val of the given node
+	 * 
+	 * @param node	the minimaxNode whose minimax value is evaluated
+	 * @throws IOException 
+	 */
+	private double getMinimaxVal(MinimaxNode node, String sameMethodSignaturePreventing) throws IOException
+	{
+		Stack<MinimaxNode> stack = new Stack<MinimaxNode>();
+		
+		stack.push(node);
+		
+		MinimaxNode currentNode = stack.peek();
+		
+		ArrayList<Move> nextMoves = currentNode.getNextMoves();
+		
+		double extreme = getMinimaxVal(currentNode.getNextNode(nextMoves.get(0)), Integer.MIN_VALUE, Integer.MAX_VALUE);
+		
+		while(!stack.isEmpty())
+		{
+			currentNode = stack.pop();
+			
+			nextMoves = currentNode.getNextMoves();
+			
+			if(getLoyalty().getVal() == currentNode.getGame().getTurn().getVal())
+			{
+				for(Move nextMove : nextMoves)
+				{
+					//Evaluate minimax of nextMove
+					//Set extreme to max
+				}
+			} 
+			else
+			{
+				for(Move nextMove : nextMoves)
+				{
+					//Evaluate minimax of nextMove
+					//Set extreme to min
 				}
 			}
 		}
@@ -337,7 +389,7 @@ public class AI extends Player
 	{
 		ArrayList<MinimaxNode> nextNodes = new ArrayList<MinimaxNode>();
 		
-		double extremeMoveValue = thisPlayersTurn ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+		double extremeMoveValue = thisPlayersTurn ? Double.MIN_VALUE : Double.MAX_VALUE;
 		
 		for(Move move : moves)
 		{
@@ -463,10 +515,10 @@ public class AI extends Player
 	}
 	
 	/**
-	 * Returns the function value of the given node
+	 * Returns the function value of the given move
 	 * 
-	 * @param node	the move whose function value is evaluated
-	 * @return	the function value of the given node
+	 * @param move	the move whose function value is evaluated
+	 * @return	the function value of the given move
 	 */
 	private double functionVal(MinimaxNode node)
 	{
@@ -474,31 +526,26 @@ public class AI extends Player
 		double functionVal = 0;
 		
 		boolean hasWon = true;
-		boolean hasLost = false;
 		
-		for(Player player : players) 
+		for(Player enemy : players) 
 		{
-			if(player.getLoyalty() != this.getLoyalty())
+			if(enemy.getLoyalty() != this.getLoyalty())
 			{
-				if(!player.isDefeated())
+				if(!enemy.isDefeated())
 				{
 					hasWon = false;
 				}
-			}
-			else if(player.isDefeated())
-			{
-				hasLost = true;
 			}
 		}
 		
 		if(hasWon)
 		{
-			return Integer.MAX_VALUE;
+			return Double.MAX_VALUE;
 		}
 		
-		if(hasLost)
+		if(isDefeated())
 		{
-			return Integer.MIN_VALUE;
+			return Double.MIN_VALUE;
 		}
 		
 //		HashSet<Node> attackedNodes = new HashSet<Node>();
@@ -543,11 +590,6 @@ public class AI extends Player
 //			{
 //				functionVal -= 0.2/Math.abs(enemyAttackedNode.getLoc().getCol() - getBoard().getGrid()[0].length/2);
 //			}
-		}
-		
-		if(functionVal != 0)
-		{
-			System.out.println(functionVal);
 		}
 		
 		return functionVal;
