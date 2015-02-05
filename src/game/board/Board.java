@@ -9,6 +9,7 @@ import game.board.node.Node;
 import game.move.Move;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
+import game.player.Player.State;
 
 /**
  * A superclass representing a general game board

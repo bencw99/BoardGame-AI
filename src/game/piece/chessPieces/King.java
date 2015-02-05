@@ -17,7 +17,7 @@ import game.piece.Piece;
 public class King extends Piece
 {
 	/** The worth of a king **/
-	public static final int KING_WORTH = Integer.MAX_VALUE;
+	public static final int KING_WORTH = Integer.MAX_VALUE/2;
 	
 	/**
 	 * Default constructor

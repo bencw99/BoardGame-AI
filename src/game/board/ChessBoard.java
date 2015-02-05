@@ -271,7 +271,9 @@ public class ChessBoard	extends RectangularBoard
 		{
 			boolean possible = true;
 			
-			Board nextBoard = this.clone(null);
+			Game nextGame = new Game(getGame());
+			
+			Board nextBoard = nextGame.getBoard();
 			
 			nextBoard.executeMove(possibleMove);
 			
@@ -337,6 +339,6 @@ public class ChessBoard	extends RectangularBoard
 	 */
 	public RectangularBoard clone(Game game)
 	{
-		return new ChessBoard(this, game);
+		return new ChessBoard(game);
 	}
 }

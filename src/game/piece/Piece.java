@@ -40,29 +40,13 @@ public abstract class Piece implements ImageObserver
 		{
 			return val;
 		}
-		
-		public Loyalty getOther()
-		{
-			if(this == RED)
-			{
-				return BLACK;
-			}
-			else
-			{
-				return RED;
-			}
-		}
-		
-		public static Loyalty getRandom()
-		{
-			int random = (int)(2*Math.random());
-			
-			return random == 0 ? RED : BLACK;
-		}
 	};
 	
 	/** The node that this piece belongs to **/
 	private Node node;
+	
+	/** The worth of this piece **/
+	private int worth;
 	
 	/** The boolean representing whether or not this piece has moved **/
 	private boolean hasMoved;
@@ -72,9 +56,6 @@ public abstract class Piece implements ImageObserver
 	
 	/** The image of this piece **/
 	protected BufferedImage image;
-	
-	/** The worth of this piece type **/
-	private static int worth;
 	
 	/**The boolean describing the initialization state of the checkers images **/
 	protected static boolean imagesInitialized = false;
@@ -284,11 +265,11 @@ public abstract class Piece implements ImageObserver
 	}
 	
 	/**
-	 * @param worthVal the worth to set
+	 * @param worth the worth to set
 	 */
-	public static void setWorth(int worthVal) 
+	public void setWorth(int worth) 
 	{
-		worth = worthVal;
+		this.worth = worth;
 	}
 	
 	/**

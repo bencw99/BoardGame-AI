@@ -15,7 +15,14 @@ import game.piece.Piece.Loyalty;
  * @author Benjamin Cohen-Wang
  */
 public abstract class Player
-{	
+{
+	/** The enum representing the state of a player **/
+	public static enum State
+	{
+		PLAYING,
+		DEFEATED
+	}
+	
 	/** The name of this player **/
 	private String name;
 	
@@ -26,7 +33,7 @@ public abstract class Player
 	private Game game;
 	
 	/**The state of this player **/
-	private boolean defeated;
+	private State state;
 	
 	/**
 	 * Parameterized constructor, initializes name, pieces, and loyalty
@@ -39,7 +46,7 @@ public abstract class Player
 	{
 		this.name = name;
 		this.loyalty = loyalty;
-		this.defeated = false;
+		this.state = State.PLAYING;
 		this.game = game;
 	}
 	
@@ -54,7 +61,7 @@ public abstract class Player
 		
 		if(possibleMoves.isEmpty())
 		{
-			setDefeated(true);
+			setState(State.DEFEATED);
 		}
 		
 		return possibleMoves;
@@ -79,9 +86,9 @@ public abstract class Player
 	/**
 	 * @return the state
 	 */
-	public boolean isDefeated()
+	public State getState()
 	{
-		return defeated;
+		return state;
 	}
 
 	/**
@@ -127,9 +134,9 @@ public abstract class Player
 	/**
 	 * @param state the state to set
 	 */
-	public void setDefeated(boolean defeated)
+	public void setState(State state)
 	{
-		this.defeated = defeated;
+		this.state = state;
 	}
 
 	/**
@@ -138,5 +145,20 @@ public abstract class Player
 	public void setLoyalty(Loyalty loyalty)
 	{
 		this.loyalty = loyalty;
+	}
+	
+	/**
+	 * @return	whether or not this player is defeated
+	 */
+	public boolean isDefeated()
+	{
+		if(state == State.DEFEATED)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 }
