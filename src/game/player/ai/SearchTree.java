@@ -59,7 +59,7 @@ public class SearchTree
 	
 		ArrayList<MinimaxSuperNode> children = node.getChildren();
 		
-		if(node instanceof MinimaxNode && ((MinimaxNode) node).getGame().getPlayers()[((MinimaxNode) node).getGame().getTurn().getVal()].isDefeated())
+		if(node instanceof MinimaxNode && children.isEmpty())
 		{
 		  	node.setValue(functionVal(((MinimaxNode) node)));
 		  	return;

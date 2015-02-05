@@ -1,9 +1,8 @@
 package game.player.ai;
 
-import game.Game;
 import game.board.Board;
 import game.move.Move;
-import game.player.Player;
+import game.piece.Piece.Loyalty;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,8 +14,14 @@ import java.util.ArrayList;
  */
 public class MinimaxNodeContents
 {
-	/** The game of this minimax node **/
-	private Game game;
+//	/** The game of this minimax node **/
+//	private Game game;
+	
+	/** The board of these minimax contents **/
+	private Board board;
+	
+	/** THe turn of these minimax contents **/
+	private Loyalty turn;
 	
 	/** The arraylist of moves from this node **/
 	private ArrayList<Move> nextMoves;
@@ -27,9 +32,10 @@ public class MinimaxNodeContents
 	 * @param minimaxDepth	the minimaxDepth to be set to
 	 * @param ame			the game to be set to
 	 */
-	public MinimaxNodeContents(Game game)
+	public MinimaxNodeContents(Board board, Loyalty turn)
 	{
-		this.game = game;
+		this.board = board;
+		this.turn = turn;
 	}
 	
 	/**
@@ -40,13 +46,13 @@ public class MinimaxNodeContents
 	 */
 	public MinimaxNodeContents getNextContents(Move move) throws IOException
 	{
-		Game newGame = new Game(game);
+		Board newBoard = this.board.clone(null);
 		
-		newGame.getBoard().executeMove(move);
-			
-		newGame.setTurn(newGame.getTurn().getOther());
+		Loyalty newTurn = this.turn.getOther();
 		
-		return new MinimaxNodeContents(newGame);
+		newBoard.executeMove(move);
+		
+		return new MinimaxNodeContents(newBoard, newTurn);
 	}
 	
 	/**
@@ -67,8 +73,7 @@ public class MinimaxNodeContents
 	{
 		if(nextMoves == null)
 		{
-			Player currentPlayer = game.getPlayers()[game.getTurn().getVal()];
-			this.nextMoves = currentPlayer.getPossibleMoves();
+			this.nextMoves = board.getPossibleMoves(turn);
 		}
 	}
 	
@@ -80,15 +85,23 @@ public class MinimaxNodeContents
 	 */
 	public boolean equals(MinimaxNodeContents other)
 	{
-		return (other.getGame().getTurn().equals(this.getGame().getTurn()) && other.getBoard().equals(this.getBoard()));
+		return (other.getTurn().equals(this.getTurn()) && other.getBoard().equals(this.getBoard()));
 	}
 	
+//	/**
+//	 * @return	the game of these contents
+//	 */
+//	public Game getGame()
+//	{
+//		return game;
+//	}
+	
 	/**
-	 * @return	the game of these contents
+	 * @return	the turn of these contents
 	 */
-	public Game getGame()
+	public Loyalty getTurn()
 	{
-		return game;
+		return turn;
 	}
 	
 	/**
@@ -96,6 +109,6 @@ public class MinimaxNodeContents
 	 */
 	public Board getBoard()
 	{
-		return game.getBoard();
+		return board;
 	}
 }

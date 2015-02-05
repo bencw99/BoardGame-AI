@@ -4,12 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import game.Game;
-import game.Game.Turn;
 import game.board.Board;
 import game.move.Move;
-import game.piece.Piece;
-import game.player.Player;
-import game.player.Player.State;
+import game.piece.Piece.Loyalty;
 /**
  * A class representing a node in the minimax algorithm
  * 
@@ -29,10 +26,10 @@ public class MinimaxNode extends MinimaxSuperNode
 	 * @param minimaxDepth	the minimaxDepth to be set to
 	 * @param ame			the game to be set to
 	 */
-	public MinimaxNode(int minimaxDepth, Game game, MinimaxSuperNode parent, Move move, int identification, boolean thisPlayersTurn)
+	public MinimaxNode(int minimaxDepth, Board board, Loyalty turn, MinimaxSuperNode parent, Move move, int identification, boolean thisPlayersTurn)
 	{
 		this.minimaxDepth = minimaxDepth;
-		this.contents = new MinimaxNodeContents(game);
+		this.contents = new MinimaxNodeContents(board, turn);
 		this.move = move;
 		this.identification = (parent == null ? "" : parent.getIdentification()) + identification;
 		this.thisPlayersTurn = thisPlayersTurn;
@@ -115,11 +112,11 @@ public class MinimaxNode extends MinimaxSuperNode
 	}
 	
 	/**
-	 * @return	the game of this node
+	 * @return	the turn of this node
 	 */
-	public Game getGame()
+	public Loyalty getTurn()
 	{
-		return contents.getGame();
+		return contents.getTurn();
 	}
 	
 	/**
@@ -127,7 +124,7 @@ public class MinimaxNode extends MinimaxSuperNode
 	 */
 	public Board getBoard()
 	{
-		return contents.getGame().getBoard();
+		return contents.getBoard();
 	}
 	
 	/**

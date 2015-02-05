@@ -83,7 +83,7 @@ public class AI extends Player
 		
 		MinimaxNode[] possibleNextNodes = new MinimaxNode[possibleMoves.size()];
 		
-		MinimaxNode currentNode = new MinimaxNode(0, new Game(getGame()), null, null, 0, true);
+		MinimaxNode currentNode = new MinimaxNode(0, getBoard().clone(null), getGame().getTurn(), null, null, 0, true);
 		
 		currentMinimaxDepth = getAppropriateDepth(currentNode);
 		
@@ -125,7 +125,7 @@ public class AI extends Player
 		
 		int random = (int)(maxMovesIndeces.size()*Math.random());
 		
-		random = 0;
+//		random = 0;
 		
 //		String insults[] = 
 //		{
@@ -150,7 +150,7 @@ public class AI extends Player
 	{	
 		long initialTime = System.currentTimeMillis();
 		
-		MinimaxNode currentNode = new MinimaxNode(0, new Game(getGame()), null, null, 0, true);
+		MinimaxNode currentNode = new MinimaxNode(0, getBoard(), getGame().getTurn(), null, null, 0, true);
 		
 		SearchTree tree = new SearchTree(currentNode, this);
 		
@@ -212,7 +212,7 @@ public class AI extends Player
 		
 		MinimaxNode[] possibleNextNodes = new MinimaxNode[possibleMoves.size()];
 		
-		MinimaxNode currentNode = new MinimaxNode(0, new Game(getGame()), null, null, 0, true);
+		MinimaxNode currentNode = new MinimaxNode(0, getBoard(), getGame().getTurn(), null, null, 0, true);
 		
 		currentMinimaxDepth = getAppropriateDepth(currentNode);
 		
@@ -301,17 +301,17 @@ public class AI extends Player
 	{	
 		if(node.getMinimaxDepth() >= currentMinimaxDepth)
 		{
-		  	return functionVal(node);
+		  	return functionVal(node, false);
 		}
 		
 		ArrayList<Move> nextMoves = node.getNextMoves();
 		
-		if(node.getGame().getPlayers()[node.getGame().getTurn().getVal()].isDefeated())
+		if(nextMoves.isEmpty())
 		{
-		  	return functionVal(node);
+		  	return functionVal(node, true);
 		}
 		
-		boolean thisPlayersTurn = getLoyalty().getVal() == node.getGame().getTurn().getVal();
+		boolean thisPlayersTurn = getLoyalty().getVal() == node.getTurn().getVal();
 		
 		double extreme;
 		
@@ -381,7 +381,7 @@ public class AI extends Player
 			
 			nextMoves = currentNode.getNextMoves();
 			
-			if(getLoyalty().getVal() == currentNode.getGame().getTurn().getVal())
+			if(getLoyalty().getVal() == currentNode.getTurn().getVal())
 			{
 				for(Move nextMove : nextMoves)
 				{
@@ -417,8 +417,11 @@ public class AI extends Player
 		for(Move move : moves)
 		{
 			MinimaxNode nextNode = node.getNextNode(move);
-			nextNode.setMinimaxDepth(nextNode.getMinimaxDepth() + 1);
-			double candidateValue = getMinimaxVal(nextNode, extremeMoveValue, Integer.MAX_VALUE);
+			
+//			nextNode.setMinimaxDepth(nextNode.getMinimaxDepth() + 1);
+//			double candidateValue = getMinimaxVal(nextNode, extremeMoveValue, Integer.MAX_VALUE);
+			
+			double candidateValue = functionVal(nextNode, false);
 			
 			if(thisPlayersTurn)
 			{
@@ -543,38 +546,26 @@ public class AI extends Player
 	 * @param move	the move whose function value is evaluated
 	 * @return	the function value of the given move
 	 */
-	private double functionVal(MinimaxNode node)
+	private double functionVal(MinimaxNode node, boolean playerDefeated)
 	{
-		Player[] players = node.getGame().getPlayers();
 		double functionVal = 0;
 		
-		boolean hasWon = true;
-		
-		for(Player enemy : players) 
+		if(playerDefeated)
 		{
-			if(enemy.getLoyalty() != this.getLoyalty())
+			if(node.getTurn() == this.getLoyalty())
 			{
-				if(!enemy.isDefeated())
-				{
-					hasWon = false;
-				}
+				return Integer.MIN_VALUE;
 			}
-		}
-		
-		if(hasWon)
-		{
-			return Double.MAX_VALUE;
-		}
-		
-		if(isDefeated())
-		{
-			return Double.MIN_VALUE;
+			else
+			{
+				return Integer.MAX_VALUE;
+			}
 		}
 		
 //		HashSet<Node> attackedNodes = new HashSet<Node>();
 //		HashSet<Node> enemyAttackedNodes = new HashSet<Node>();
 		
-		for(Node gridNode : node.getGame().getBoard().getNodes())
+		for(Node gridNode : node.getBoard().getNodes())
 		{
 			Piece piece = gridNode.getPiece();
 			
@@ -616,6 +607,16 @@ public class AI extends Player
 		}
 		
 		return functionVal;
+	}
+	
+	private void generatePieceWorths(Game game)
+	{
+		
+		
+		while(!game.isCompleted())
+		{
+			
+		}
 	}
 	
 	/**
