@@ -28,52 +28,53 @@ public class Game
 		CHECKERS,
 		CHESS
 	}
+	
 	/**
 	 * An enum representing whose turn it is
 	 * 
 	 * @author Benjamin Cohen-Wang
 	 */
-	public static enum Turn
-	{
-		PLAYER1(0),
-		PLAYER2(1);
-		
-		private int val;
-		
-		Turn(int val)
-		{
-			this.val = val;
-		}
-		
-		public int getVal()
-		{
-			return val;
-		}
-		
-		public Loyalty getLoyalty()
-		{
-			return val == 0 ? Loyalty.RED: Loyalty.BLACK;
-		}
-		
-		public Turn getOther()
-		{
-			if(this == PLAYER1)
-			{
-				return PLAYER2;
-			}
-			else
-			{
-				return PLAYER1;
-			}
-		}
-		
-		public static Turn getRandom()
-		{
-			int random = (int)(2*Math.random());
-			
-			return random == 0 ? PLAYER1 : PLAYER2;
-		}
-	}
+//	public static enum Turn
+//	{
+//		PLAYER1(0),
+//		PLAYER2(1);
+//		
+//		private int val;
+//		
+//		Turn(int val)
+//		{
+//			this.val = val;
+//		}
+//		
+//		public int getVal()
+//		{
+//			return val;
+//		}
+//		
+//		public Loyalty getLoyalty()
+//		{
+//			return val == 0 ? Loyalty.RED: Loyalty.BLACK;
+//		}
+//		
+//		public Turn getOther()
+//		{
+//			if(this == PLAYER1)
+//			{
+//				return PLAYER2;
+//			}
+//			else
+//			{
+//				return PLAYER1;
+//			}
+//		}
+//		
+//		public static Turn getRandom()
+//		{
+//			int random = (int)(2*Math.random());
+//			
+//			return random == 0 ? PLAYER1 : PLAYER2;
+//		}
+//	}
 	
 	/** The board this game takes place on **/
 	private Board board;
@@ -81,8 +82,11 @@ public class Game
 	/** The array of players participating in this game **/
 	private Player[] players;
 	
-	/** The Turn describing whose turn it is **/
-	private Turn turn;
+	/** The loyalty describing whose turn it is **/
+	private Loyalty turn;
+	
+	/** The state of this game **/
+	private boolean completed;
 	
 	/**
 	 * Parameterized constructor, sets this game to the given game type
@@ -91,9 +95,11 @@ public class Game
 	 */
 	public Game(GameType type) throws IOException
 	{	
+		completed = false;
+		
 		if(type == GameType.CHECKERS)
 		{
-			turn = Turn.getRandom();
+			turn = Loyalty.getRandom();
 			
 			players = new Player[2];
 			players[0] = new AI("AI", Loyalty.RED, this);
@@ -103,10 +109,10 @@ public class Game
 		}
 		if(type == GameType.CHESS)
 		{
-			turn = Turn.PLAYER1;
+			turn = Loyalty.RED;
 			
 			players = new Player[2];
-			players[0] = new AI("Player 1", Loyalty.RED, this, 4);
+			players[0] = new AI("Player 1", Loyalty.RED, this, 6);
 			players[1] = new Human("Player 2", Loyalty.BLACK, this);
 			
 			board = new ChessBoard(this);
@@ -118,53 +124,57 @@ public class Game
 	 * 
 	 * @param game	the game whose copy is made
 	 */
-	public Game(Game game)
-	{
-		this.players = new Player[game.getPlayers().length];
-		
-		for(int i = 0; i < players.length; i ++)
-		{
-			players[i] = new AI(null, game.getPlayers()[i].getLoyalty(), this);
-		}
-		
-		Constructor constructor = null;
-		
-		try
-		{
-			 constructor = game.getBoard().getClass().getConstructor(game.getBoard().getClass(), this.getClass());
-		} 
-		catch (SecurityException e)
-		{
-			e.printStackTrace();
-		} 
-		catch (NoSuchMethodException e)
-		{
-			e.printStackTrace();
-		}
-		
-		try
-		{
-			this.board = (Board) constructor.newInstance(game.getBoard(), this);
-		} 
-		catch (IllegalArgumentException e)
-		{
-			e.printStackTrace();
-		} 
-		catch (InstantiationException e)
-		{
-			e.printStackTrace();
-		} 
-		catch (IllegalAccessException e)
-		{
-			e.printStackTrace();
-		} 
-		catch (InvocationTargetException e)
-		{
-			e.printStackTrace();
-		}
-		
-		this.turn = game.turn;
-	}
+//	public Game(Game game)
+//	{
+//		completed = false;
+//		
+//		this.players = new Player[game.getPlayers().length];
+//		
+//		for(int i = 0; i < players.length; i ++)
+//		{
+//			players[i] = new AI(null, game.getPlayers()[i].getLoyalty(), this);
+//		}
+//		
+////		this.board = game.getBoard().clone(this);
+//		
+//		Constructor constructor = null;
+//		
+//		try
+//		{
+//			 constructor = game.getBoard().getClass().getConstructor(game.getBoard().getClass(), this.getClass());
+//		} 
+//		catch (SecurityException e)
+//		{
+//			e.printStackTrace();
+//		} 
+//		catch (NoSuchMethodException e)
+//		{
+//			e.printStackTrace();
+//		}
+//		
+//		try
+//		{
+//			this.board = (Board) constructor.newInstance(game.getBoard(), this);
+//		} 
+//		catch (IllegalArgumentException e)
+//		{
+//			e.printStackTrace();
+//		} 
+//		catch (InstantiationException e)
+//		{
+//			e.printStackTrace();
+//		} 
+//		catch (IllegalAccessException e)
+//		{
+//			e.printStackTrace();
+//		} 
+//		catch (InvocationTargetException e)
+//		{
+//			e.printStackTrace();
+//		}
+//		
+//		this.turn = game.turn;
+//	}
 	
 	/**
 	 * Parameterized constructor, initializes fields to given parameters 
@@ -174,17 +184,18 @@ public class Game
 	 */
 	public Game(Board board, Player[] players)
 	{
-		this(board, players, Turn.getRandom());
+		this(board, players, Loyalty.getRandom());
 	}
 	
 	/**
 	 * Parameterized constructor, initializes fields to given parameters 
 	 * 
 	 * @param board	the board that the board of this game is set to
-	 * @param player1	the players of this game
+	 * @param players	the players of this game
 	 */
-	public Game(Board board, Player[] players, Turn turn)
+	public Game(Board board, Player[] players, Loyalty turn)
 	{
+		this.completed = false;
 		this.board = board;
 		this.players = players;
 		this.turn = turn;
@@ -207,17 +218,29 @@ public class Game
 			return;
 		}
 		
+		int aliveCount = 0;
+		
+		for(Player player : players)
+		{
+			if(!player.isDefeated())
+			{
+				aliveCount ++;
+			}
+		}
+		
+		if(aliveCount <= 1)
+		{
+			this.completed = true;
+		}
+		
 		while(move == null)
 		{
 			move = thisPlayer.getThisTurnMove();
 		}
 	
-		if(!thisPlayer.isDefeated())
-		{		
-			board.executeMove(move);
+		board.executeMove(move);
 				
-			turn = turn.getOther();
-		}
+		turn = turn.getOther();
 	}
 	
 	/**
@@ -249,11 +272,19 @@ public class Game
 	/**
 	 * @return the turn
 	 */
-	public Turn getTurn() 
+	public Loyalty getTurn() 
 	{
 		return turn;
 	}
 
+	/**
+	 * @return is completed
+	 */
+	public boolean isCompleted()
+	{
+		return completed;
+	}
+	
 	/**
 	 * @param board the board to set
 	 */
@@ -273,7 +304,7 @@ public class Game
 	/**
 	 * @param turn the turn to set
 	 */
-	public void setTurn(Turn turn) 
+	public void setTurn(Loyalty turn) 
 	{
 		this.turn = turn;
 	}
