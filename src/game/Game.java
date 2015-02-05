@@ -29,53 +29,6 @@ public class Game
 		CHESS
 	}
 	
-	/**
-	 * An enum representing whose turn it is
-	 * 
-	 * @author Benjamin Cohen-Wang
-	 */
-//	public static enum Turn
-//	{
-//		PLAYER1(0),
-//		PLAYER2(1);
-//		
-//		private int val;
-//		
-//		Turn(int val)
-//		{
-//			this.val = val;
-//		}
-//		
-//		public int getVal()
-//		{
-//			return val;
-//		}
-//		
-//		public Loyalty getLoyalty()
-//		{
-//			return val == 0 ? Loyalty.RED: Loyalty.BLACK;
-//		}
-//		
-//		public Turn getOther()
-//		{
-//			if(this == PLAYER1)
-//			{
-//				return PLAYER2;
-//			}
-//			else
-//			{
-//				return PLAYER1;
-//			}
-//		}
-//		
-//		public static Turn getRandom()
-//		{
-//			int random = (int)(2*Math.random());
-//			
-//			return random == 0 ? PLAYER1 : PLAYER2;
-//		}
-//	}
-	
 	/** The board this game takes place on **/
 	private Board board;
 	
@@ -124,57 +77,57 @@ public class Game
 	 * 
 	 * @param game	the game whose copy is made
 	 */
-//	public Game(Game game)
-//	{
-//		completed = false;
-//		
-//		this.players = new Player[game.getPlayers().length];
-//		
-//		for(int i = 0; i < players.length; i ++)
-//		{
-//			players[i] = new AI(null, game.getPlayers()[i].getLoyalty(), this);
-//		}
-//		
-////		this.board = game.getBoard().clone(this);
-//		
-//		Constructor constructor = null;
-//		
-//		try
-//		{
-//			 constructor = game.getBoard().getClass().getConstructor(game.getBoard().getClass(), this.getClass());
-//		} 
-//		catch (SecurityException e)
-//		{
-//			e.printStackTrace();
-//		} 
-//		catch (NoSuchMethodException e)
-//		{
-//			e.printStackTrace();
-//		}
-//		
-//		try
-//		{
-//			this.board = (Board) constructor.newInstance(game.getBoard(), this);
-//		} 
-//		catch (IllegalArgumentException e)
-//		{
-//			e.printStackTrace();
-//		} 
-//		catch (InstantiationException e)
-//		{
-//			e.printStackTrace();
-//		} 
-//		catch (IllegalAccessException e)
-//		{
-//			e.printStackTrace();
-//		} 
-//		catch (InvocationTargetException e)
-//		{
-//			e.printStackTrace();
-//		}
-//		
-//		this.turn = game.turn;
-//	}
+	public Game(Game game)
+	{
+		completed = false;
+		
+		this.players = new Player[game.getPlayers().length];
+		
+		for(int i = 0; i < players.length; i ++)
+		{
+			players[i] = new AI(null, game.getPlayers()[i].getLoyalty(), this);
+		}
+		
+//		this.board = game.getBoard().clone(this);
+		
+		Constructor constructor = null;
+		
+		try
+		{
+			 constructor = game.getBoard().getClass().getConstructor(game.getBoard().getClass(), this.getClass());
+		} 
+		catch (SecurityException e)
+		{
+			e.printStackTrace();
+		} 
+		catch (NoSuchMethodException e)
+		{
+			e.printStackTrace();
+		}
+		
+		try
+		{
+			this.board = (Board) constructor.newInstance(game.getBoard(), this);
+		} 
+		catch (IllegalArgumentException e)
+		{
+			e.printStackTrace();
+		} 
+		catch (InstantiationException e)
+		{
+			e.printStackTrace();
+		} 
+		catch (IllegalAccessException e)
+		{
+			e.printStackTrace();
+		} 
+		catch (InvocationTargetException e)
+		{
+			e.printStackTrace();
+		}
+		
+		this.turn = game.turn;
+	}
 	
 	/**
 	 * Parameterized constructor, initializes fields to given parameters 

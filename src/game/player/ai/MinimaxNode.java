@@ -4,12 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import game.Game;
-import game.Game.Turn;
 import game.board.Board;
 import game.move.Move;
-import game.piece.Piece;
-import game.player.Player;
-import game.player.Player.State;
+
 /**
  * A class representing a node in the minimax algorithm
  * 

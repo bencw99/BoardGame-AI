@@ -40,6 +40,25 @@ public abstract class Piece implements ImageObserver
 		{
 			return val;
 		}
+		
+		public static Loyalty getRandom()
+		{
+			int random = (int)(2*Math.random());
+			
+			return random == 0 ? RED : BLACK;
+		}
+		
+		public Loyalty getOther()
+		{
+			if(this == RED)
+			{
+				return BLACK;
+			}
+			else
+			{
+				return RED;
+			}
+		}
 	};
 	
 	/** The node that this piece belongs to **/
