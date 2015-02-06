@@ -63,7 +63,7 @@ public class GamePanel extends JPanel
         frame.setLocation(new Point(500, 100));
         frame.pack();
         
-        while((!game.getPlayers()[0].isDefeated()) && (!game.getPlayers()[1].isDefeated()))
+        while(!game.isCompleted())
         {	
             try 
             {

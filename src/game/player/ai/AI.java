@@ -10,8 +10,6 @@ import game.player.Player;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Stack;
-
 /**
  * A class representing a Human player associated with a game
  * 
@@ -64,14 +62,6 @@ public class AI extends Player
 		 * Idea: Use the minimax algorithm evaluation function to teach board game playing and comments on moves made
 		 */
 		
-//		String comments[] = 
-//		{
-//			"Hmmm....",
-//			"Interesting move."
-//		};
-//		
-//		System.out.println(comments[(int)(Math.random()*comments.length)]);
-		
 		ArrayList<Move> possibleMoves = getPossibleMoves();
 		
 		if(isDefeated())
@@ -101,12 +91,6 @@ public class AI extends Player
 		for(int i = 1; i < possibleNextNodes.length; i ++)
 		{
 			double currentVal = getMinimaxVal(possibleNextNodes[i], maxMinimaxVal, Integer.MAX_VALUE);
-		
-			/*
-			 * There exists a bug in the following block of code
-			 * 
-			 * Randomness seems to cause unfavorable move to be selected
-			 */
 			
 			if(currentVal > maxMinimaxVal)
 			{
@@ -126,16 +110,6 @@ public class AI extends Player
 		int random = (int)(maxMovesIndeces.size()*Math.random());
 		
 		random = 0;
-		
-//		String insults[] = 
-//		{
-//			"You'll never beat me!", 
-//			"HA!", 
-//			"Prepare to be defeated!", 
-//			"I think what you think " + minimaxDepth + " thinks before you!"
-//		};
-//		
-//		System.out.println(insults[(int)(Math.random()*insults.length)]);
 		
 		return possibleMovesArray[maxMovesIndeces.get(random)];
 	}
@@ -358,51 +332,6 @@ public class AI extends Player
 	}
 	
 	/**
-	 * Returns the minimax val of the given node
-	 * 
-	 * @param node	the minimaxNode whose minimax value is evaluated
-	 * @throws IOException 
-	 */
-	private double getMinimaxVal(MinimaxNode node, String sameMethodSignaturePreventing) throws IOException
-	{
-		Stack<MinimaxNode> stack = new Stack<MinimaxNode>();
-		
-		stack.push(node);
-		
-		MinimaxNode currentNode = stack.peek();
-		
-		ArrayList<Move> nextMoves = currentNode.getNextMoves();
-		
-		double extreme = getMinimaxVal(currentNode.getNextNode(nextMoves.get(0)), Integer.MIN_VALUE, Integer.MAX_VALUE);
-		
-		while(!stack.isEmpty())
-		{
-			currentNode = stack.pop();
-			
-			nextMoves = currentNode.getNextMoves();
-			
-			if(getLoyalty().getVal() == currentNode.getGame().getTurn().getVal())
-			{
-				for(Move nextMove : nextMoves)
-				{
-					//Evaluate minimax of nextMove
-					//Set extreme to max
-				}
-			} 
-			else
-			{
-				for(Move nextMove : nextMoves)
-				{
-					//Evaluate minimax of nextMove
-					//Set extreme to min
-				}
-			}
-		}
-		
-		return extreme;
-	}
-	
-	/**
 	 * Performs a heuristic sort on the array list of moves
 	 *
 	 * @param moves	the moves to be heuristically sorted
@@ -571,9 +500,6 @@ public class AI extends Player
 			return Double.MIN_VALUE;
 		}
 		
-//		HashSet<Node> attackedNodes = new HashSet<Node>();
-//		HashSet<Node> enemyAttackedNodes = new HashSet<Node>();
-		
 		for(Node gridNode : node.getGame().getBoard().getNodes())
 		{
 			Piece piece = gridNode.getPiece();
@@ -583,36 +509,12 @@ public class AI extends Player
 				if(piece.getLoyalty() == getLoyalty())
 				{
 					functionVal += piece.getWorth();
-					
-//					ArrayList<Move> possibleMoves = piece.getPossibleMoves();
-//					
-//					for(Move possibleMove : possibleMoves)
-//					{
-//						attackedNodes.add(possibleMove.getNodes().get(possibleMove.getNodes().size() - 1));
-//					}
 				}
 				else
 				{
 					functionVal -= piece.getWorth();
-					
-//					ArrayList<Move> possibleMoves = piece.getPossibleMoves();
-//					
-//					for(Move possibleMove : possibleMoves)
-//					{
-//						enemyAttackedNodes.add(possibleMove.getNodes().get(possibleMove.getNodes().size() - 1));
-//					}
 				}
 			}
-			
-//			for(Node attackedNode : attackedNodes)
-//			{
-//				functionVal += 0.2/Math.abs(attackedNode.getLoc().getCol() - getBoard().getGrid()[0].length/2);
-//			}
-//			
-//			for(Node enemyAttackedNode : enemyAttackedNodes)
-//			{
-//				functionVal -= 0.2/Math.abs(enemyAttackedNode.getLoc().getCol() - getBoard().getGrid()[0].length/2);
-//			}
 		}
 		
 		return functionVal;

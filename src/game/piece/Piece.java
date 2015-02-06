@@ -26,8 +26,8 @@ public abstract class Piece implements ImageObserver
 	/** The enum describing the loyalty of this piece **/
 	public static enum Loyalty 
 	{
-		BLACK(1), 
-		RED(0);
+		RED(0),
+		BLACK(1); 
 		
 		private int val;
 		

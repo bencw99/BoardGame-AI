@@ -5,6 +5,7 @@ import game.board.node.Location;
 import game.board.node.Node;
 import game.move.ChessMove;
 import game.move.Move;
+import game.piece.Piece;
 import game.piece.Piece.Loyalty;
 import game.piece.chessPieces.*;
 import gui.GamePanel;
@@ -27,7 +28,7 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 	private ArrayList<Location> moveLocs;
 	
 	/** The type to be promoted to **/
-	private Class promotionType;
+	private Class<? extends Piece> promotionType;
 	
 	/** The boolean determining whether or not the move is registered **/
 	private boolean moveRegistered = false;
@@ -63,7 +64,7 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 		{
 			try
 			{
-				Thread.sleep(100);
+				Thread.sleep(50);
 			} 
 			catch (InterruptedException e)
 			{

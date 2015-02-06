@@ -89,14 +89,14 @@ public class CheckersBoard extends RectangularBoard
 		
 		ArrayList<Node> nodes = move.getNodes();
 		
-		if(nodes.get(nodes.size() - 1).getLoc().getRow() == nodes.get(0).getPiece().getLoyalty().getVal()*((getGrid()).length - 1))
+		if(nodes.get(nodes.size() - 1).getLoc().getRow() == (1 - nodes.get(0).getPiece().getLoyalty().getVal())*(getGrid().length - 1))
 		{
 			remove(nodes.get(0).getLoc());
 			
 			Piece newKing = null;
 			try
 			{
-				newKing = new King(getPiece(nodes.get(0).getLoc()).getLoyalty(), nodes.get(0));
+				newKing = new King(nodes.get(0).getPiece().getLoyalty(), nodes.get(0));
 			} 
 			catch (IOException e)
 			{

@@ -65,8 +65,8 @@ public class Game
 			turn = Loyalty.RED;
 			
 			players = new Player[2];
-			players[0] = new AI("Player 1", Loyalty.RED, this, 6);
-			players[1] = new Human("Player 2", Loyalty.BLACK, this);
+			players[0] = new AI("AI", Loyalty.RED, this, 6);
+			players[1] = new Human("Human", Loyalty.BLACK, this);
 			
 			board = new ChessBoard(this);
 		}
@@ -79,7 +79,7 @@ public class Game
 	 */
 	public Game(Game game)
 	{
-		completed = false;
+		completed = game.isCompleted();
 		
 		this.players = new Player[game.getPlayers().length];
 		
@@ -90,7 +90,7 @@ public class Game
 		
 //		this.board = game.getBoard().clone(this);
 		
-		Constructor constructor = null;
+		Constructor<? extends Board> constructor = null;
 		
 		try
 		{
@@ -163,8 +163,6 @@ public class Game
 		Player thisPlayer = players[turn.getVal()];
 		
 		Move move = thisPlayer.getThisTurnMove();
-		
-//		Move move = thisPlayer instanceof AI ? ((AI)thisPlayer).getThisTurnMove(1000) : thisPlayer.getThisTurnMove();
 		
 		if(thisPlayer.isDefeated())
 		{	
