@@ -90,9 +90,7 @@ public class CheckersBoard extends RectangularBoard
 		ArrayList<Node> nodes = move.getNodes();
 		
 		if(nodes.get(nodes.size() - 1).getLoc().getRow() == (1 - nodes.get(0).getPiece().getLoyalty().getVal())*(getGrid().length - 1))
-		{
-			remove(nodes.get(0).getLoc());
-			
+		{	
 			Piece newKing = null;
 			try
 			{
@@ -102,6 +100,8 @@ public class CheckersBoard extends RectangularBoard
 			{
 				e.printStackTrace();
 			}
+			
+			remove(nodes.get(0).getLoc());
 			
 			put(newKing, nodes.get(0).getLoc());
 		}

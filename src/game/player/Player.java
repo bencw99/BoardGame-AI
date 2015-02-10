@@ -3,10 +3,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import game.Game;
-import game.board.Board;
 import game.board.RectangularBoard;
 import game.move.Move;
-import game.piece.*;
 import game.piece.Piece.Loyalty;
 
 /**
@@ -16,9 +14,6 @@ import game.piece.Piece.Loyalty;
  */
 public abstract class Player
 {	
-	/** The name of this player **/
-	private String name;
-	
 	/** The loyalty of this player **/
 	private Loyalty loyalty;
 	
@@ -37,7 +32,6 @@ public abstract class Player
 	 */
 	public Player(String name, Loyalty loyalty, Game game)
 	{
-		this.name = name;
 		this.loyalty = loyalty;
 		this.defeated = false;
 		this.game = game;
@@ -73,7 +67,7 @@ public abstract class Player
 	 */
 	public String getName()
 	{
-		return name;
+		return null;
 	}
 	
 	/**

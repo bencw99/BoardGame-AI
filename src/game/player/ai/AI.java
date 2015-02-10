@@ -9,6 +9,7 @@ import game.player.Player;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 /**
  * A class representing a Human player associated with a game
@@ -16,15 +17,18 @@ import java.util.HashSet;
  * @author Benjamin Cohen-Wang
  */
 public class AI extends Player
-{
-	/** The depth of the minimax search **/
-	private static final int DEFAULT_MINIMAX_DEPTH = 13;
-	
+{	
 	/** The minimax depth of this ai instance **/
 	private final int minimaxDepth;
 	
 	/** The minimax depth searched in the current turn **/
 	private int currentMinimaxDepth;
+	
+	/** The class describing the worths of pieces **/
+	private HashMap<Class<? extends Piece>, Double> worthMap;
+	
+	/** The depth of the minimax search **/
+	private static final int DEFAULT_MINIMAX_DEPTH = 13;
 	
 	/**
 	 * Parameterized constructor, initializes name, pieces, and loyalty
@@ -341,25 +345,30 @@ public class AI extends Player
 	{
 		ArrayList<MinimaxNode> nextNodes = new ArrayList<MinimaxNode>();
 		
-		double extremeMoveValue = thisPlayersTurn ? Double.MIN_VALUE : Double.MAX_VALUE;
+		double alphaVal = Integer.MIN_VALUE;
+		
+		double betaVal = Integer.MAX_VALUE;
+		
+		double extremeMoveVal = thisPlayersTurn ? Integer.MIN_VALUE : Integer.MAX_VALUE;
 		
 		for(Move move : moves)
 		{
 			MinimaxNode nextNode = node.getNextNode(move);
-			nextNode.setMinimaxDepth(nextNode.getMinimaxDepth() + 1);
-			double candidateValue = getMinimaxVal(nextNode, extremeMoveValue, Integer.MAX_VALUE);
+			nextNode.setMinimaxDepth(nextNode.getMinimaxDepth() + 6);
+			double candidateVal = getMinimaxVal(nextNode, alphaVal, betaVal);
 			
 			if(thisPlayersTurn)
 			{
-				extremeMoveValue = Math.max(extremeMoveValue, candidateValue);
+				extremeMoveVal = Math.max(extremeMoveVal, candidateVal);
+				alphaVal = Math.max(alphaVal, extremeMoveVal);
 			}
 			else
 			{
-				extremeMoveValue = Math.min(extremeMoveValue, candidateValue);
+				extremeMoveVal = Math.min(extremeMoveVal, candidateVal);
+				betaVal = Math.max(betaVal, extremeMoveVal);
 			}
 			
-			nextNode.setValue(candidateValue);
-//			nextNode.setValue(functionVal(nextNode));
+			nextNode.setValue(candidateVal);
 			
 			nextNodes.add(nextNode);
 		}
@@ -518,6 +527,29 @@ public class AI extends Player
 		}
 		
 		return functionVal;
+	}
+	
+	private void generateWorths()
+	{
+		Game testGame = new Game(getGame());
+		
+		
+	}
+	
+	/**
+	 * @return the worthmap of this AI
+	 */
+	public HashMap<Class<? extends Piece>, Double> getWorthMap()
+	{
+		return worthMap;
+	}
+	
+	/**
+	 * @return the worthmap of this AI
+	 */
+	public void setWorthMap(HashMap<Class<? extends Piece>, Double> worthMap)
+	{
+		this.worthMap = worthMap;
 	}
 	
 	/**

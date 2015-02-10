@@ -41,6 +41,14 @@ public abstract class MinimaxSuperNode
 	}
 	
 	/**
+	 * @param minimaxDepth	the minimaxDepth to be set
+	 */
+	public void setMinimaxDepth(int minimaxDepth)
+	{
+		this.minimaxDepth = minimaxDepth;
+	}
+	
+	/**
 	 * Loads the children array list
 	 */
 	public abstract void loadChildren();
