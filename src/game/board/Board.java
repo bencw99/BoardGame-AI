@@ -22,6 +22,9 @@ public abstract class Board
 	
 	/** The arraylist of nodes composing this grid **/
 	private ArrayList<Node> nodes;
+	
+	/** The piees possible present in this board **/
+	public static ArrayList<Class<? extends Piece>> PIECE_TYPES;
 	 
 	/**
 	 * Parameterized constructor, initializes game to given game
@@ -30,6 +33,10 @@ public abstract class Board
 	{
 		this.game = game;
 		this.nodes = new ArrayList<Node>();
+		if(PIECE_TYPES == null)
+		{
+			pieceTypesInit();
+		}
 	}
 	
 	/** 
@@ -62,6 +69,13 @@ public abstract class Board
 	 * @throws IOException 
 	 */
 	public abstract void loadBoard() throws IOException;
+	
+	/**
+	 * Loads the types of pieces present in this board
+	 * Method must be called by all board child class constructors (Present in board superclass constructor)
+	 */
+	protected abstract void pieceTypesInit();
+	
 	
 	/**
 	 * Gets the possible moves of the given loyalty
@@ -126,6 +140,14 @@ public abstract class Board
 	public ArrayList<Node> getNodes()
 	{
 		return nodes;
+	}
+	
+	/**
+	 * @return the array list of nodes of this board
+	 */
+	public ArrayList<Class<? extends Piece>> getPieceTypes()
+	{
+		return PIECE_TYPES;
 	}
 	
 	/**

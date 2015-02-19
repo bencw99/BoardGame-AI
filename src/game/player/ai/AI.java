@@ -21,9 +21,6 @@ public class AI extends Player
 	/** The minimax depth of this ai instance **/
 	private final int minimaxDepth;
 	
-	/** The minimax depth searched in the current turn **/
-	private int currentMinimaxDepth;
-	
 	/** The class describing the worths of pieces **/
 	private HashMap<Class<? extends Piece>, Double> worthMap;
 	
@@ -78,8 +75,6 @@ public class AI extends Player
 		MinimaxNode[] possibleNextNodes = new MinimaxNode[possibleMoves.size()];
 		
 		MinimaxNode currentNode = new MinimaxNode(0, new Game(getGame()), null, null, 0, true);
-		
-		currentMinimaxDepth = getAppropriateDepth(currentNode);
 		
 		for(int i = 0; i < possibleMoves.size(); i ++)
 		{	
@@ -192,8 +187,6 @@ public class AI extends Player
 		
 		MinimaxNode currentNode = new MinimaxNode(0, new Game(getGame()), null, null, 0, true);
 		
-		currentMinimaxDepth = getAppropriateDepth(currentNode);
-		
 		for(int i = 0; i < possibleMoves.size(); i ++)
 		{
 			possibleMovesArray[i] = possibleMoves.get(i);
@@ -263,10 +256,10 @@ public class AI extends Player
 	 * @param node	the node at which the search begins
 	 * @return	an appropriate depth from this node
 	 */
-	private int getAppropriateDepth(MinimaxNode node)
-	{
-		return minimaxDepth;
-	}
+//	private int getAppropriateDepth(MinimaxNode node)
+//	{
+//		return minimaxDepth;
+//	}
 	
 	/**
 	 * Returns the minimax val of the given move
@@ -277,7 +270,7 @@ public class AI extends Player
 	 */
 	private double getMinimaxVal(MinimaxNode node, double alphaVal, double betaVal) throws IOException
 	{	
-		if(node.getMinimaxDepth() >= currentMinimaxDepth)
+		if(node.getMinimaxDepth() >= minimaxDepth)
 		{
 		  	return functionVal(node);
 		}
@@ -533,7 +526,21 @@ public class AI extends Player
 	{
 		Game testGame = new Game(getGame());
 		
+		for(Player testPlayer : testGame.getPlayers())
+		{
+			if(testPlayer instanceof AI)
+			{
+				for(Class<? extends Piece> pieceType : testGame.getBoard().getPieceTypes())
+				{
+					((AI) testPlayer).worthMap.put(pieceType, 1.0);
+				}
+			}
+		}
 		
+		while(!testGame.isCompleted())
+		{
+			
+		}
 	}
 	
 	/**

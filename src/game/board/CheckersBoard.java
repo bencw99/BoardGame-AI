@@ -29,7 +29,7 @@ public class CheckersBoard extends RectangularBoard
 	/** The default height of nodes of this board **/
 	public static final int NODE_HEIGHT =  80;
 	
-	/** **/
+	/** The number of checkers pieces in a checkers game **/
 	public static final int CHECKERS_PIECE_NUM = 12;
 	
 	/**
@@ -189,6 +189,17 @@ public class CheckersBoard extends RectangularBoard
 				getGrid()[i][j] = new Node(new Location(i, j), this, color); 
 			}
 		}
+	}
+	
+	/**
+	 * Loads the types of pieces present in this board
+	 */
+	protected void pieceTypesInit()
+	{
+		PIECE_TYPES = new ArrayList<Class<? extends Piece>>();
+		
+		PIECE_TYPES.add(King.class);
+		PIECE_TYPES.add(Soldier.class);
 	}
 	
 	/**

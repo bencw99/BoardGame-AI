@@ -258,6 +258,21 @@ public class ChessBoard	extends RectangularBoard
 	}
 
 	/**
+	 * Loads the types of pieces present in this board
+	 */
+	protected void pieceTypesInit()
+	{
+		PIECE_TYPES = new ArrayList<Class<? extends Piece>>();
+		
+		PIECE_TYPES.add(King.class);
+		PIECE_TYPES.add(Queen.class);
+		PIECE_TYPES.add(Rook.class);
+		PIECE_TYPES.add(Bishop.class);
+		PIECE_TYPES.add(Knight.class);
+		PIECE_TYPES.add(Pawn.class);
+	}
+	
+	/**
 	 * Gets the possible moves of the given loyalty
 	 * 
 	 * @param loyalty	the loyalty to be tested
