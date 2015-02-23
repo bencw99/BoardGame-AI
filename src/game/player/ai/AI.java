@@ -1,6 +1,7 @@
 package game.player.ai;
 
 import game.Game;
+import game.board.CheckersBoard;
 import game.board.node.Node;
 import game.move.Move;
 import game.piece.Piece;
@@ -108,7 +109,10 @@ public class AI extends Player
 		
 		int random = (int)(maxMovesIndeces.size()*Math.random());
 		
-		random = 0;
+		if(getBoard() instanceof CheckersBoard)
+		{
+			random = 0;
+		}
 		
 		return possibleMovesArray[maxMovesIndeces.get(random)];
 	}

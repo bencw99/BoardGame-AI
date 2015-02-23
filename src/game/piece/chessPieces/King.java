@@ -90,6 +90,65 @@ public class King extends Piece
 			}
 		}
 		
+		if(!hasMoved())
+		{
+			boolean openSpace = true;
+			int count = 1;
+			
+			while(openSpace)
+			{
+				Location currentLoc = new Location(getLoc().getRow(), getLoc().getCol() + count);
+				
+				if(!getBoard().isValid(currentLoc) || getBoard().getNode(currentLoc).getPiece() != null)
+				{
+					openSpace = false;
+					
+					if(getBoard().isValid(currentLoc) && getBoard().getNode(currentLoc).getPiece() instanceof Rook)
+					{
+						if(!getBoard().getNode(currentLoc).getPiece().hasMoved())
+						{
+							ArrayList<Node> move = new ArrayList<Node>();
+							
+							move.add(getNode());
+							move.add(getBoard().getNode(new Location(getNode().getLoc().getRow(), getNode().getLoc().getCol() + 2)));
+							
+							possibleMoves.add(new ChessMove(move, getBoard(), getLoyalty()));
+						}
+					}
+				}
+				
+				count ++;
+			}
+			
+			openSpace = true;
+			count = 1;
+			
+			while(openSpace)
+			{
+				Location currentLoc = new Location(getLoc().getRow(), getLoc().getCol() - count);
+				
+				if(!getBoard().isValid(currentLoc) || getBoard().getNode(currentLoc).getPiece() != null)
+				{
+					openSpace = false;
+					
+					if(getBoard().isValid(currentLoc) && getBoard().getNode(currentLoc).getPiece() instanceof Rook)
+					{
+						if(!getBoard().getNode(currentLoc).getPiece().hasMoved())
+						{
+							ArrayList<Node> move = new ArrayList<Node>();
+							
+							move.add(getNode());
+							move.add(getBoard().getNode(new Location(getNode().getLoc().getRow(), getNode().getLoc().getCol() - 2)));
+							
+							possibleMoves.add(new ChessMove(move, getBoard(), getLoyalty()));
+						}
+					}
+				}
+				
+				count ++;
+			}
+		}
+		
 		return possibleMoves;
 	}
 	

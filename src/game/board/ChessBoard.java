@@ -193,20 +193,31 @@ public class ChessBoard	extends RectangularBoard
 		Node terminalNode = nodes.get(move.getNodes().size() - 1);
 		Piece movedPiece = initialNode.getPiece();
 		
-		if(movedPiece instanceof Rook && !movedPiece.hasMoved())
+		if(movedPiece instanceof King)
 		{
-			for(int j = -1; j <= 1; j += 2)
+			if(terminalNode.getLoc().getCol() - initialNode.getLoc().getCol() == 2)
 			{
-				Location locBeside = new Location(terminalNode.getLoc().getRow(), terminalNode.getLoc().getCol() + j);
-				Location otherLocBeside = new Location(terminalNode.getLoc().getRow(), terminalNode.getLoc().getCol() - j);
-				if(isValid(locBeside) && isValid(otherLocBeside))
-				{
-					Piece pieceBeside = getNode(locBeside).getPiece();
+				Location locBeside = new Location(terminalNode.getLoc().getRow(), terminalNode.getLoc().getCol() + 1);
+				Location otherLocBeside = new Location(terminalNode.getLoc().getRow(), terminalNode.getLoc().getCol() - 1);
 					
-					if(pieceBeside instanceof King && !pieceBeside.hasMoved())
-					{
-						move(locBeside, otherLocBeside);
-					}
+				Piece pieceBeside = getNode(locBeside).getPiece();
+						
+				if(pieceBeside instanceof King && !pieceBeside.hasMoved())
+				{
+					move(locBeside, otherLocBeside);
+				}
+			}
+			
+			if(terminalNode.getLoc().getCol() - initialNode.getLoc().getCol() == -2)
+			{
+				Location locBeside = new Location(terminalNode.getLoc().getRow(), terminalNode.getLoc().getCol() - 2);
+				Location otherLocBeside = new Location(terminalNode.getLoc().getRow(), terminalNode.getLoc().getCol() + 1);
+					
+				Piece pieceBeside = getNode(locBeside).getPiece();
+						
+				if(pieceBeside instanceof King && !pieceBeside.hasMoved())
+				{
+					move(locBeside, otherLocBeside);
 				}
 			}
 		}
