@@ -65,7 +65,7 @@ public class Game
 			turn = Loyalty.RED;
 			
 			players = new Player[2];
-			players[0] = new AI("AI", Loyalty.RED, this, 6);
+			players[0] = new AI("AI", Loyalty.RED, this, 5);
 			players[1] = new Human("Human", Loyalty.BLACK, this);
 			
 			board = new ChessBoard(this);

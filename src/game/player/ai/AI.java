@@ -25,7 +25,7 @@ public class AI extends Player
 	private HashMap<Class<? extends Piece>, Double> worthMap;
 	
 	/** The depth of the minimax search **/
-	private static final int DEFAULT_MINIMAX_DEPTH = 13;
+	private static final int DEFAULT_MINIMAX_DEPTH = 12;
 	
 	/**
 	 * Parameterized constructor, initializes name, pieces, and loyalty
@@ -347,7 +347,7 @@ public class AI extends Player
 		for(Move move : moves)
 		{
 			MinimaxNode nextNode = node.getNextNode(move);
-			nextNode.setMinimaxDepth(nextNode.getMinimaxDepth() + 6);
+			nextNode.setMinimaxDepth(nextNode.getMinimaxDepth() + 12);
 			double candidateVal = getMinimaxVal(nextNode, alphaVal, betaVal);
 			
 			if(thisPlayersTurn)
@@ -462,8 +462,8 @@ public class AI extends Player
 		nodes.set(end, nodes.get(delimeterIndex));
 		nodes.set(delimeterIndex, pivotNode);
 		
-		quickSort(nodes, start, delimeterIndex - 1);
-		quickSort(nodes, delimeterIndex + 1, end);
+		reverseQuickSort(nodes, start, delimeterIndex - 1);
+		reverseQuickSort(nodes, delimeterIndex + 1, end);
 		
 		return nodes;
 	}
