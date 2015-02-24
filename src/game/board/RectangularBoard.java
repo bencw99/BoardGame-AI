@@ -4,6 +4,7 @@ import game.Game;
 import game.board.node.Location;
 import game.board.node.Node;
 import game.piece.Piece;
+import game.piece.chessPieces.King;
 
 /**
  * A class representing a rectangular board
@@ -115,7 +116,7 @@ public abstract class RectangularBoard extends Board
 		Piece piece = remove(start);
 		
 		put(piece, end);
-	
+		
 		piece.setHasMoved(true);
 		
 		return piece;

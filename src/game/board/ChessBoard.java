@@ -190,7 +190,7 @@ public class ChessBoard	extends RectangularBoard
 		}
 		
 		Node initialNode = nodes.get(0);
-		Node terminalNode = nodes.get(move.getNodes().size() - 1);
+		Node terminalNode = nodes.get(nodes.size() - 1);
 		Piece movedPiece = initialNode.getPiece();
 		
 		if(movedPiece instanceof King)
@@ -202,7 +202,7 @@ public class ChessBoard	extends RectangularBoard
 					
 				Piece pieceBeside = getNode(locBeside).getPiece();
 						
-				if(pieceBeside instanceof King && !pieceBeside.hasMoved())
+				if(pieceBeside instanceof Rook && !pieceBeside.hasMoved())
 				{
 					move(locBeside, otherLocBeside);
 				}
@@ -212,10 +212,10 @@ public class ChessBoard	extends RectangularBoard
 			{
 				Location locBeside = new Location(terminalNode.getLoc().getRow(), terminalNode.getLoc().getCol() - 2);
 				Location otherLocBeside = new Location(terminalNode.getLoc().getRow(), terminalNode.getLoc().getCol() + 1);
-					
+				
 				Piece pieceBeside = getNode(locBeside).getPiece();
 						
-				if(pieceBeside instanceof King && !pieceBeside.hasMoved())
+				if(pieceBeside instanceof Rook && !pieceBeside.hasMoved())
 				{
 					move(locBeside, otherLocBeside);
 				}
@@ -265,7 +265,7 @@ public class ChessBoard	extends RectangularBoard
 			}
 		}
 		
-		move(move.getNodes().get(0).getLoc(), move.getNodes().get(move.getNodes().size() - 1).getLoc());
+		move(initialNode.getLoc(), terminalNode.getLoc());
 	}
 
 	/**
