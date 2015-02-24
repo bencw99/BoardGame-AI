@@ -54,7 +54,7 @@ public class Pawn extends Piece
 	 */
 	public Pawn(Piece piece, Node node) throws IOException
 	{
-		super(piece.getLoyalty(), node);
+		super(piece, node);
 		setWorth(PAWN_WORTH);
 		image = (getLoyalty() == Loyalty.RED) ? WHITE_PAWN: BLACK_PAWN;
 	}

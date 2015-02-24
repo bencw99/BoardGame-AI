@@ -55,7 +55,7 @@ public class Bishop extends Piece
 	 */
 	public Bishop(Piece piece, Node node) throws IOException
 	{
-		super(piece.getLoyalty(), node);
+		super(piece, node);
 		setWorth(BISHOP_WORTH);
 		image = (getLoyalty() == Loyalty.RED) ? WHITE_BISHOP: BLACK_BISHOP;
 	}

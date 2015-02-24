@@ -199,9 +199,9 @@ public class ChessBoard	extends RectangularBoard
 			{
 				Location locBeside = new Location(terminalNode.getLoc().getRow(), terminalNode.getLoc().getCol() + 1);
 				Location otherLocBeside = new Location(terminalNode.getLoc().getRow(), terminalNode.getLoc().getCol() - 1);
-					
+
 				Piece pieceBeside = getNode(locBeside).getPiece();
-						
+
 				if(pieceBeside instanceof Rook && !pieceBeside.hasMoved())
 				{
 					move(locBeside, otherLocBeside);

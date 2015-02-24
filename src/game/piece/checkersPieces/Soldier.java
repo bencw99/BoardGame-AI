@@ -55,7 +55,7 @@ public class Soldier extends Piece
 	 */
 	public Soldier(Piece piece, Node node) throws IOException
 	{
-		super(piece.getLoyalty(), node);
+		super(piece, node);
 		setWorth(SOLDIER_WORTH);
 	}
 	

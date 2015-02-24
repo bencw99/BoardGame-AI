@@ -55,7 +55,7 @@ public class Queen extends Piece
 	 */
 	public Queen(Piece piece, Node node) throws IOException
 	{
-		super(piece.getLoyalty(), node);
+		super(piece, node);
 		setWorth(QUEEN_WORTH);
 		image = (getLoyalty() == Loyalty.RED) ? WHITE_QUEEN: BLACK_QUEEN;
 	}

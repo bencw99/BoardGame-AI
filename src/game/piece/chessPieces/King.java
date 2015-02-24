@@ -55,7 +55,7 @@ public class King extends Piece
 	 */
 	public King(Piece piece, Node node) throws IOException
 	{
-		super(piece.getLoyalty(), node);
+		super(piece, node);
 		setWorth(KING_WORTH);
 		image = (getLoyalty() == Loyalty.RED) ? WHITE_KING: BLACK_KING;
 	}

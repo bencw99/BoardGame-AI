@@ -55,7 +55,7 @@ public class Rook extends Piece
 	 */
 	public Rook(Piece piece, Node node) throws IOException
 	{
-		super(piece.getLoyalty(), node);
+		super(piece, node);
 		setWorth(ROOK_WORTH);
 		image = (getLoyalty() == Loyalty.RED) ? WHITE_ROOK: BLACK_ROOK;
 	}

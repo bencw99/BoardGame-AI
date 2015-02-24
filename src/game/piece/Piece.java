@@ -172,7 +172,8 @@ public abstract class Piece implements ImageObserver
 	 */
 	public Piece(Piece piece, Node node) throws IOException
 	{
-		this(piece.loyalty, node);
+		this.loyalty = piece.loyalty;
+		this.node = node;
 		this.hasMoved = piece.hasMoved();
 		
 		if(!imagesInitialized)

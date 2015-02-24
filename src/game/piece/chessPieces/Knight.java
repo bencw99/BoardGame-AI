@@ -55,7 +55,7 @@ public class Knight extends Piece
 	 */
 	public Knight(Piece piece, Node node) throws IOException
 	{
-		super(piece.getLoyalty(), node);
+		super(piece, node);
 		setWorth(KNIGHT_WORTH);
 		image = (getLoyalty() == Loyalty.RED) ? WHITE_KNIGHT: BLACK_KNIGHT;
 	}
