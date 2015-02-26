@@ -223,16 +223,16 @@ public class ChessBoard	extends RectangularBoard
 		}
 		
 		if(movedPiece instanceof Pawn)
-		{
-			if(nodes.get(nodes.size() - 1).getLoc().getRow() == (1 - getPiece(nodes.get(0).getLoc()).getLoyalty().getVal()*(getGrid()).length - 1))
+		{	
+			if(terminalNode.getLoc().getRow() == (1 - initialNode.getPiece().getLoyalty().getVal())*(getGrid().length - 1))
 			{	
 				Piece promoted = null;
 				
 				try
-				{
+				{	
 					Constructor<? extends Piece> constructor = ((ChessMove) move).getPromotionType().getConstructor(Loyalty.class, Node.class);
 					
-					promoted = (Piece) constructor.newInstance(nodes.get(0).getPiece().getLoyalty(), nodes.get(0));
+					promoted = (Piece) constructor.newInstance(initialNode.getPiece().getLoyalty(), initialNode);
 				} 
 				catch (SecurityException e)
 				{
@@ -259,9 +259,9 @@ public class ChessBoard	extends RectangularBoard
 					e.printStackTrace();
 				}
 				
-				remove(nodes.get(0).getLoc());
+				remove(initialNode.getLoc());
 				
-				put(promoted, nodes.get(0).getLoc());
+				put(promoted, initialNode.getLoc());
 			}
 		}
 		
