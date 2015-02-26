@@ -65,7 +65,7 @@ public abstract class Piece implements ImageObserver
 	private Node node;
 	
 	/** The worth of this piece **/
-	private int worth;
+	private double worth;
 	
 	/** The boolean representing whether or not this piece has moved **/
 	private boolean hasMoved;
@@ -263,7 +263,7 @@ public abstract class Piece implements ImageObserver
 	/**
 	 * @return the worth
 	 */
-	public int getWorth() 
+	public double getWorth() 
 	{
 		return worth;
 	}
@@ -287,7 +287,7 @@ public abstract class Piece implements ImageObserver
 	/**
 	 * @param worth the worth to set
 	 */
-	public void setWorth(int worth) 
+	public void setWorth(double worth) 
 	{
 		this.worth = worth;
 	}

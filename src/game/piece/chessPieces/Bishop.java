@@ -17,7 +17,7 @@ import game.piece.Piece;
 public class Bishop extends Piece
 {
 	/** The worth of a bishop **/
-	public static final int BISHOP_WORTH = 3;
+	public static final double BISHOP_WORTH = 3.0;
 	
 	/**
 	 * Default constructor

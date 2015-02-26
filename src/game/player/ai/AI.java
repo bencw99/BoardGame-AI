@@ -88,6 +88,8 @@ public class AI extends Player
 		ArrayList<Integer> maxMovesIndeces = new ArrayList<Integer>();
 		maxMovesIndeces.add(0);
 		
+		System.out.println("Move: " + 0 + " with value " + maxMinimaxVal);
+		
 		for(int i = 1; i < possibleNextNodes.length; i ++)
 		{
 			double currentVal = getMinimaxVal(possibleNextNodes[i], maxMinimaxVal, Integer.MAX_VALUE);
@@ -98,14 +100,22 @@ public class AI extends Player
 				maxMovesIndeces.add(i);
 				maxMinimaxVal = currentVal;
 			}
-			
-			if(currentVal == maxMinimaxVal)
+			else if(currentVal == maxMinimaxVal)
 			{
 				maxMovesIndeces.add(i);
 			}
 			
-			System.out.println(currentVal);
+			possibleNextNodes[i].setValue(currentVal);
+			
+			System.out.println("Move: " + i + " with value " + currentVal);
 		}
+		
+		for(int index : maxMovesIndeces)
+		{
+			System.out.print(index + " ");
+		}
+		
+		System.out.println();
 		
 		int random = (int)(maxMovesIndeces.size()*Math.random());
 		
@@ -113,6 +123,8 @@ public class AI extends Player
 		{
 			random = 0;
 		}
+		
+		System.out.println("Move chosen:" + maxMovesIndeces.get(random) + " with value " + possibleNextNodes[maxMovesIndeces.get(random)].getValue());
 		
 		return possibleMovesArray[maxMovesIndeces.get(random)];
 	}
@@ -485,6 +497,9 @@ public class AI extends Player
 		
 		boolean hasWon = true;
 		
+		HashSet<Node> attackedNodes = new HashSet<Node>();
+		HashSet<Node> enemyAttackedNodes = new HashSet<Node>();
+		
 		for(Player enemy : players) 
 		{
 			if(enemy.getLoyalty() != this.getLoyalty())
@@ -515,12 +530,36 @@ public class AI extends Player
 				if(piece.getLoyalty() == getLoyalty())
 				{
 					functionVal += piece.getWorth();
+					
+					ArrayList<Move> possibleMoves = piece.getPossibleMoves();
+					
+					for(Move possibleMove : possibleMoves)
+					{
+						attackedNodes.add(possibleMove.getNodes().get(possibleMove.getNodes().size() - 1));
+					}
 				}
 				else
 				{
 					functionVal -= piece.getWorth();
+					
+					ArrayList<Move> possibleMoves = piece.getPossibleMoves();
+					
+					for(Move possibleMove : possibleMoves)
+					{
+						enemyAttackedNodes.add(possibleMove.getNodes().get(possibleMove.getNodes().size() - 1));
+					}
 				}
 			}
+		}
+		
+		for(Node attackedNode : attackedNodes)
+		{
+			functionVal += 0.35/(Math.abs(attackedNode.getLoc().getCol() - getBoard().getGrid()[0].length/2) + 1);
+		}
+		
+		for(Node enemyAttackedNode : enemyAttackedNodes)
+		{
+			functionVal -= 0.35/(Math.abs(enemyAttackedNode.getLoc().getCol() - getBoard().getGrid()[0].length/2) + 1);
 		}
 		
 		return functionVal;
