@@ -281,6 +281,80 @@ public class AI extends Player
 	 * Returns the minimax val of the given move
 	 * 
 	 * @param minimaxNode	the move whose minimax val is evaluated
+	 * @param alphaVal	the alpha value of this minimax evaluation
+	 * @param betaVal	the beta value of this minimax evaluation
+	 * @param parentVal	the function value of the paret of this node
+	 * @return	the minimax val of the given move
+	 * @throws IOException 
+	 */
+	private double getMinimaxVal(MinimaxNode node, double alphaVal, double betaVal, double parentVal) throws IOException
+	{	
+		double functionVal = functionVal(parentVal, node.getMove());
+		
+		if(node.getMinimaxDepth() >= minimaxDepth)
+		{
+		  	return functionVal;
+		}
+		
+		ArrayList<Move> nextMoves = node.getNextMoves();
+		
+		if(node.getGame().getPlayers()[node.getGame().getTurn().getVal()].isDefeated())
+		{
+		  	return functionVal(node);
+		}
+		
+		boolean thisPlayersTurn = getLoyalty().getVal() == node.getGame().getTurn().getVal();
+		
+		double extreme;
+		
+//		heuristicSort(nextMoves, node, thisPlayersTurn);
+		
+		if(thisPlayersTurn)
+		{
+			extreme = Integer.MIN_VALUE;
+			
+			for(Move nextMove : nextMoves)
+			{	
+				double maxCand = getMinimaxVal(node.getNextNode(nextMove), alphaVal, betaVal, functionVal);
+				
+				extreme = Math.max(extreme, maxCand);
+				
+				alphaVal = Math.max(alphaVal, maxCand);
+				
+				if(alphaVal >= betaVal)
+				{
+					break;
+				}
+			}
+		} 
+		else
+		{
+			extreme = Integer.MAX_VALUE;
+			
+			for(Move nextMove : nextMoves)
+			{
+				double minCand = getMinimaxVal(node.getNextNode(nextMove), alphaVal, betaVal, functionVal);
+
+				extreme = Math.min(extreme, minCand);
+				
+				betaVal = Math.min(betaVal, minCand);
+				
+				if(alphaVal >= betaVal)
+				{
+					break;
+				}
+			}
+		}
+		
+		return extreme;
+	}
+	
+	/**
+	 * Returns the minimax val of the given move
+	 * 
+	 * @param minimaxNode	the move whose minimax val is evaluated
+	 * @param alphaVal	the alpha value of this minimax evaluation
+	 * @param betaVal	the beta value of this minimax evaluation
 	 * @return	the minimax val of the given move
 	 * @throws IOException 
 	 */
@@ -497,8 +571,8 @@ public class AI extends Player
 		
 		boolean hasWon = true;
 		
-		HashSet<Node> attackedNodes = new HashSet<Node>();
-		HashSet<Node> enemyAttackedNodes = new HashSet<Node>();
+//		HashSet<Node> attackedNodes = new HashSet<Node>();
+//		HashSet<Node> enemyAttackedNodes = new HashSet<Node>();
 		
 		for(Player enemy : players) 
 		{
@@ -531,35 +605,59 @@ public class AI extends Player
 				{
 					functionVal += piece.getWorth();
 					
-					ArrayList<Move> possibleMoves = piece.getPossibleMoves();
-					
-					for(Move possibleMove : possibleMoves)
-					{
-						attackedNodes.add(possibleMove.getNodes().get(possibleMove.getNodes().size() - 1));
-					}
+//					ArrayList<Move> possibleMoves = piece.getPossibleMoves();
+//					
+//					for(Move possibleMove : possibleMoves)
+//					{
+//						attackedNodes.add(possibleMove.getNodes().get(possibleMove.getNodes().size() - 1));
+//					}
 				}
 				else
 				{
 					functionVal -= piece.getWorth();
 					
-					ArrayList<Move> possibleMoves = piece.getPossibleMoves();
-					
-					for(Move possibleMove : possibleMoves)
-					{
-						enemyAttackedNodes.add(possibleMove.getNodes().get(possibleMove.getNodes().size() - 1));
-					}
+//					ArrayList<Move> possibleMoves = piece.getPossibleMoves();
+//					
+//					for(Move possibleMove : possibleMoves)
+//					{
+//						enemyAttackedNodes.add(possibleMove.getNodes().get(possibleMove.getNodes().size() - 1));
+//					}
 				}
 			}
 		}
 		
-		for(Node attackedNode : attackedNodes)
-		{
-			functionVal += 0.35/(Math.abs(attackedNode.getLoc().getCol() - getBoard().getGrid()[0].length/2) + 1);
-		}
+//		for(Node attackedNode : attackedNodes)
+//		{
+//			functionVal += 0.2/(Math.abs(attackedNode.getLoc().getCol() - getBoard().getGrid()[0].length/2) + 1);
+//		}
+//		
+//		for(Node enemyAttackedNode : enemyAttackedNodes)
+//		{
+//			functionVal -= 0.2/(Math.abs(enemyAttackedNode.getLoc().getCol() - getBoard().getGrid()[0].length/2) + 1);
+//		}
 		
-		for(Node enemyAttackedNode : enemyAttackedNodes)
+		return functionVal;
+	}
+	
+	/**
+	 * Returns the function value of the given move and parent value
+	 * 
+	 * @return	the function value of the given move
+	 */
+	private double functionVal(double parentVal, Move move)
+	{
+		double functionVal = parentVal;
+		
+		for(Node jumped : move.getJumped())
 		{
-			functionVal -= 0.35/(Math.abs(enemyAttackedNode.getLoc().getCol() - getBoard().getGrid()[0].length/2) + 1);
+			if(jumped.getPiece().getLoyalty() == this.getLoyalty())
+			{
+				functionVal -= jumped.getPiece().getWorth();
+			}
+			else
+			{
+				functionVal += jumped.getPiece().getWorth();
+			}
 		}
 		
 		return functionVal;
