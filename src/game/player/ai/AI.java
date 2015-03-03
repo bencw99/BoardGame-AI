@@ -64,6 +64,8 @@ public class AI extends Player
 		 * Idea: Use the minimax algorithm evaluation function to teach board game playing and comments on moves made
 		 */
 		
+		double initialTime = System.nanoTime();
+		
 		ArrayList<Move> possibleMoves = getPossibleMoves();
 		
 		if(isDefeated())
@@ -83,16 +85,13 @@ public class AI extends Player
 			possibleNextNodes[i] = currentNode.getNextNode(possibleMoves.get(i));
 		}
 		
-		double maxMinimaxVal = getMinimaxVal(possibleNextNodes[0], Integer.MIN_VALUE, Integer.MAX_VALUE);
+		double maxMinimaxVal = Integer.MIN_VALUE;
 		
 		ArrayList<Integer> maxMovesIndeces = new ArrayList<Integer>();
-		maxMovesIndeces.add(0);
 		
-		System.out.println("Move: " + 0 + " with value " + maxMinimaxVal);
-		
-		for(int i = 1; i < possibleNextNodes.length; i ++)
+		for(int i = 0; i < possibleNextNodes.length; i ++)
 		{
-			double currentVal = getMinimaxVal(possibleNextNodes[i], maxMinimaxVal, Integer.MAX_VALUE);
+			double currentVal = getMinimaxVal(possibleNextNodes[i], maxMinimaxVal, Integer.MAX_VALUE, functionVal(currentNode));
 			
 			if(currentVal > maxMinimaxVal)
 			{
@@ -109,6 +108,8 @@ public class AI extends Player
 			
 			System.out.println("Move: " + i + " with value " + currentVal);
 		}
+	
+		System.out.print("Best moves: ");
 		
 		for(int index : maxMovesIndeces)
 		{
@@ -124,7 +125,8 @@ public class AI extends Player
 			random = 0;
 		}
 		
-		System.out.println("Move chosen:" + maxMovesIndeces.get(random) + " with value " + possibleNextNodes[maxMovesIndeces.get(random)].getValue());
+		System.out.println("Move chosen: " + maxMovesIndeces.get(random) + " with value " + possibleNextNodes[maxMovesIndeces.get(random)].getValue());
+		System.out.println("Time taken: " + (System.nanoTime() - initialTime)/1000000000 + " seconds");
 		
 		return possibleMovesArray[maxMovesIndeces.get(random)];
 	}
