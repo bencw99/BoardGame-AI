@@ -106,7 +106,7 @@ public class AI extends Player
 			
 			possibleNextNodes[i].setValue(currentVal);
 			
-			System.out.println("Move: " + i + " with value " + currentVal);
+			System.out.println("Move: " + i + ": " + possibleMovesArray[i] + " with value " + currentVal);
 		}
 	
 		System.out.print("Best moves: ");
@@ -160,7 +160,7 @@ public class AI extends Player
 		
 		ArrayList<Integer> maxMovesIndeces = new ArrayList<Integer>();
 		
-		double maxMinimaxVal = Double.MIN_VALUE;
+		double maxMinimaxVal = Integer.MIN_VALUE;
 		
 		for(int i = 0; i < nextNodes.size(); i ++)
 		{
@@ -309,7 +309,7 @@ public class AI extends Player
 		
 		double extreme;
 		
-//		heuristicSort(nextMoves, node, thisPlayersTurn);
+//		heuristicSort(nextMoves, node, thisPlayersTurn, functionVal);
 		
 		if(thisPlayersTurn)
 		{
@@ -475,6 +475,43 @@ public class AI extends Player
 		return moves;
 	}
 	
+	/**
+	 * Performs a heuristic sort on the array list of moves
+	 *
+	 * @param moves	the moves to be heuristically sorted
+	 * @throws IOException 
+	 */
+	private ArrayList<Move> heuristicSort(ArrayList<Move> moves, MinimaxNode node, boolean thisPlayersTurn, double parentVal) throws IOException
+	{
+		ArrayList<MinimaxNode> nextNodes = new ArrayList<MinimaxNode>();
+		
+		for(Move move : moves)
+		{
+			MinimaxNode nextNode = node.getNextNode(move);
+			double candidateVal = functionVal(parentVal, move);
+			
+			nextNode.setValue(candidateVal);
+			
+			nextNodes.add(nextNode);
+		}
+		
+		if(!thisPlayersTurn)
+		{
+			nextNodes = quickSort(nextNodes, 0, nextNodes.size() - 1);
+		}
+		else
+		{
+			nextNodes = reverseQuickSort(nextNodes, 0, nextNodes.size() - 1);
+		}
+		
+		for(int i = 0; i < moves.size(); i ++)
+		{
+			moves.set(i, nextNodes.get(i).getMove());
+		}
+		
+		return moves;
+	}
+	
 	
 	/**
 	 * Sorts the given array list of minimax nodes
@@ -589,12 +626,12 @@ public class AI extends Player
 		
 		if(hasWon)
 		{
-			return Double.MAX_VALUE;
+			return Integer.MAX_VALUE;
 		}
 		
 		if(isDefeated())
 		{
-			return Double.MIN_VALUE;
+			return Integer.MIN_VALUE;
 		}
 		
 		for(Node gridNode : node.getGame().getBoard().getNodes())

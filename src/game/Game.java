@@ -55,7 +55,7 @@ public class Game
 			turn = Loyalty.getRandom();
 			
 			players = new Player[2];
-			players[0] = new Human("AI", Loyalty.RED, this);
+			players[0] = new AI("AI", Loyalty.RED, this);
 			players[1] = new Human("Human", Loyalty.BLACK, this);
 			
 			board = new CheckersBoard(this);

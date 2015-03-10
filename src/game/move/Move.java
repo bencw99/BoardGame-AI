@@ -55,7 +55,7 @@ public abstract class Move
 		
 		for(Node node : nodes)
 		{
-			string += node.toString();
+			string += node.getLoc().toString();
 		}
 		
 		return string;

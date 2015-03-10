@@ -19,7 +19,7 @@ public class MinimaxNodeContents
 	private Game game;
 	
 	/** The arraylist of moves from this node **/
-	private ArrayList<Move> nextMoves;
+//	private ArrayList<Move> nextMoves;
 	
 	/**
 	 * Parameterized constructor, initializes board and minimax depth to given values
@@ -56,21 +56,24 @@ public class MinimaxNodeContents
 	 */
 	public ArrayList<Move> getNextMoves()
 	{	
-		loadNextMoves();
-		return nextMoves;
+//		loadNextMoves();
+//		return nextMoves;
+		
+		Player currentPlayer = game.getPlayers()[game.getTurn().getVal()];
+		return currentPlayer.getPossibleMoves();
 	}
 	
 	/**
 	 * Loads the next moves array list
 	 */
-	public void loadNextMoves()
-	{
-		if(nextMoves == null)
-		{
-			Player currentPlayer = game.getPlayers()[game.getTurn().getVal()];
-			this.nextMoves = currentPlayer.getPossibleMoves();
-		}
-	}
+//	public void loadNextMoves()
+//	{
+//		if(nextMoves == null)
+//		{
+//			Player currentPlayer = game.getPlayers()[game.getTurn().getVal()];
+//			this.nextMoves = currentPlayer.getPossibleMoves();
+//		}
+//	}
 	
 	/**
 	 * Compares these contents with another
