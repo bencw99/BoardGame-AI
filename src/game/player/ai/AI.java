@@ -106,7 +106,7 @@ public class AI extends Player
 			
 			possibleNextNodes[i].setValue(currentVal);
 			
-			System.out.println("Move: " + i + ": " + possibleMovesArray[i] + " with value " + currentVal);
+			System.out.println("Move " + i + ": " + possibleMovesArray[i] + " with value " + currentVal);
 		}
 	
 		System.out.print("Best moves: ");
@@ -702,6 +702,54 @@ public class AI extends Player
 		return functionVal;
 	}
 	
+	private double functionVal(Game game)
+	{
+		Player[] players = game.getPlayers();
+		double functionVal = 0;
+		
+		boolean hasWon = true;
+		
+		for(Player enemy : players) 
+		{
+			if(enemy.getLoyalty() != this.getLoyalty())
+			{
+				if(!enemy.isDefeated())
+				{
+					hasWon = false;
+				}
+			}
+		}
+		
+		if(hasWon)
+		{
+			return Integer.MAX_VALUE;
+		}
+		
+		if(isDefeated())
+		{
+			return Integer.MIN_VALUE;
+		}
+		
+		for(Node gridNode : game.getBoard().getNodes())
+		{
+			Piece piece = gridNode.getPiece();
+			
+			if(piece != null)
+			{
+				if(piece.getLoyalty() == getLoyalty())
+				{
+					functionVal += piece.getWorth();
+				}
+				else
+				{
+					functionVal -= piece.getWorth();
+				}
+			}
+		}
+		
+		return functionVal;
+	}
+	
 	private void generateWorths()
 	{
 		Game testGame = new Game(getGame());
@@ -712,20 +760,74 @@ public class AI extends Player
 			{
 				for(Class<? extends Piece> pieceType : testGame.getBoard().getPieceTypes())
 				{
-					((AI) testPlayer).worthMap.put(pieceType, Math.random());
+					((AI) testPlayer).worthMap.put(pieceType, 1.0);
 				}
 			}
 		}
-	
-		while(!testGame.isCompleted())
+		
+		for(Class<? extends Piece> pieceType : ((AI) testGame.getPlayers()[0]).worthMap.keySet())
 		{
-			try
+			boolean stable = false;
+			
+			while(!testGame.isCompleted())
 			{
-				testGame.executeTurn();
-			} 
-			catch (IOException e)
+				try
+				{
+					testGame.executeTurn();
+				} 
+				catch (IOException e)
+				{
+					e.printStackTrace();
+				}
+			}
+			
+			double previousVal = functionVal(testGame);
+			double currentVal;
+			double derivative = 0;
+			
+			//Increment worth map of piece type
+			
+			while(!stable)
 			{
-				e.printStackTrace();
+				while(!testGame.isCompleted())
+				{
+					try
+					{
+						testGame.executeTurn();
+					} 
+					catch (IOException e)
+					{
+						e.printStackTrace();
+					}
+				}
+				
+				currentVal = functionVal(testGame);
+				
+				double thisDeriv = currentVal - previousVal;
+				
+				if(thisDeriv > 0)
+				{	
+					if(derivative < 0)
+					{
+						stable = true;
+					}
+				}
+				else
+				{
+					//Switch sign of increment
+				}
+				
+				//Increment worth map of piece type
+				
+				derivative = currentVal - previousVal;
+				
+				previousVal = currentVal;
+				
+				Player[] oldPlayers = testGame.getPlayers();
+				
+				testGame = new Game(getGame());
+				
+				testGame.setPlayers(oldPlayers);
 			}
 		}
 	}
