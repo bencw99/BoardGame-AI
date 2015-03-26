@@ -239,7 +239,7 @@ public class CheckersBoard extends RectangularBoard
 	 */
 	public RectangularBoard clone(Game game)
 	{
-		return new CheckersBoard(game);
+		return new CheckersBoard(this, game);
 	}
 	
 	/**

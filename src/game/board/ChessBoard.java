@@ -365,6 +365,6 @@ public class ChessBoard	extends RectangularBoard
 	 */
 	public RectangularBoard clone(Game game)
 	{
-		return new ChessBoard(game);
+		return new ChessBoard(this, game);
 	}
 }

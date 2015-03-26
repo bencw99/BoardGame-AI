@@ -712,14 +712,21 @@ public class AI extends Player
 			{
 				for(Class<? extends Piece> pieceType : testGame.getBoard().getPieceTypes())
 				{
-					((AI) testPlayer).worthMap.put(pieceType, 1.0);
+					((AI) testPlayer).worthMap.put(pieceType, Math.random());
 				}
 			}
 		}
-		
+	
 		while(!testGame.isCompleted())
 		{
-			
+			try
+			{
+				testGame.executeTurn();
+			} 
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
 		}
 	}
 	
