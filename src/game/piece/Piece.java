@@ -306,6 +306,34 @@ public abstract class Piece implements ImageObserver
 	}
 
 	/**
+	 * Compares this piece to another
+	 * 
+	 * @param other	the piece to be compared to
+	 * @return	the value of the piece comparison
+	 */
+	@Override
+	public boolean equals(Object obj)
+	{
+		if(getClass().equals(obj.getClass()))
+		{
+			Piece other = (Piece) obj;
+			
+			if(this.loyalty == other.loyalty && this.hasMoved == other.hasMoved)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	/**
 	 * Initializes images
 	 * 
 	 * @throws IOException

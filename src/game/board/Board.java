@@ -76,7 +76,6 @@ public abstract class Board
 	 */
 	protected abstract void pieceTypesInit();
 	
-	
 	/**
 	 * Gets the possible moves of the given loyalty
 	 * 

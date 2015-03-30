@@ -22,6 +22,9 @@ public class AI extends Player
 	/** The minimax depth of this ai instance **/
 	private final int minimaxDepth;
 	
+	/** The transposition table of this ai instance **/
+	private HashMap<MinimaxNodeContents, Double> transpositionTable;
+	
 	/** The class describing the worths of pieces **/
 	private HashMap<Class<? extends Piece>, Double> worthMap;
 	
@@ -297,7 +300,7 @@ public class AI extends Player
 		{
 		  	return functionVal;
 		}
-		
+	
 		ArrayList<Move> nextMoves = node.getNextMoves();
 		
 		if(node.getGame().getPlayers()[node.getGame().getTurn().getVal()].isDefeated())

@@ -74,6 +74,17 @@ public class MinimaxNodeContents
 //			this.nextMoves = currentPlayer.getPossibleMoves();
 //		}
 //	}
+
+	/**
+	 * Returns the hash code of these minimax node contents, overrides from Object
+	 * 
+	 *  @return the hash code
+	 */
+	@Override
+	public int hashCode()
+	{
+		return 0;
+	}
 	
 	/**
 	 * Compares these contents with another

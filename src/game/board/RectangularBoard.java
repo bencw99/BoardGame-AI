@@ -160,4 +160,43 @@ public abstract class RectangularBoard extends Board
 			return false;
 		}
 	}
+	
+	/**
+	 * Compares this board to another
+	 * 
+	 * @param other	the board to be compared to
+	 * @return	the value of the board comparison
+	 */
+	@Override
+	public boolean equals(Object obj)
+	{
+		if(obj instanceof RectangularBoard)
+		{
+			RectangularBoard other = (RectangularBoard) obj;
+			
+			if(this.grid.length != other.grid.length || this.grid[0].length != other.grid[0].length)
+			{
+				return false;
+			}
+			
+			boolean equal = true;
+			
+			for(int i = 0; i < grid.length; i ++)
+			{
+				for(int j = 0; j < grid[0].length; j ++)
+				{
+					if(!this.grid[i][j].getPiece().equals(other.grid[i][j].getPiece()))
+					{
+						equal = false;
+					}
+				}
+			}
+			
+			return equal;
+		}
+		else
+		{
+			return false;
+		}
+	}
 }
