@@ -2,6 +2,7 @@ package game.player.ai;
 
 import game.Game;
 import game.board.Board;
+import game.board.RectangularBoard;
 import game.move.Move;
 import game.player.Player;
 
@@ -92,9 +93,18 @@ public class MinimaxNodeContents
 	 * @param other the contents to be compared to
 	 * @return a boolean representing the comparison
 	 */
-	public boolean equals(MinimaxNodeContents other)
+	public boolean equals(Object obj)
 	{
-		return (other.getGame().getTurn().equals(this.getGame().getTurn()) && other.getBoard().equals(this.getBoard()));
+		if(obj instanceof MinimaxNodeContents)
+		{
+			MinimaxNodeContents other = (MinimaxNodeContents) obj;
+			return (other.getGame().getTurn().equals(this.getGame().getTurn()) && ((RectangularBoard) other.getBoard()).equals((RectangularBoard) this.getBoard()));
+	
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
 	/**

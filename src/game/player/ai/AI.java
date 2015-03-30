@@ -294,6 +294,13 @@ public class AI extends Player
 	 */
 	private double getMinimaxVal(MinimaxNode node, double alphaVal, double betaVal, double parentVal) throws IOException
 	{	
+//		Double transposedVal = transpositionTable.get(node.getContents());
+//		
+//		if(transposedVal != null)
+//		{
+//			return transposedVal;
+//		}
+		
 		double functionVal = functionVal(parentVal, node.getMove());
 		
 		if(node.getMinimaxDepth() >= minimaxDepth)
@@ -351,6 +358,8 @@ public class AI extends Player
 			}
 		}
 		
+//		transpositionTable.put(node.getContents(), extreme);
+		
 		return extreme;
 	}
 	
@@ -365,6 +374,13 @@ public class AI extends Player
 	 */
 	private double getMinimaxVal(MinimaxNode node, double alphaVal, double betaVal) throws IOException
 	{	
+//		Double transposedVal = transpositionTable.get(node.getContents());
+//		
+//		if(transposedVal != null)
+//		{
+//			return transposedVal;
+//		}
+		
 		if(node.getMinimaxDepth() >= minimaxDepth)
 		{
 		  	return functionVal(node);
@@ -419,6 +435,8 @@ public class AI extends Player
 				}
 			}
 		}
+		
+//		transpositionTable.put(node.getContents(), extreme);
 		
 		return extreme;
 	}

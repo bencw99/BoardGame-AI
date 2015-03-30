@@ -4,7 +4,6 @@ import game.Game;
 import game.board.node.Location;
 import game.board.node.Node;
 import game.piece.Piece;
-import game.piece.chessPieces.King;
 
 /**
  * A class representing a rectangular board

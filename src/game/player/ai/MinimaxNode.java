@@ -106,9 +106,26 @@ public class MinimaxNode extends MinimaxSuperNode
 	 * @param other the node to be compared to
 	 * @return a boolean representing the comparison
 	 */
-	public boolean equals(MinimaxNode other)
+	public boolean equals(Object obj)
 	{
-		return this.contents.equals(other.contents);
+		if(obj instanceof MinimaxNode)
+		{
+			MinimaxNode other = (MinimaxNode) obj;
+			return this.contents.equals(other.contents);
+			
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	/**
+	 * @return	the contents of this node
+	 */
+	public MinimaxNodeContents getContents()
+	{
+		return contents;
 	}
 	
 	/**
