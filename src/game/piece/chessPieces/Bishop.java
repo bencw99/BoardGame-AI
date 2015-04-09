@@ -1,5 +1,6 @@
 package game.piece.chessPieces;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -8,6 +9,7 @@ import game.board.node.Node;
 import game.move.ChessMove;
 import game.move.Move;
 import game.piece.Piece;
+import game.piece.Piece.Loyalty;
 
 /**
  * A class representing a chess bishop
@@ -17,7 +19,7 @@ import game.piece.Piece;
 public class Bishop extends Piece
 {
 	/** The worth of a bishop **/
-	public static final double BISHOP_WORTH = 3.0;
+	public static final double BISHOP_WORTH = 3.1;
 	
 	/**
 	 * Default constructor
@@ -28,8 +30,6 @@ public class Bishop extends Piece
 	public Bishop(Loyalty loyalty) throws IOException
 	{
 		super(loyalty);
-		setWorth(BISHOP_WORTH);
-		image = (getLoyalty() == Loyalty.RED) ? WHITE_BISHOP: BLACK_BISHOP;
 	}
 	
 	/**
@@ -42,8 +42,6 @@ public class Bishop extends Piece
 	public Bishop(Loyalty loyalty, Node node) throws IOException
 	{
 		super(loyalty, node);
-		setWorth(BISHOP_WORTH);
-		image = (getLoyalty() == Loyalty.RED) ? WHITE_BISHOP: BLACK_BISHOP;
 	}
 	
 	/**
@@ -56,8 +54,6 @@ public class Bishop extends Piece
 	public Bishop(Piece piece, Node node) throws IOException
 	{
 		super(piece, node);
-		setWorth(BISHOP_WORTH);
-		image = (getLoyalty() == Loyalty.RED) ? WHITE_BISHOP: BLACK_BISHOP;
 	}
 
 	/**
@@ -122,5 +118,32 @@ public class Bishop extends Piece
 	public Piece clone(Node node) throws IOException
 	{
 		return new Bishop(this, node);
+	}
+
+	/**
+	 * @return the worth
+	 */
+	@Override
+	public double getWorth()
+	{
+		return BISHOP_WORTH;
+	}
+	
+	/**
+	 * @return the image
+	 */
+	@Override
+	public BufferedImage getImage()
+	{
+		return (getLoyalty() == Loyalty.RED) ? WHITE_BISHOP: BLACK_BISHOP;
+	}
+	
+	/**
+	 * @return the enumeration of this Piece subclass
+	 */
+	@Override
+	public int getEnum()
+	{
+		return 3;
 	}
 }

@@ -1,4 +1,5 @@
 package game.piece.chessPieces;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -7,6 +8,7 @@ import game.board.node.Node;
 import game.move.ChessMove;
 import game.move.Move;
 import game.piece.Piece;
+import game.piece.Piece.Loyalty;
 
 /**
  * A class representing a chess pawn
@@ -27,8 +29,6 @@ public class Pawn extends Piece
 	public Pawn(Loyalty loyalty) throws IOException
 	{
 		super(loyalty);
-		setWorth(PAWN_WORTH);
-		image = (getLoyalty() == Loyalty.RED) ? WHITE_PAWN: BLACK_PAWN;
 	}
 	
 	/**
@@ -41,8 +41,6 @@ public class Pawn extends Piece
 	public Pawn(Loyalty loyalty, Node node) throws IOException
 	{
 		super(loyalty, node);
-		setWorth(PAWN_WORTH);
-		image = (getLoyalty() == Loyalty.RED) ? WHITE_PAWN: BLACK_PAWN;
 	}
 	
 	/**
@@ -55,8 +53,6 @@ public class Pawn extends Piece
 	public Pawn(Piece piece, Node node) throws IOException
 	{
 		super(piece, node);
-		setWorth(PAWN_WORTH);
-		image = (getLoyalty() == Loyalty.RED) ? WHITE_PAWN: BLACK_PAWN;
 	}
 
 	/**
@@ -154,5 +150,32 @@ public class Pawn extends Piece
 	public Piece clone(Node node) throws IOException
 	{
 		return new Pawn(this, node);
+	}
+	
+	/**
+	 * @return the worth
+	 */
+	@Override
+	public double getWorth()
+	{
+		return PAWN_WORTH;
+	}
+	
+	/**
+	 * @return the image
+	 */
+	@Override
+	public BufferedImage getImage()
+	{
+		return (getLoyalty() == Loyalty.RED) ? WHITE_PAWN: BLACK_PAWN;
+	}
+	
+	/**
+	 * @return the enumeration of this Piece subclass
+	 */
+	@Override
+	public int getEnum()
+	{
+		return 1;
 	}
 }

@@ -184,6 +184,15 @@ public abstract class RectangularBoard extends Board
 			{
 				for(int j = 0; j < grid[0].length; j ++)
 				{
+					if(this.grid[i][j].getPiece() == null || other.grid[i][j].getPiece() == null)
+					{
+						if(!(this.grid[i][j].getPiece() == null && other.grid[i][j].getPiece() == null))
+						{
+							equal = false;
+						}
+						
+						continue;
+					}
 					if(!this.grid[i][j].getPiece().equals(other.grid[i][j].getPiece()))
 					{
 						equal = false;

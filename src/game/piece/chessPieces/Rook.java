@@ -1,5 +1,6 @@
 package game.piece.chessPieces;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -8,6 +9,7 @@ import game.board.node.Node;
 import game.move.ChessMove;
 import game.move.Move;
 import game.piece.Piece;
+import game.piece.Piece.Loyalty;
 
 /**
  * A class representing a chess rook
@@ -28,8 +30,6 @@ public class Rook extends Piece
 	public Rook(Loyalty loyalty) throws IOException
 	{
 		super(loyalty);
-		setWorth(ROOK_WORTH);
-		image = (getLoyalty() == Loyalty.RED) ? WHITE_ROOK: BLACK_ROOK;
 	}
 	
 	/**
@@ -42,8 +42,6 @@ public class Rook extends Piece
 	public Rook(Loyalty loyalty, Node node) throws IOException
 	{
 		super(loyalty, node);
-		setWorth(ROOK_WORTH);
-		image = (getLoyalty() == Loyalty.RED) ? WHITE_ROOK: BLACK_ROOK;
 	}
 	
 	/**
@@ -56,8 +54,6 @@ public class Rook extends Piece
 	public Rook(Piece piece, Node node) throws IOException
 	{
 		super(piece, node);
-		setWorth(ROOK_WORTH);
-		image = (getLoyalty() == Loyalty.RED) ? WHITE_ROOK: BLACK_ROOK;
 	}
 
 	/**
@@ -218,5 +214,32 @@ public class Rook extends Piece
 	public Piece clone(Node node) throws IOException
 	{
 		return new Rook(this, node);
+	}
+	
+	/**
+	 * @return the worth
+	 */
+	@Override
+	public double getWorth()
+	{
+		return ROOK_WORTH;
+	}
+	
+	/**
+	 * @return the image
+	 */
+	@Override
+	public BufferedImage getImage()
+	{
+		return (getLoyalty() == Loyalty.RED) ? WHITE_ROOK: BLACK_ROOK;
+	}
+	
+	/**
+	 * @return the enumeration of this Piece subclass
+	 */
+	@Override
+	public int getEnum()
+	{
+		return 4;
 	}
 }

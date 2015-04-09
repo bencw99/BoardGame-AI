@@ -53,6 +53,7 @@ public class AI extends Player
 	{
 		super(name, loyalty, game);
 		this.minimaxDepth = minimaxDepth;
+		this.transpositionTable = new HashMap<MinimaxNodeContents, Double>();
 	}
 
 	/**
@@ -267,6 +268,8 @@ public class AI extends Player
 		}
 		
 		int random = (int)(maxMovesIndeces.size()*Math.random());
+		
+		transpositionTable.clear();
 		
 		return possibleMovesArray[maxMovesIndeces.get(random)];
 	}

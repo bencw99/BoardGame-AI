@@ -1,5 +1,6 @@
 package game.piece.checkersPieces;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -29,8 +30,6 @@ public class King extends Piece
 	public King(Loyalty loyalty) throws IOException
 	{
 		super(loyalty);
-		setWorth(KING_WORTH);
-		image = (getLoyalty() == Loyalty.RED) ? RED_CHECKER_KING: BLACK_CHECKER_KING;
 	}
 	
 	/**
@@ -43,8 +42,6 @@ public class King extends Piece
 	public King(Loyalty loyalty, Node node) throws IOException
 	{
 		super(loyalty, node);
-		setWorth(KING_WORTH);
-		image = (getLoyalty() == Loyalty.RED) ? RED_CHECKER_KING: BLACK_CHECKER_KING;
 	}
 
 	/**
@@ -57,7 +54,6 @@ public class King extends Piece
 	public King(Piece piece, Node node) throws IOException
 	{
 		super(piece, node);
-		setWorth(KING_WORTH);
 	}
 	
 	/**
@@ -192,5 +188,32 @@ public class King extends Piece
 	public Piece clone(Node node) throws IOException
 	{
 		return new King(this, node);
+	}
+	
+	/**
+	 * @return the worth
+	 */
+	@Override
+	public double getWorth()
+	{
+		return KING_WORTH;
+	}
+	
+	/**
+	 * @return the image
+	 */
+	@Override
+	public BufferedImage getImage()
+	{
+		return (getLoyalty() == Loyalty.RED) ? RED_CHECKER_KING: BLACK_CHECKER_KING;
+	}
+	
+	/**
+	 * @return the enumeration of this Piece subclass
+	 */
+	@Override
+	public int getEnum()
+	{
+		return 2;
 	}
 }

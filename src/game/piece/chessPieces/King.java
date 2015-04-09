@@ -1,5 +1,6 @@
 package game.piece.chessPieces;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -8,6 +9,7 @@ import game.board.node.Node;
 import game.move.ChessMove;
 import game.move.Move;
 import game.piece.Piece;
+import game.piece.Piece.Loyalty;
 
 /**
  * A class representing a chess king
@@ -28,8 +30,6 @@ public class King extends Piece
 	public King(Loyalty loyalty) throws IOException
 	{
 		super(loyalty);
-		setWorth(KING_WORTH);
-		image = (getLoyalty() == Loyalty.RED) ? WHITE_KING: BLACK_KING;
 	}
 	
 	/**
@@ -42,8 +42,6 @@ public class King extends Piece
 	public King(Loyalty loyalty, Node node) throws IOException
 	{
 		super(loyalty, node);
-		setWorth(KING_WORTH);
-		image = (getLoyalty() == Loyalty.RED) ? WHITE_KING: BLACK_KING;
 	}
 	
 	/**
@@ -56,8 +54,6 @@ public class King extends Piece
 	public King(Piece piece, Node node) throws IOException
 	{
 		super(piece, node);
-		setWorth(KING_WORTH);
-		image = (getLoyalty() == Loyalty.RED) ? WHITE_KING: BLACK_KING;
 	}
 
 	/**
@@ -162,5 +158,32 @@ public class King extends Piece
 	public Piece clone(Node node) throws IOException
 	{
 		return new King(this, node);
+	}
+	
+	/**
+	 * @return the worth
+	 */
+	@Override
+	public double getWorth()
+	{
+		return KING_WORTH;
+	}
+	
+	/**
+	 * @return the image
+	 */
+	@Override
+	public BufferedImage getImage()
+	{
+		return (getLoyalty() == Loyalty.RED) ? WHITE_KING: BLACK_KING;
+	}
+	
+	/**
+	 * @return the enumeration of this Piece subclass
+	 */
+	@Override
+	public int getEnum()
+	{
+		return 6;
 	}
 }

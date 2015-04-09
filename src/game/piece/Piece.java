@@ -64,17 +64,11 @@ public abstract class Piece implements ImageObserver
 	/** The node that this piece belongs to **/
 	private Node node;
 	
-	/** The worth of this piece **/
-	private double worth;
-	
 	/** The boolean representing whether or not this piece has moved **/
 	private boolean hasMoved;
 	
 	/** The loyalty of this piece **/
 	private Loyalty loyalty;
-	
-	/** The image of this piece **/
-	protected BufferedImage image;
 	
 	/**The boolean describing the initialization state of the checkers images **/
 	protected static boolean imagesInitialized = false;
@@ -189,10 +183,10 @@ public abstract class Piece implements ImageObserver
 	 */
 	public void draw(Graphics graphics) 
 	{
-		int widthOffset = (getBoard().getNodeWidth() - image.getWidth())/2;
-		int heightOffset = (getBoard().getNodeHeight() - image.getHeight())/2;
+		int widthOffset = (getBoard().getNodeWidth() - getImage().getWidth())/2;
+		int heightOffset = (getBoard().getNodeHeight() - getImage().getHeight())/2;
 		
-		graphics.drawImage(image, getLoc().getCol()*getBoard().getNodeHeight() + widthOffset, getLoc().getRow()*getBoard().getNodeWidth() + heightOffset, this);
+		graphics.drawImage(getImage(), getLoc().getCol()*getBoard().getNodeHeight() + widthOffset, getLoc().getRow()*getBoard().getNodeWidth() + heightOffset, this);
 	}
 	
 	/**
@@ -263,10 +257,17 @@ public abstract class Piece implements ImageObserver
 	/**
 	 * @return the worth
 	 */
-	public double getWorth() 
-	{
-		return worth;
-	}
+	public abstract double getWorth();
+	
+	/**
+	 * @return the image
+	 */
+	public abstract BufferedImage getImage();
+	
+	/**
+	 * @return the enumeration of this Piece subclass
+	 */
+	public abstract int getEnum();
 
 	/**
 	 * @return	has moved
@@ -282,14 +283,6 @@ public abstract class Piece implements ImageObserver
 	public Loyalty getLoyalty()
 	{
 		return loyalty;
-	}
-	
-	/**
-	 * @param worth the worth to set
-	 */
-	public void setWorth(double worth) 
-	{
-		this.worth = worth;
 	}
 	
 	/**

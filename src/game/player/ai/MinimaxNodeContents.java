@@ -3,7 +3,9 @@ package game.player.ai;
 import game.Game;
 import game.board.Board;
 import game.board.RectangularBoard;
+import game.board.node.Node;
 import game.move.Move;
+import game.piece.Piece;
 import game.player.Player;
 
 import java.io.IOException;
@@ -81,11 +83,28 @@ public class MinimaxNodeContents
 	 * 
 	 *  @return the hash code
 	 */
-	@Override
-	public int hashCode()
-	{
-		return 0;
-	}
+//	@Override
+//	public int hashCode()
+//	{
+//		int sum = 0;
+//		int count = 0;
+//		
+//		for(Node node : game.getBoard().getNodes())
+//		{
+//			if(node.getPiece() == null)
+//			{
+//				sum += 0;
+//			}
+//			else
+//			{
+//				sum += Math.pow(16, count) * 0; // Zero should be some identifier for this piece
+//			}
+//			
+//			count ++;
+//		}
+//		
+//		return sum;
+//	}
 	
 	/**
 	 * Compares these contents with another

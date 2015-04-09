@@ -1,5 +1,6 @@
 package game.piece.checkersPieces;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -8,6 +9,7 @@ import game.board.node.Node;
 import game.move.CheckersMove;
 import game.move.Move;
 import game.piece.Piece;
+import game.piece.Piece.Loyalty;
 
 /**
  * A class describing a checkers soldier piece
@@ -28,8 +30,6 @@ public class Soldier extends Piece
 	public Soldier(Loyalty loyalty) throws IOException
 	{
 		super(loyalty);
-		setWorth(SOLDIER_WORTH);
-		image = (getLoyalty() == Loyalty.RED) ? RED_CHECKER: BLACK_CHECKER;
 	}
 	
 	/**
@@ -42,8 +42,6 @@ public class Soldier extends Piece
 	public Soldier(Loyalty loyalty, Node node) throws IOException
 	{
 		super(loyalty, node);
-		setWorth(SOLDIER_WORTH);
-		image = (getLoyalty() == Loyalty.RED) ? RED_CHECKER: BLACK_CHECKER;
 	}
 	
 	/**
@@ -56,7 +54,6 @@ public class Soldier extends Piece
 	public Soldier(Piece piece, Node node) throws IOException
 	{
 		super(piece, node);
-		setWorth(SOLDIER_WORTH);
 	}
 	
 	/**
@@ -169,5 +166,32 @@ public class Soldier extends Piece
 	public Piece clone(Node node) throws IOException
 	{
 		return new Soldier(this, node);
+	}
+	
+	/**
+	 * @return the worth
+	 */
+	@Override
+	public double getWorth()
+	{
+		return SOLDIER_WORTH;
+	}
+	
+	/**
+	 * @return the image
+	 */
+	@Override
+	public BufferedImage getImage()
+	{
+		return (getLoyalty() == Loyalty.RED) ? RED_CHECKER: BLACK_CHECKER;
+	}
+	
+	/**
+	 * @return the enumeration of this Piece subclass
+	 */
+	@Override
+	public int getEnum()
+	{
+		return 1;
 	}
 }

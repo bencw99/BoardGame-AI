@@ -1,5 +1,6 @@
 package game.piece.chessPieces;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -8,6 +9,7 @@ import game.board.node.Node;
 import game.move.ChessMove;
 import game.move.Move;
 import game.piece.Piece;
+import game.piece.Piece.Loyalty;
 
 /**
  * A class representing a chess queen
@@ -28,8 +30,6 @@ public class Queen extends Piece
 	public Queen(Loyalty loyalty) throws IOException
 	{
 		super(loyalty);
-		setWorth(QUEEN_WORTH);
-		image = (getLoyalty() == Loyalty.RED) ? WHITE_QUEEN: BLACK_QUEEN;
 	}
 	
 	/**
@@ -42,8 +42,6 @@ public class Queen extends Piece
 	public Queen(Loyalty loyalty, Node node) throws IOException
 	{
 		super(loyalty, node);
-		setWorth(QUEEN_WORTH);
-		image = (getLoyalty() == Loyalty.RED) ? WHITE_QUEEN: BLACK_QUEEN;
 	}
 	
 	/**
@@ -56,8 +54,6 @@ public class Queen extends Piece
 	public Queen(Piece piece, Node node) throws IOException
 	{
 		super(piece, node);
-		setWorth(QUEEN_WORTH);
-		image = (getLoyalty() == Loyalty.RED) ? WHITE_QUEEN: BLACK_QUEEN;
 	}
 
 	/**
@@ -122,5 +118,32 @@ public class Queen extends Piece
 	public Piece clone(Node node) throws IOException
 	{
 		return new Queen(this, node);
+	}
+	
+	/**
+	 * @return the worth
+	 */
+	@Override
+	public double getWorth()
+	{
+		return QUEEN_WORTH;
+	}
+	
+	/**
+	 * @return the image
+	 */
+	@Override
+	public BufferedImage getImage()
+	{
+		return (getLoyalty() == Loyalty.RED) ? WHITE_QUEEN: BLACK_QUEEN;
+	}
+	
+	/**
+	 * @return the enumeration of this Piece subclass
+	 */
+	@Override
+	public int getEnum()
+	{
+		return 5;
 	}
 }
