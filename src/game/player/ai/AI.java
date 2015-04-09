@@ -297,12 +297,12 @@ public class AI extends Player
 	 */
 	private double getMinimaxVal(MinimaxNode node, double alphaVal, double betaVal, double parentVal) throws IOException
 	{	
-//		Double transposedVal = transpositionTable.get(node.getContents());
-//		
-//		if(transposedVal != null)
-//		{
-//			return transposedVal;
-//		}
+		Double transposedVal = transpositionTable.get(node.getContents());
+		
+		if(transposedVal != null)
+		{
+			return transposedVal;
+		}
 		
 		double functionVal = functionVal(parentVal, node.getMove());
 		
@@ -361,7 +361,7 @@ public class AI extends Player
 			}
 		}
 		
-//		transpositionTable.put(node.getContents(), extreme);
+		transpositionTable.put(node.getContents(), extreme);
 		
 		return extreme;
 	}
