@@ -11,7 +11,7 @@ import game.player.Player;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.TreeMap;
 /**
  * A class representing a Human player associated with a game
  * 
@@ -23,13 +23,16 @@ public class AI extends Player
 	private final int minimaxDepth;
 	
 	/** The transposition table of this ai instance **/
-	private HashMap<MinimaxNodeContents, Double> transpositionTable;
+	private ArrayList<HashMap<MinimaxNodeContents, Double>> transpositionTables;
 	
-	/** The class describing the worths of pieces **/
-	private HashMap<Class<? extends Piece>, Double> worthMap;
+	/** The map containing the worths of pieces **/
+	private TreeMap<Class<? extends Piece>, Double> worthMap;
 	
 	/** The depth of the minimax search **/
 	private static final int DEFAULT_MINIMAX_DEPTH = 12;
+	
+	/** The minimax threads to run while other players turns are running **/
+	MinimaxValueFinder[] minimaxThreads;
 	
 	/**
 	 * Parameterized constructor, initializes name, pieces, and loyalty
@@ -53,7 +56,7 @@ public class AI extends Player
 	{
 		super(name, loyalty, game);
 		this.minimaxDepth = minimaxDepth;
-		this.transpositionTable = new HashMap<MinimaxNodeContents, Double>();
+		this.transpositionTables = new ArrayList<HashMap<MinimaxNodeContents, Double>>();
 	}
 
 	/**
@@ -215,10 +218,9 @@ public class AI extends Player
 			possibleNextNodes[i] = currentNode.getNextNode(possibleMoves.get(i));
 		}
 		
-		double maxMinimaxVal = getMinimaxVal(possibleNextNodes[0], Integer.MIN_VALUE, Integer.MAX_VALUE);
+		double maxMinimaxVal = Integer.MIN_VALUE;
 		
 		ArrayList<Integer> maxMovesIndeces = new ArrayList<Integer>();
-		maxMovesIndeces.add(0);
 		
 		MinimaxValueFinder[] minimaxThreads = new MinimaxValueFinder[possibleNextNodes.length];
 		
@@ -269,7 +271,7 @@ public class AI extends Player
 		
 		int random = (int)(maxMovesIndeces.size()*Math.random());
 		
-		transpositionTable.clear();
+		transpositionTables.clear();
 		
 		return possibleMovesArray[maxMovesIndeces.get(random)];
 	}
@@ -297,15 +299,42 @@ public class AI extends Player
 	 */
 	private double getMinimaxVal(MinimaxNode node, double alphaVal, double betaVal, double parentVal) throws IOException
 	{	
-		Double transposedVal = transpositionTable.get(node.getContents());
+		/** Dynamic programming transposition table search **/
 		
-		if(transposedVal != null)
+		/** Hash table initialization for this level **/
+		if(transpositionTables.size() <= node.getMinimaxDepth())
 		{
-			return transposedVal;
+			transpositionTables.add(new HashMap<MinimaxNodeContents, Double>());
+		}
+		else
+		{
+			/** Search for any similar nodes in smaller or equal depth of tree **/
+			
+			/** Currently out of use, unclear if beneficial
+			for(int i = node.getMinimaxDepth(); i >= 0; i --)
+			{
+				Double transposedVal = transpositionTables.get(i).get(node.getContents());
+				
+				if(transposedVal != null)
+				{
+					return transposedVal;
+				}
+			}
+			**/
+			
+			/** Case of match: value returned **/
+			Double transposedVal = transpositionTables.get(node.getMinimaxDepth()).get(node.getContents());
+			
+			if(transposedVal != null)
+			{
+				return transposedVal;
+			}
 		}
 		
+		/** Heuristic of this node based on parent heuristic **/
 		double functionVal = functionVal(parentVal, node.getMove());
 		
+		/** Leaf node case testing **/
 		if(node.getMinimaxDepth() >= minimaxDepth)
 		{
 		  	return functionVal;
@@ -322,8 +351,10 @@ public class AI extends Player
 		
 		double extreme;
 		
+		/** Heuristic sorts children for alpha-beta optimizations **/
 //		heuristicSort(nextMoves, node, thisPlayersTurn, functionVal);
 		
+		/** Minimax evaluations **/
 		if(thisPlayersTurn)
 		{
 			extreme = Integer.MIN_VALUE;
@@ -361,7 +392,8 @@ public class AI extends Player
 			}
 		}
 		
-		transpositionTable.put(node.getContents(), extreme);
+		/** Transposition table insertion **/
+		transpositionTables.get(node.getMinimaxDepth()).put(node.getContents(), extreme);
 		
 		return extreme;
 	}
@@ -377,12 +409,29 @@ public class AI extends Player
 	 */
 	private double getMinimaxVal(MinimaxNode node, double alphaVal, double betaVal) throws IOException
 	{	
-//		Double transposedVal = transpositionTable.get(node.getContents());
-//		
-//		if(transposedVal != null)
-//		{
-//			return transposedVal;
-//		}
+		if(transpositionTables.size() <= node.getMinimaxDepth())
+		{
+			transpositionTables.add(new HashMap<MinimaxNodeContents, Double>());
+		}
+		else
+		{
+//			for(int i = node.getMinimaxDepth(); i >= 0; i --)
+//			{
+//				Double transposedVal = transpositionTables.get(i).get(node.getContents());
+//				
+//				if(transposedVal != null)
+//				{
+//					return transposedVal;
+//				}
+//			}
+			
+			Double transposedVal = transpositionTables.get(node.getMinimaxDepth()).get(node.getContents());
+			
+			if(transposedVal != null)
+			{
+				return transposedVal;
+			}
+		}
 		
 		if(node.getMinimaxDepth() >= minimaxDepth)
 		{
@@ -438,8 +487,8 @@ public class AI extends Player
 				}
 			}
 		}
-		
-//		transpositionTable.put(node.getContents(), extreme);
+
+		transpositionTables.get(node.getMinimaxDepth()).put(node.getContents(), extreme);
 		
 		return extreme;
 	}
@@ -774,6 +823,67 @@ public class AI extends Player
 		return functionVal;
 	}
 	
+	
+	public double rankMove(MinimaxNode node, Move move)
+	{
+		
+		
+		return 0;
+	}
+	
+	/**
+	 * Initializes threads to evaluate other player's moves 
+	 * 
+	 * @throws IOException 
+	 * @param player the player to be evaluated
+	 */
+	public void startPlayerEvaluationThreads(Player player) throws IOException
+	{
+		ArrayList<Move> possibleMoves = player.getPossibleMoves();
+		
+		Move[] possibleMovesArray = new Move[possibleMoves.size()];
+		
+		MinimaxNode[] possibleNextNodes = new MinimaxNode[possibleMoves.size()];
+		
+		MinimaxNode currentNode = new MinimaxNode(0, new Game(player.getGame()), null, null, 0, true);
+		
+		for(int i = 0; i < possibleMoves.size(); i ++)
+		{
+			possibleMovesArray[i] = possibleMoves.get(i);
+			possibleNextNodes[i] = currentNode.getNextNode(possibleMoves.get(i));
+		}
+		
+		minimaxThreads = new MinimaxValueFinder[possibleNextNodes.length];
+		
+		for(int i = 0; i < minimaxThreads.length; i ++)
+		{
+			/** This piece should be changed to evaluate for player, not for the instance of AI **/
+			minimaxThreads[i] = new MinimaxValueFinder(possibleNextNodes[i]);
+			minimaxThreads[i].start();
+		}
+	}
+	
+	/**
+	 * Evaluates a player based off of minimax results
+	 */
+	public void finishPlayerEvaluationThreads()
+	{
+		boolean threadsHaveFinished = true;
+		
+		for(int i = 0; i < minimaxThreads.length; i ++)
+		{
+			if(minimaxThreads[i].isAlive())
+			{
+				threadsHaveFinished = false;
+			}
+		}
+		
+		if(threadsHaveFinished)
+		{
+			
+		}
+	}
+	
 	private void generateWorths()
 	{
 		Game testGame = new Game(getGame());
@@ -789,30 +899,12 @@ public class AI extends Player
 			}
 		}
 		
-		for(Class<? extends Piece> pieceType : ((AI) testGame.getPlayers()[0]).worthMap.keySet())
+		for(int i = 0; i <= 100; i ++)
 		{
-			boolean stable = false;
-			
-			while(!testGame.isCompleted())
+			for(Class<? extends Piece> pieceType : ((AI) testGame.getPlayers()[0]).worthMap.keySet())
 			{
-				try
-				{
-					testGame.executeTurn();
-				} 
-				catch (IOException e)
-				{
-					e.printStackTrace();
-				}
-			}
-			
-			double previousVal = functionVal(testGame);
-			double currentVal;
-			double derivative = 0;
-			
-			//Increment worth map of piece type
-			
-			while(!stable)
-			{
+				boolean stable = false;
+				
 				while(!testGame.isCompleted())
 				{
 					try
@@ -825,49 +917,73 @@ public class AI extends Player
 					}
 				}
 				
-				currentVal = functionVal(testGame);
+				double previousVal = functionVal(testGame);
+				double currentVal;
+				double derivative = 0;
+				double increment = 0.1;
 				
-				double thisDeriv = currentVal - previousVal;
+				Double pieceWorth = worthMap.get(pieceType);
 				
-				if(thisDeriv > 0)
-				{	
-					if(derivative < 0)
-					{
-						stable = true;
-					}
-				}
-				else
+				pieceWorth += increment;
+				
+				while(!stable)
 				{
-					//Switch sign of increment
+					while(!testGame.isCompleted())
+					{
+						try
+						{
+							testGame.executeTurn();
+						} 
+						catch (IOException e)
+						{
+							e.printStackTrace();
+						}
+					}
+					
+					currentVal = functionVal(testGame);
+					
+					double thisDeriv = currentVal - previousVal;
+					
+					if(thisDeriv > 0)
+					{	
+						if(derivative < 0)
+						{
+							stable = true;
+						}
+					}
+					else
+					{
+						increment *= -1;
+					}
+					
+					pieceWorth += increment;
+					
+					derivative = currentVal - previousVal;
+					
+					previousVal = currentVal;
+					
+					Player[] oldPlayers = testGame.getPlayers();
+					
+					testGame = new Game(getGame());
+					
+					testGame.setPlayers(oldPlayers);
 				}
-				
-				//Increment worth map of piece type
-				
-				derivative = currentVal - previousVal;
-				
-				previousVal = currentVal;
-				
-				Player[] oldPlayers = testGame.getPlayers();
-				
-				testGame = new Game(getGame());
-				
-				testGame.setPlayers(oldPlayers);
 			}
 		}
 	}
 	
 	/**
-	 * @return the worthmap of this AI
+	 * @return the worth map of this AI
 	 */
-	public HashMap<Class<? extends Piece>, Double> getWorthMap()
+	public TreeMap<Class<? extends Piece>, Double> getWorthMap()
 	{
 		return worthMap;
 	}
 	
 	/**
-	 * @return the worthmap of this AI
+	 * @return the worth map of this AI
 	 */
-	public void setWorthMap(HashMap<Class<? extends Piece>, Double> worthMap)
+	public void setWorthMap(TreeMap<Class<? extends Piece>, Double> worthMap)
 	{
 		this.worthMap = worthMap;
 	}
@@ -877,7 +993,7 @@ public class AI extends Player
 	 * 
 	 * @author Benjamin Cohen-Wang
 	 */
-	private class MinimaxValueFinder extends Thread
+	public class MinimaxValueFinder extends Thread
 	{
 		/** The minimax node of this minimax value finder **/
 		private MinimaxNode node;

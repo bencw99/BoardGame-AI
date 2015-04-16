@@ -4,12 +4,16 @@ import java.awt.Graphics;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 
 import game.board.*;
 import game.move.Move;
 import game.piece.Piece.Loyalty;
 import game.player.*;
 import game.player.ai.AI;
+import game.player.ai.Dummy;
+import game.player.ai.MinimaxNode;
+import game.player.ai.AI.MinimaxValueFinder;
 
 /**
  * A class representing a checkers game
@@ -73,7 +77,7 @@ public class Game
 	}
 	
 	/**
-	 * Parameterized constructor, makes this game a copy of the given game
+	 * Parameterized constructor, makes this game a copy of the given game with dummy players
 	 * 
 	 * @param game	the game whose copy is made
 	 */
@@ -85,7 +89,7 @@ public class Game
 		
 		for(int i = 0; i < players.length; i ++)
 		{
-			players[i] = new AI(null, game.getPlayers()[i].getLoyalty(), this);
+			players[i] = new Dummy(null, game.getPlayers()[i].getLoyalty(), this);
 		}
 		
 		this.board = game.getBoard().clone(this);  

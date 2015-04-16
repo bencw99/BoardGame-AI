@@ -8,6 +8,7 @@ import game.move.Move;
 import game.piece.Piece;
 import game.piece.Piece.Loyalty;
 import game.piece.chessPieces.*;
+import game.player.ai.MinimaxNode;
 import gui.GamePanel;
 
 import java.awt.event.KeyEvent;
@@ -15,6 +16,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -48,8 +50,9 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 	 * Returns the move executed this turn
 	 * 
 	 * @return	the move to be executed this turn
+	 * @throws IOException 
 	 */
-	public Move getThisTurnMove()
+	public Move getThisTurnMove() throws IOException
 	{
 		if(isDefeated())
 		{
@@ -61,7 +64,7 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 		promotionType = null;
 		
 		while(!moveRegistered)
-		{
+		{	
 			try
 			{
 				Thread.sleep(50);
@@ -267,7 +270,7 @@ public class Human extends Player implements MouseMotionListener, MouseListener,
 			GamePanel.frame.repaint();
 		}
 	}
-
+	
 	public void keyReleased(KeyEvent arg0)
 	{
 		

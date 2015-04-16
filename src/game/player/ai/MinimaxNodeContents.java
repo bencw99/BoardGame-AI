@@ -90,6 +90,23 @@ public class MinimaxNodeContents
 		
 		for(Node node : game.getBoard().getNodes())
 		{
+			/* Following values subject to testing and change */
+			sum *= 31;
+			
+			/* Alternate values: 
+			 * 7
+			 * 31
+			 */
+			
+			sum %= 1129963;
+			
+			/* Alternate values: 
+			 * 107374
+			 * 15485867
+			 * 982451653
+			 */
+
+			
 			if(node.getPiece() == null)
 			{
 				sum += 0;
@@ -98,10 +115,6 @@ public class MinimaxNodeContents
 			{
 				sum += node.getPiece().getEnum(); // Zero should be some identifier for this piece
 			}
-			
-			/* Following values subject to testing and change */
-			sum *= 31;
-			sum %= 104729;
 		}
 		
 		return sum;
