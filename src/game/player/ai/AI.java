@@ -823,14 +823,6 @@ public class AI extends Player
 		return functionVal;
 	}
 	
-	
-	public double rankMove(MinimaxNode node, Move move)
-	{
-		
-		
-		return 0;
-	}
-	
 	/**
 	 * Initializes threads to evaluate other player's moves 
 	 * 
@@ -866,7 +858,7 @@ public class AI extends Player
 	/**
 	 * Evaluates a player based off of minimax results
 	 */
-	public void finishPlayerEvaluationThreads()
+	public void finishPlayerEvaluationThreads(Player player)
 	{
 		boolean threadsHaveFinished = true;
 		
@@ -880,7 +872,37 @@ public class AI extends Player
 		
 		if(threadsHaveFinished)
 		{
+			MinimaxNodeContents newContents = new MinimaxNodeContents(player.getGame());
+			int chosenIndex = 0;
+			double chosenValue = 0;
 			
+			for(int i = 0; i < minimaxThreads.length; i ++)
+			{
+				if(minimaxThreads[i].getNode().getContents().equals(newContents))
+				{
+					chosenValue = minimaxThreads[i].getMinimaxValue();
+					chosenIndex = i;
+				}
+				
+				System.out.println("Move " + i + ": " + minimaxThreads[i].getMinimaxValue());
+			}
+			
+			System.out.println("Move chosen: " + chosenIndex + " with value " + chosenValue);
+			
+			int count = 0;
+			int smallerCount = 0;
+			
+			for(MinimaxValueFinder minimaxThread : minimaxThreads)
+			{
+				count ++;
+				
+				if(minimaxThread.getMinimaxValue() < chosenValue)
+				{
+					smallerCount ++;
+				}
+			}
+			
+			double evaluatedRank = smallerCount/count;
 		}
 	}
 	
@@ -1034,6 +1056,16 @@ public class AI extends Player
 		public double getMinimaxValue()
 		{
 			return minimaxValue;
+		}
+		
+		/**
+		 * Returns the minimax node of this instance
+		 * 
+		 * @return	the minimax node of this instance
+		 */
+		public MinimaxNode getNode()
+		{
+			return node;
 		}
 	}
 }
