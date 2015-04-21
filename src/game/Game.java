@@ -130,25 +130,31 @@ public class Game
 	{
 		Player thisPlayer = players[turn.getVal()];
 		
-//		for(Player player : players)
-//		{
-//			if(player instanceof AI)
-//			{
-//				((AI) player).startPlayerEvaluationThreads(thisPlayer);
-//			}
-//		}
+		if(thisPlayer instanceof Human)
+		{
+			for(Player player : players)
+			{
+				if(player instanceof AI)
+				{
+					((AI) player).startPlayerEvaluationThreads(thisPlayer);
+				}
+			}
+		}
 		
 		Move move = thisPlayer.getThisTurnMove();
 		
 		if(thisPlayer.isDefeated())
 		{	
-//			for(Player player : players)
-//			{
-//				if(player instanceof AI)
-//				{
-//					((AI) player).finishPlayerEvaluationThreads(thisPlayer);
-//				}
-//			}
+			if(thisPlayer instanceof Human)
+			{
+				for(Player player : players)
+				{
+					if(player instanceof AI)
+					{
+						((AI) player).finishPlayerEvaluationThreads(thisPlayer);
+					}
+				}
+			}
 			
 			return;
 		}
@@ -177,13 +183,16 @@ public class Game
 				
 		turn = turn.getOther();
 		
-//		for(Player player : players)
-//		{
-//			if(player instanceof AI)
-//			{
-//				((AI) player).finishPlayerEvaluationThreads(thisPlayer);
-//			}
-//		}
+		if(thisPlayer instanceof Human)
+		{
+			for(Player player : players)
+			{
+				if(player instanceof AI)
+				{
+					((AI) player).finishPlayerEvaluationThreads(thisPlayer);
+				}
+			}
+		}
 	}
 	
 	/**

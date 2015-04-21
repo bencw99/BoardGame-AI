@@ -65,11 +65,14 @@ public class AI extends Player
 	 * @return	the move to be executed this turn
 	 * @throws IOException 
 	 */
+	@Override
 	public Move getThisTurnMove() throws IOException
 	{	
 		/*
 		 * Idea: Use the minimax algorithm evaluation function to teach board game playing and comments on moves made
 		 */
+		
+		transpositionTables.clear();
 		
 		double initialTime = System.nanoTime();
 		
@@ -271,8 +274,6 @@ public class AI extends Player
 		
 		int random = (int)(maxMovesIndeces.size()*Math.random());
 		
-		transpositionTables.clear();
-		
 		return possibleMovesArray[maxMovesIndeces.get(random)];
 	}
 	
@@ -297,7 +298,7 @@ public class AI extends Player
 	 * @return	the minimax val of the given move
 	 * @throws IOException 
 	 */
-	private double getMinimaxVal(MinimaxNode node, double alphaVal, double betaVal, double parentVal) throws IOException
+	private double getMinimaxVal(MinimaxNode node, double alphaVal, double betaVal, Double parentVal, int specificMinimaxDepth) throws IOException
 	{	
 		/** Dynamic programming transposition table search **/
 		
@@ -332,10 +333,20 @@ public class AI extends Player
 		}
 		
 		/** Heuristic of this node based on parent heuristic **/
-		double functionVal = functionVal(parentVal, node.getMove());
+		double functionVal;
+		
+		if(parentVal != null)
+		{
+			functionVal = functionVal(parentVal, node.getMove());
+		}
+		else
+		{
+			functionVal = functionVal(node);
+		}
+		
 		
 		/** Leaf node case testing **/
-		if(node.getMinimaxDepth() >= minimaxDepth)
+		if(node.getMinimaxDepth() >= specificMinimaxDepth)
 		{
 		  	return functionVal;
 		}
@@ -404,93 +415,41 @@ public class AI extends Player
 	 * @param minimaxNode	the move whose minimax val is evaluated
 	 * @param alphaVal	the alpha value of this minimax evaluation
 	 * @param betaVal	the beta value of this minimax evaluation
+	 * @param parentVal	the function value of the paret of this node
+	 * @return	the minimax val of the given move
+	 * @throws IOException 
+	 */
+	private double getMinimaxVal(MinimaxNode node, double alphaVal, double betaVal, Double parentVal) throws IOException
+	{	
+		return this.getMinimaxVal(node, alphaVal, betaVal, parentVal, this.minimaxDepth);
+	}
+	
+	/**
+	 * Returns the minimax val of the given move
+	 * 
+	 * @param minimaxNode	the move whose minimax val is evaluated
+	 * @param alphaVal	the alpha value of this minimax evaluation
+	 * @param betaVal	the beta value of this minimax evaluation
 	 * @return	the minimax val of the given move
 	 * @throws IOException 
 	 */
 	private double getMinimaxVal(MinimaxNode node, double alphaVal, double betaVal) throws IOException
 	{	
-		if(transpositionTables.size() <= node.getMinimaxDepth())
-		{
-			transpositionTables.add(new HashMap<MinimaxNodeContents, Double>());
-		}
-		else
-		{
-//			for(int i = node.getMinimaxDepth(); i >= 0; i --)
-//			{
-//				Double transposedVal = transpositionTables.get(i).get(node.getContents());
-//				
-//				if(transposedVal != null)
-//				{
-//					return transposedVal;
-//				}
-//			}
-			
-			Double transposedVal = transpositionTables.get(node.getMinimaxDepth()).get(node.getContents());
-			
-			if(transposedVal != null)
-			{
-				return transposedVal;
-			}
-		}
-		
-		if(node.getMinimaxDepth() >= minimaxDepth)
-		{
-		  	return functionVal(node);
-		}
-		
-		ArrayList<Move> nextMoves = node.getNextMoves();
-		
-		if(node.getGame().getPlayers()[node.getGame().getTurn().getVal()].isDefeated())
-		{
-		  	return functionVal(node);
-		}
-		
-		boolean thisPlayersTurn = getLoyalty().getVal() == node.getGame().getTurn().getVal();
-		
-		double extreme;
-		
-//		heuristicSort(nextMoves, node, thisPlayersTurn);
-		
-		if(thisPlayersTurn)
-		{
-			extreme = Integer.MIN_VALUE;
-			
-			for(Move nextMove : nextMoves)
-			{	
-				double maxCand = getMinimaxVal(node.getNextNode(nextMove), alphaVal, betaVal);
-				
-				extreme = Math.max(extreme, maxCand);
-				
-				alphaVal = Math.max(alphaVal, maxCand);
-				
-				if(alphaVal >= betaVal)
-				{
-					break;
-				}
-			}
-		} 
-		else
-		{
-			extreme = Integer.MAX_VALUE;
-			
-			for(Move nextMove : nextMoves)
-			{
-				double minCand = getMinimaxVal(node.getNextNode(nextMove), alphaVal, betaVal);
-
-				extreme = Math.min(extreme, minCand);
-				
-				betaVal = Math.min(betaVal, minCand);
-				
-				if(alphaVal >= betaVal)
-				{
-					break;
-				}
-			}
-		}
-
-		transpositionTables.get(node.getMinimaxDepth()).put(node.getContents(), extreme);
-		
-		return extreme;
+		return this.getMinimaxVal(node, alphaVal, betaVal, null);
+	}
+	
+	/**
+	 * Returns the minimax val of the given move
+	 * 
+	 * @param minimaxNode	the move whose minimax val is evaluated
+	 * @param alphaVal	the alpha value of this minimax evaluation
+	 * @param betaVal	the beta value of this minimax evaluation
+	 * @return	the minimax val of the given move
+	 * @throws IOException 
+	 */
+	private double getMinimaxVal(MinimaxNode node, double alphaVal, double betaVal, int specificMinimaxDepth) throws IOException
+	{	
+		return this.getMinimaxVal(node, alphaVal, betaVal, null, specificMinimaxDepth);
 	}
 	
 	/**
@@ -831,9 +790,9 @@ public class AI extends Player
 	 */
 	public void startPlayerEvaluationThreads(Player player) throws IOException
 	{
-		ArrayList<Move> possibleMoves = player.getPossibleMoves();
+		transpositionTables.clear();
 		
-		Move[] possibleMovesArray = new Move[possibleMoves.size()];
+		ArrayList<Move> possibleMoves = player.getPossibleMoves();
 		
 		MinimaxNode[] possibleNextNodes = new MinimaxNode[possibleMoves.size()];
 		
@@ -841,7 +800,6 @@ public class AI extends Player
 		
 		for(int i = 0; i < possibleMoves.size(); i ++)
 		{
-			possibleMovesArray[i] = possibleMoves.get(i);
 			possibleNextNodes[i] = currentNode.getNextNode(possibleMoves.get(i));
 		}
 		
@@ -850,9 +808,11 @@ public class AI extends Player
 		for(int i = 0; i < minimaxThreads.length; i ++)
 		{
 			/** This piece should be changed to evaluate for player, not for the instance of AI **/
-			minimaxThreads[i] = new MinimaxValueFinder(possibleNextNodes[i]);
+			minimaxThreads[i] = new MinimaxValueFinder(possibleNextNodes[i], functionVal(currentNode));
 			minimaxThreads[i].start();
 		}
+		
+		System.out.println("Evaluation threads initialized");
 	}
 	
 	/**
@@ -860,49 +820,44 @@ public class AI extends Player
 	 */
 	public void finishPlayerEvaluationThreads(Player player)
 	{
-		boolean threadsHaveFinished = true;
+		MinimaxNodeContents newContents = new MinimaxNodeContents(player.getGame());
+		int chosenIndex = 0;
+		double chosenValue = 0;
 		
 		for(int i = 0; i < minimaxThreads.length; i ++)
 		{
-			if(minimaxThreads[i].isAlive())
+			if(minimaxThreads[i].getNode().getContents().equals(newContents))
 			{
-				threadsHaveFinished = false;
+				chosenValue = minimaxThreads[i].getMinimaxValue();
+				chosenIndex = i;
 			}
+			
+			System.out.println("Move " + i + ": " + minimaxThreads[i].getMinimaxValue());
 		}
 		
-		if(threadsHaveFinished)
+		System.out.println("Move chosen: " + chosenIndex + " with value " + chosenValue);
+		
+		int count = 0;
+		int smallerCount = 0;
+		
+		for(MinimaxValueFinder minimaxThread : minimaxThreads)
 		{
-			MinimaxNodeContents newContents = new MinimaxNodeContents(player.getGame());
-			int chosenIndex = 0;
-			double chosenValue = 0;
+			count ++;
 			
-			for(int i = 0; i < minimaxThreads.length; i ++)
+			if(minimaxThread.getMinimaxValue() < chosenValue)
 			{
-				if(minimaxThreads[i].getNode().getContents().equals(newContents))
-				{
-					chosenValue = minimaxThreads[i].getMinimaxValue();
-					chosenIndex = i;
-				}
-				
-				System.out.println("Move " + i + ": " + minimaxThreads[i].getMinimaxValue());
+				smallerCount ++;
 			}
+		}
 			
-			System.out.println("Move chosen: " + chosenIndex + " with value " + chosenValue);
-			
-			int count = 0;
-			int smallerCount = 0;
-			
-			for(MinimaxValueFinder minimaxThread : minimaxThreads)
-			{
-				count ++;
-				
-				if(minimaxThread.getMinimaxValue() < chosenValue)
-				{
-					smallerCount ++;
-				}
-			}
-			
-			double evaluatedRank = smallerCount/count;
+		double evaluatedRank = smallerCount/count;
+		
+		System.out.println("Evaluated Rank: " + evaluatedRank);
+
+		for(int i = 0; i < minimaxThreads.length; i ++)
+		{
+			/** Find alternative way to stop this thread **/
+			minimaxThreads[i].stop();
 		}
 	}
 	
@@ -921,7 +876,7 @@ public class AI extends Player
 			}
 		}
 		
-		for(int i = 0; i <= 100; i ++)
+		for(int i = 0; i <= 10; i ++)
 		{
 			for(Class<? extends Piece> pieceType : ((AI) testGame.getPlayers()[0]).worthMap.keySet())
 			{
@@ -1023,6 +978,9 @@ public class AI extends Player
 		/** The minimax value of this minimax value finder **/
 		private double minimaxValue;
 		
+		/** The parent function value of this minimax value finder **/
+		private Double parentValue;
+		
 		/**
 		 * Parameterized constructor, initializes MinimaxValue instance to given node
 		 * 
@@ -1030,21 +988,53 @@ public class AI extends Player
 		 */
 		public MinimaxValueFinder(MinimaxNode node)
 		{
+			this(node, null);
+		}
+		
+		/**
+		 * Parameterized constructor, initializes MinimaxValue instance to given node
+		 * 
+		 * @param node	the node to be set to
+		 */
+		public MinimaxValueFinder(MinimaxNode node, Double parentValue)
+		{
 			this.node = node;
+			this.parentValue = parentValue;
 		}
 
 		/**
 		 * Evaluates the minimax val of the node of this instance
 		 */
+		@Override
 		public void run()
 		{
-			try
+			if(parentValue == null)
 			{
-				minimaxValue = getMinimaxVal(node, Integer.MIN_VALUE, Integer.MAX_VALUE);
-			} 
-			catch (IOException exception)
+				for(int i = 1; i <= minimaxDepth; i ++)
+				{
+					try
+					{
+						minimaxValue = getMinimaxVal(node, Integer.MIN_VALUE, Integer.MAX_VALUE, minimaxDepth);
+					} 
+					catch (IOException exception)
+					{
+						exception.printStackTrace();
+					}
+				}
+			}
+			else
 			{
-				exception.printStackTrace();
+				for(int i = 1; i <= minimaxDepth; i ++)
+				{
+					try
+					{
+						minimaxValue = getMinimaxVal(node, Integer.MIN_VALUE, Integer.MAX_VALUE, parentValue, minimaxDepth);
+					} 
+					catch (IOException exception)
+					{
+						exception.printStackTrace();
+					}
+				}
 			}
 		}
 		
