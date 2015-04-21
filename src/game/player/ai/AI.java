@@ -837,20 +837,20 @@ public class AI extends Player
 		
 		System.out.println("Move chosen: " + chosenIndex + " with value " + chosenValue);
 		
-		int count = 0;
-		int smallerCount = 0;
+		double count = 0;
+		double greaterCount = 0;
 		
 		for(MinimaxValueFinder minimaxThread : minimaxThreads)
 		{
 			count ++;
 			
-			if(minimaxThread.getMinimaxValue() < chosenValue)
+			if(minimaxThread.getMinimaxValue() > chosenValue)
 			{
-				smallerCount ++;
+				greaterCount ++;
 			}
 		}
 			
-		double evaluatedRank = smallerCount/count;
+		double evaluatedRank = (count - greaterCount)/count;
 		
 		System.out.println("Evaluated Rank: " + evaluatedRank);
 
