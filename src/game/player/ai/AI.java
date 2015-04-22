@@ -298,7 +298,7 @@ public class AI extends Player
 	 * @return	the minimax val of the given move
 	 * @throws IOException 
 	 */
-	private double getMinimaxVal(MinimaxNode node, double alphaVal, double betaVal, Double parentVal, int specificMinimaxDepth) throws IOException
+	private double getMinimaxVal(MinimaxNode node, double alphaVal, double betaVal, Double parentVal, int specificMinimaxDepth, Player maximizedPlayer) throws IOException
 	{	
 		/** Dynamic programming transposition table search **/
 		
@@ -337,11 +337,11 @@ public class AI extends Player
 		
 		if(parentVal != null)
 		{
-			functionVal = functionVal(parentVal, node.getMove());
+			functionVal = functionVal(parentVal, node.getMove(), maximizedPlayer);
 		}
 		else
 		{
-			functionVal = functionVal(node);
+			functionVal = functionVal(node, maximizedPlayer);
 		}
 		
 		
@@ -355,10 +355,10 @@ public class AI extends Player
 		
 		if(node.getGame().getPlayers()[node.getGame().getTurn().getVal()].isDefeated())
 		{
-		  	return functionVal(node);
+		  	return functionVal(node, maximizedPlayer);
 		}
 		
-		boolean thisPlayersTurn = getLoyalty().getVal() == node.getGame().getTurn().getVal();
+		boolean thisPlayersTurn = maximizedPlayer.getLoyalty().getVal() == node.getGame().getTurn().getVal();
 		
 		double extreme;
 		
@@ -407,6 +407,32 @@ public class AI extends Player
 		transpositionTables.get(node.getMinimaxDepth()).put(node.getContents(), extreme);
 		
 		return extreme;
+	}
+	
+	/**
+	 * Computes an appropriate depth for the minimax search executed this turn
+	 * 
+	 * @param node	the node at which the search begins
+	 * @return	an appropriate depth from this node
+	 */
+//	private int getAppropriateDepth(MinimaxNode node)
+//	{
+//		return minimaxDepth;
+//	}
+	
+	/**
+	 * Returns the minimax val of the given move
+	 * 
+	 * @param minimaxNode	the move whose minimax val is evaluated
+	 * @param alphaVal	the alpha value of this minimax evaluation
+	 * @param betaVal	the beta value of this minimax evaluation
+	 * @param parentVal	the function value of the paret of this node
+	 * @return	the minimax val of the given move
+	 * @throws IOException 
+	 */
+	private double getMinimaxVal(MinimaxNode node, double alphaVal, double betaVal, Double parentVal, int specificMinimaxDepth) throws IOException
+	{	
+		return this.getMinimaxVal(node, alphaVal, betaVal, parentVal, specificMinimaxDepth, this);
 	}
 	
 	/**
@@ -637,77 +663,18 @@ public class AI extends Player
 	 */
 	private double functionVal(MinimaxNode node)
 	{
-		Player[] players = node.getGame().getPlayers();
-		double functionVal = 0;
-		
-		boolean hasWon = true;
-		
-//		HashSet<Node> attackedNodes = new HashSet<Node>();
-//		HashSet<Node> enemyAttackedNodes = new HashSet<Node>();
-		
-		for(Player enemy : players) 
-		{
-			if(enemy.getLoyalty() != this.getLoyalty())
-			{
-				if(!enemy.isDefeated())
-				{
-					hasWon = false;
-				}
-			}
-		}
-		
-		if(hasWon)
-		{
-			return Integer.MAX_VALUE;
-		}
-		
-		if(isDefeated())
-		{
-			return Integer.MIN_VALUE;
-		}
-		
-		for(Node gridNode : node.getGame().getBoard().getNodes())
-		{
-			Piece piece = gridNode.getPiece();
-			
-			if(piece != null)
-			{
-				if(piece.getLoyalty() == getLoyalty())
-				{
-					functionVal += piece.getWorth();
-					
-//					ArrayList<Move> possibleMoves = piece.getPossibleMoves();
-//					
-//					for(Move possibleMove : possibleMoves)
-//					{
-//						attackedNodes.add(possibleMove.getNodes().get(possibleMove.getNodes().size() - 1));
-//					}
-				}
-				else
-				{
-					functionVal -= piece.getWorth();
-					
-//					ArrayList<Move> possibleMoves = piece.getPossibleMoves();
-//					
-//					for(Move possibleMove : possibleMoves)
-//					{
-//						enemyAttackedNodes.add(possibleMove.getNodes().get(possibleMove.getNodes().size() - 1));
-//					}
-				}
-			}
-		}
-		
-//		for(Node attackedNode : attackedNodes)
-//		{
-//			functionVal += 0.2/(Math.abs(attackedNode.getLoc().getCol() - getBoard().getGrid()[0].length/2) + 1);
-//		}
-//		
-//		for(Node enemyAttackedNode : enemyAttackedNodes)
-//		{
-//			functionVal -= 0.2/(Math.abs(enemyAttackedNode.getLoc().getCol() - getBoard().getGrid()[0].length/2) + 1);
-//		}
-		
-		return functionVal;
+		return functionVal(node.getGame());
+	}
+	
+	/**
+	 * Returns the function value of the given move
+	 * 
+	 * @param move	the move whose function value is evaluated
+	 * @return	the function value of the given move
+	 */
+	private double functionVal(MinimaxNode node, Player player)
+	{
+		return functionVal(node.getGame(), player);
 	}
 	
 	/**
@@ -715,13 +682,13 @@ public class AI extends Player
 	 * 
 	 * @return	the function value of the given move
 	 */
-	private double functionVal(double parentVal, Move move)
+	private double functionVal(double parentVal, Move move, Player player)
 	{
 		double functionVal = parentVal;
 		
 		for(Node jumped : move.getJumped())
 		{
-			if(jumped.getPiece().getLoyalty() == this.getLoyalty())
+			if(jumped.getPiece().getLoyalty() == player.getLoyalty())
 			{
 				functionVal -= jumped.getPiece().getWorth();
 			}
@@ -734,7 +701,17 @@ public class AI extends Player
 		return functionVal;
 	}
 	
-	private double functionVal(Game game)
+	/**
+	 * Returns the function value of the given move and parent value
+	 * 
+	 * @return	the function value of the given move
+	 */
+	private double functionVal(double parentVal, Move move)
+	{
+		return functionVal(parentVal, move, this);
+	}
+	
+	private double functionVal(Game game, Player player)
 	{
 		Player[] players = game.getPlayers();
 		double functionVal = 0;
@@ -782,6 +759,11 @@ public class AI extends Player
 		return functionVal;
 	}
 	
+	private double functionVal(Game game)
+	{
+		return functionVal(game, this);
+	}
+	
 	/**
 	 * Initializes threads to evaluate other player's moves 
 	 * 
@@ -808,7 +790,7 @@ public class AI extends Player
 		for(int i = 0; i < minimaxThreads.length; i ++)
 		{
 			/** This piece should be changed to evaluate for player, not for the instance of AI **/
-			minimaxThreads[i] = new MinimaxValueFinder(possibleNextNodes[i], functionVal(currentNode));
+			minimaxThreads[i] = new MinimaxValueFinder(possibleNextNodes[i], functionVal(currentNode), player);
 			minimaxThreads[i].start();
 		}
 		
@@ -981,6 +963,19 @@ public class AI extends Player
 		/** The parent function value of this minimax value finder **/
 		private Double parentValue;
 		
+		/** The player this minimax value finder is working to evaluate **/
+		private Player player;
+		
+		/**
+		 * Parameterized constructor, initializes MinimaxValue instance to given node
+		 * 
+		 * @param node	the node to be set to
+		 */
+		public MinimaxValueFinder(MinimaxNode node, Player player)
+		{
+			this(node, null, player);
+		}
+		
 		/**
 		 * Parameterized constructor, initializes MinimaxValue instance to given node
 		 * 
@@ -996,10 +991,11 @@ public class AI extends Player
 		 * 
 		 * @param node	the node to be set to
 		 */
-		public MinimaxValueFinder(MinimaxNode node, Double parentValue)
+		public MinimaxValueFinder(MinimaxNode node, Double parentValue, Player player)
 		{
 			this.node = node;
 			this.parentValue = parentValue;
+			this.player = player;
 		}
 
 		/**
@@ -1014,7 +1010,7 @@ public class AI extends Player
 				{
 					try
 					{
-						minimaxValue = getMinimaxVal(node, Integer.MIN_VALUE, Integer.MAX_VALUE, minimaxDepth);
+						minimaxValue = getMinimaxVal(node, Integer.MIN_VALUE, Integer.MAX_VALUE, null, minimaxDepth, player);
 					} 
 					catch (IOException exception)
 					{
@@ -1028,7 +1024,7 @@ public class AI extends Player
 				{
 					try
 					{
-						minimaxValue = getMinimaxVal(node, Integer.MIN_VALUE, Integer.MAX_VALUE, parentValue, minimaxDepth);
+						minimaxValue = getMinimaxVal(node, Integer.MIN_VALUE, Integer.MAX_VALUE, parentValue, minimaxDepth, player);
 					} 
 					catch (IOException exception)
 					{
