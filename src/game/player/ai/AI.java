@@ -278,17 +278,6 @@ public class AI extends Player
 	}
 	
 	/**
-	 * Computes an appropriate depth for the minimax search executed this turn
-	 * 
-	 * @param node	the node at which the search begins
-	 * @return	an appropriate depth from this node
-	 */
-//	private int getAppropriateDepth(MinimaxNode node)
-//	{
-//		return minimaxDepth;
-//	}
-	
-	/**
 	 * Returns the minimax val of the given move
 	 * 
 	 * @param minimaxNode	the move whose minimax val is evaluated
@@ -355,7 +344,7 @@ public class AI extends Player
 		
 		if(node.getGame().getPlayers()[node.getGame().getTurn().getVal()].isDefeated())
 		{
-		  	return functionVal(node, maximizedPlayer);
+		  	return functionVal;
 		}
 		
 		boolean thisPlayersTurn = maximizedPlayer.getLoyalty().getVal() == node.getGame().getTurn().getVal();
@@ -372,7 +361,7 @@ public class AI extends Player
 			
 			for(Move nextMove : nextMoves)
 			{	
-				double maxCand = getMinimaxVal(node.getNextNode(nextMove), alphaVal, betaVal, functionVal);
+				double maxCand = getMinimaxVal(node.getNextNode(nextMove), alphaVal, betaVal, functionVal, specificMinimaxDepth, maximizedPlayer);
 				
 				extreme = Math.max(extreme, maxCand);
 				
@@ -390,7 +379,7 @@ public class AI extends Player
 			
 			for(Move nextMove : nextMoves)
 			{
-				double minCand = getMinimaxVal(node.getNextNode(nextMove), alphaVal, betaVal, functionVal);
+				double minCand = getMinimaxVal(node.getNextNode(nextMove), alphaVal, betaVal, functionVal, specificMinimaxDepth, maximizedPlayer);
 
 				extreme = Math.min(extreme, minCand);
 				
@@ -686,6 +675,31 @@ public class AI extends Player
 	{
 		double functionVal = parentVal;
 		
+		Player[] players = player.getGame().getPlayers();
+		
+		boolean hasWon = true;
+		
+		for(Player enemy : players) 
+		{
+			if(enemy.getLoyalty() != player.getLoyalty())
+			{
+				if(!enemy.isDefeated())
+				{
+					hasWon = false;
+				}
+			}
+		}
+		
+		if(hasWon)
+		{
+			return Integer.MAX_VALUE;
+		}
+		
+		if(isDefeated())
+		{
+			return Integer.MIN_VALUE;
+		}
+		
 		for(Node jumped : move.getJumped())
 		{
 			if(jumped.getPiece().getLoyalty() == player.getLoyalty())
@@ -720,7 +734,7 @@ public class AI extends Player
 		
 		for(Player enemy : players) 
 		{
-			if(enemy.getLoyalty() != this.getLoyalty())
+			if(enemy.getLoyalty() != player.getLoyalty())
 			{
 				if(!enemy.isDefeated())
 				{
@@ -745,7 +759,7 @@ public class AI extends Player
 			
 			if(piece != null)
 			{
-				if(piece.getLoyalty() == getLoyalty())
+				if(piece.getLoyalty() == player.getLoyalty())
 				{
 					functionVal += piece.getWorth();
 				}
@@ -790,7 +804,7 @@ public class AI extends Player
 		for(int i = 0; i < minimaxThreads.length; i ++)
 		{
 			/** This piece should be changed to evaluate for player, not for the instance of AI **/
-			minimaxThreads[i] = new MinimaxValueFinder(possibleNextNodes[i], functionVal(currentNode), player);
+			minimaxThreads[i] = new MinimaxValueFinder(possibleNextNodes[i], functionVal(currentNode, player), player);
 			minimaxThreads[i].start();
 		}
 		
@@ -1010,7 +1024,7 @@ public class AI extends Player
 				{
 					try
 					{
-						minimaxValue = getMinimaxVal(node, Integer.MIN_VALUE, Integer.MAX_VALUE, null, minimaxDepth, player);
+						minimaxValue = getMinimaxVal(node, Integer.MIN_VALUE, Integer.MAX_VALUE, null, i, player);
 					} 
 					catch (IOException exception)
 					{
@@ -1024,7 +1038,7 @@ public class AI extends Player
 				{
 					try
 					{
-						minimaxValue = getMinimaxVal(node, Integer.MIN_VALUE, Integer.MAX_VALUE, parentValue, minimaxDepth, player);
+						minimaxValue = getMinimaxVal(node, Integer.MIN_VALUE, Integer.MAX_VALUE, parentValue, i, player);
 					} 
 					catch (IOException exception)
 					{
