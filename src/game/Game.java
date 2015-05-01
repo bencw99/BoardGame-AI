@@ -141,6 +141,21 @@ public class Game
 			}
 		}
 		
+		int aliveCount = 0;
+		
+		for(Player player : players)
+		{
+			if(!player.isDefeated())
+			{
+				aliveCount ++;
+			}
+		}
+		
+		if(aliveCount <= 1)
+		{
+			this.completed = true;
+		}
+		
 		Move move = thisPlayer.getThisTurnMove();
 		
 		if(thisPlayer.isDefeated())
@@ -157,21 +172,6 @@ public class Game
 			}
 			
 			return;
-		}
-		
-		int aliveCount = 0;
-		
-		for(Player player : players)
-		{
-			if(!player.isDefeated())
-			{
-				aliveCount ++;
-			}
-		}
-		
-		if(aliveCount <= 1)
-		{
-			this.completed = true;
 		}
 		
 		while(move == null)

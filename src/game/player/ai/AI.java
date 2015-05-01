@@ -857,22 +857,21 @@ public class AI extends Player
 		}
 	}
 	
-	private void generateWorths()
+	private void generateWorths(int minimaxDepth, int repetitionNum, double increment)
 	{
 		Game testGame = new Game(getGame());
 		
 		for(Player testPlayer : testGame.getPlayers())
 		{
-			if(testPlayer instanceof AI)
+			testPlayer = new AI("", testPlayer.getLoyalty(), testGame, minimaxDepth);
+			
+			for(Class<? extends Piece> pieceType : testGame.getBoard().getPieceTypes())
 			{
-				for(Class<? extends Piece> pieceType : testGame.getBoard().getPieceTypes())
-				{
-					((AI) testPlayer).worthMap.put(pieceType, 1.0);
-				}
+				((AI) testPlayer).worthMap.put(pieceType, 1.0);
 			}
 		}
 		
-		for(int i = 0; i <= 10; i ++)
+		for(int i = 0; i <= repetitionNum; i ++)
 		{
 			for(Class<? extends Piece> pieceType : ((AI) testGame.getPlayers()[0]).worthMap.keySet())
 			{
@@ -893,9 +892,8 @@ public class AI extends Player
 				double previousVal = functionVal(testGame);
 				double currentVal;
 				double derivative = 0;
-				double increment = 0.1;
 				
-				Double pieceWorth = worthMap.get(pieceType);
+				Double pieceWorth = ((AI) testGame.getPlayers()[0]).worthMap.get(pieceType);
 				
 				pieceWorth += increment;
 				
