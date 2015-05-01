@@ -57,6 +57,8 @@ public class AI extends Player
 		super(name, loyalty, game);
 		this.minimaxDepth = minimaxDepth;
 		this.transpositionTables = new ArrayList<HashMap<MinimaxNodeContents, Double>>();
+		
+//		this.worthMap = new TreeMap<Class<? extends Piece>, Double>();
 	}
 
 	/**
@@ -704,10 +706,12 @@ public class AI extends Player
 		{
 			if(jumped.getPiece().getLoyalty() == player.getLoyalty())
 			{
+//				functionVal -= worthMap.get(jumped.getPiece().getClass());
 				functionVal -= jumped.getPiece().getWorth();
 			}
 			else
 			{
+//				functionVal += worthMap.get(jumped.getPiece().getClass());
 				functionVal += jumped.getPiece().getWorth();
 			}
 		}
@@ -761,10 +765,12 @@ public class AI extends Player
 			{
 				if(piece.getLoyalty() == player.getLoyalty())
 				{
+//					functionVal += worthMap.get(piece.getClass());
 					functionVal += piece.getWorth();
 				}
 				else
 				{
+//					functionVal -= worthMap.get(piece.getClass());
 					functionVal -= piece.getWorth();
 				}
 			}
