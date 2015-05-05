@@ -28,6 +28,9 @@ public class AI extends Player
 	/** The map containing the worths of pieces **/
 	private TreeMap<Class<? extends Piece>, Double> worthMap;
 	
+	/** THe array containing the values of this worth map **/
+	private double worthMapValues[];
+	
 	/** The depth of the minimax search **/
 	private static final int DEFAULT_MINIMAX_DEPTH = 12;
 	
@@ -57,8 +60,7 @@ public class AI extends Player
 		super(name, loyalty, game);
 		this.minimaxDepth = minimaxDepth;
 		this.transpositionTables = new ArrayList<HashMap<MinimaxNodeContents, Double>>();
-		
-//		this.worthMap = new TreeMap<Class<? extends Piece>, Double>();
+		this.worthMap = new TreeMap<Class<? extends Piece>, Double>();
 	}
 
 	/**
@@ -663,7 +665,7 @@ public class AI extends Player
 	 * @param move	the move whose function value is evaluated
 	 * @return	the function value of the given move
 	 */
-	private double functionVal(MinimaxNode node, Player player)
+	private static double functionVal(MinimaxNode node, Player player)
 	{
 		return functionVal(node.getGame(), player);
 	}
@@ -673,7 +675,7 @@ public class AI extends Player
 	 * 
 	 * @return	the function value of the given move
 	 */
-	private double functionVal(double parentVal, Move move, Player player)
+	private static double functionVal(double parentVal, Move move, Player player)
 	{
 		double functionVal = parentVal;
 		
@@ -697,7 +699,7 @@ public class AI extends Player
 			return Integer.MAX_VALUE;
 		}
 		
-		if(isDefeated())
+		if(player.isDefeated())
 		{
 			return Integer.MIN_VALUE;
 		}
@@ -729,7 +731,7 @@ public class AI extends Player
 		return functionVal(parentVal, move, this);
 	}
 	
-	private double functionVal(Game game, Player player)
+	private static double functionVal(Game game, Player player)
 	{
 		Player[] players = game.getPlayers();
 		double functionVal = 0;
@@ -752,7 +754,7 @@ public class AI extends Player
 			return Integer.MAX_VALUE;
 		}
 		
-		if(isDefeated())
+		if(player.isDefeated())
 		{
 			return Integer.MIN_VALUE;
 		}
@@ -863,9 +865,9 @@ public class AI extends Player
 		}
 	}
 	
-	private void generateWorths(int minimaxDepth, int repetitionNum, double increment)
+	private static TreeMap<Class<? extends Piece>, Double> generateWorths(Game game, int minimaxDepth, int repetitionNum, double increment)
 	{
-		Game testGame = new Game(getGame());
+		Game testGame = new Game(game);
 		
 		for(Player testPlayer : testGame.getPlayers())
 		{
@@ -877,9 +879,11 @@ public class AI extends Player
 			}
 		}
 		
-		for(int i = 0; i <= repetitionNum; i ++)
+		AI maximizedPlayer = (AI) testGame.getPlayers()[0];
+		
+		for(int i = 0; i < repetitionNum; i ++)
 		{
-			for(Class<? extends Piece> pieceType : ((AI) testGame.getPlayers()[0]).worthMap.keySet())
+			for(Class<? extends Piece> pieceType : maximizedPlayer.worthMap.keySet())
 			{
 				boolean stable = false;
 				
@@ -888,14 +892,18 @@ public class AI extends Player
 					try
 					{
 						testGame.executeTurn();
-					} 
+					}
 					catch (IOException e)
 					{
 						e.printStackTrace();
 					}
 				}
 				
-				double previousVal = functionVal(testGame);
+				/*
+				 * More accurate representation of end game position should be calculated
+				 * This one simply returns positive or negative max integer value because players are defeated
+				 */
+				double previousVal = functionVal(testGame, maximizedPlayer);
 				double currentVal;
 				double derivative = 0;
 				
@@ -917,7 +925,7 @@ public class AI extends Player
 						}
 					}
 					
-					currentVal = functionVal(testGame);
+					currentVal = functionVal(testGame, maximizedPlayer);
 					
 					double thisDeriv = currentVal - previousVal;
 					
@@ -941,12 +949,21 @@ public class AI extends Player
 					
 					Player[] oldPlayers = testGame.getPlayers();
 					
-					testGame = new Game(getGame());
+					testGame = new Game(game);
 					
 					testGame.setPlayers(oldPlayers);
 				}
+				
+				double newPieceWorth = maximizedPlayer.worthMap.get(pieceType);
+				
+				for(Player player : testGame.getPlayers())
+				{
+					((AI) player).worthMap.get(pieceType);
+				}
 			}
 		}
+		
+		return maximizedPlayer.worthMap;
 	}
 	
 	/**

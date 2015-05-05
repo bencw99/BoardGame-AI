@@ -149,12 +149,6 @@ public abstract class Piece implements ImageObserver
 	{
 		this(loyalty);
 		this.node = node;
-		this.hasMoved = false;
-		
-		if(!imagesInitialized)
-		{
-			imagesInit();
-		}
 	}
 	
 	/**

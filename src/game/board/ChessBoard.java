@@ -36,6 +36,9 @@ public class ChessBoard	extends RectangularBoard
 	/** The default height of nodes of this board **/
 	public static final int NODE_HEIGHT =  80;
 	
+	/** The array of piece types of this board **/
+	private static Class PIECE_TYPES[] = {King.class, Queen.class, Bishop.class, Rook.class, Knight.class, Pawn.class};
+	
 	/**
 	 * Parameterized constructor, initializes grid to size 8 by 8, and game to given game
 	 * 
@@ -267,21 +270,6 @@ public class ChessBoard	extends RectangularBoard
 		
 		move(initialNode.getLoc(), terminalNode.getLoc());
 	}
-
-	/**
-	 * Loads the types of pieces present in this board
-	 */
-	protected void pieceTypesInit()
-	{
-		PIECE_TYPES = new ArrayList<Class<? extends Piece>>();
-		
-		PIECE_TYPES.add(King.class);
-		PIECE_TYPES.add(Queen.class);
-		PIECE_TYPES.add(Rook.class);
-		PIECE_TYPES.add(Bishop.class);
-		PIECE_TYPES.add(Knight.class);
-		PIECE_TYPES.add(Pawn.class);
-	}
 	
 	/**
 	 * Gets the possible moves of the given loyalty
@@ -366,5 +354,14 @@ public class ChessBoard	extends RectangularBoard
 	public RectangularBoard clone(Game game)
 	{
 		return new ChessBoard(this, game);
+	}
+	
+	/**
+	 * @return the array of piece types of this board
+	 */
+	@Override
+	public Class<? extends Piece>[] getPieceTypes()
+	{
+		return PIECE_TYPES;
 	}
 }

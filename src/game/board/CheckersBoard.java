@@ -32,6 +32,9 @@ public class CheckersBoard extends RectangularBoard
 	/** The number of checkers pieces in a checkers game **/
 	public static final int CHECKERS_PIECE_NUM = 12;
 	
+	/** The array of piece types of this board **/
+	private static Class PIECE_TYPES[] = {King.class, Soldier.class};
+	
 	/**
 	 * Parameterized constructor, initializes grid to size 8 by 8, and game to given game
 	 * 
@@ -192,17 +195,6 @@ public class CheckersBoard extends RectangularBoard
 	}
 	
 	/**
-	 * Loads the types of pieces present in this board
-	 */
-	protected void pieceTypesInit()
-	{
-		PIECE_TYPES = new ArrayList<Class<? extends Piece>>();
-		
-		PIECE_TYPES.add(King.class);
-		PIECE_TYPES.add(Soldier.class);
-	}
-	
-	/**
 	 * Gets the possible moves of the given loyalty
 	 * 
 	 * @param loyalty	the loyalty to be tested
@@ -256,5 +248,14 @@ public class CheckersBoard extends RectangularBoard
 	public int getNodeHeight()
 	{
 		return NODE_HEIGHT;
+	}
+
+	/**
+	 * @return the array of piece types of this board
+	 */
+	@Override
+	public Class<? extends Piece>[] getPieceTypes()
+	{
+		return PIECE_TYPES;
 	}
 }
