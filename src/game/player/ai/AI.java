@@ -10,6 +10,7 @@ import game.player.Player;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.TreeMap;
 /**
@@ -130,19 +131,11 @@ public class AI extends Player
 			System.out.print(index + " ");
 		}
 		
-		System.out.println();
-		
-		int random = (int)(maxMovesIndeces.size()*Math.random());
-		
-		if(getBoard() instanceof CheckersBoard)
-		{
-			random = 0;
-		}
-		
-		System.out.println("Move chosen: " + maxMovesIndeces.get(random) + " with value " + possibleNextNodes[maxMovesIndeces.get(random)].getValue());
+		System.out.println();		
+		System.out.println("Move chosen: " + maxMovesIndeces.get(0) + " with value " + possibleNextNodes[maxMovesIndeces.get(0)].getValue());
 		System.out.println("Time taken: " + (System.nanoTime() - initialTime)/1000000000 + " seconds");
 		
-		return possibleMovesArray[maxMovesIndeces.get(random)];
+		return possibleMovesArray[maxMovesIndeces.get(0)];
 	}
 	
 	/**
@@ -171,6 +164,7 @@ public class AI extends Player
 		}
 
 		ArrayList<MinimaxSuperNode> nextNodes = currentNode.getChildren();
+		Collections.shuffle(nextNodes);
 		
 		ArrayList<Integer> maxMovesIndeces = new ArrayList<Integer>();
 		
